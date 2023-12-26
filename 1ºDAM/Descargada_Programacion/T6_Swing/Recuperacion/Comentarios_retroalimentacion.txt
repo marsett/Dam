@@ -1,0 +1,9 @@
+8,70/10,00
+
+Hola Mario. He publicado la solución para que puedas compararla con tu ejercicio.
+
+Tu examen está muy bien. Aquí te recopilo mis comentarios:
+
+- ﻿Escribes bien en el archivo, aunque no lo cierras. Para poder cerrarlo en el mismo  actionPerformed tendrías que haber abierto el fichero  en el mismo método: lo abres y lo cierras. Te falta la opción "Al revés".
+
+- Lees el fichero en cada opción. Te faltaría pasarlo a un método aparte.

@@ -1,0 +1,95 @@
+package examendi;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.io.File;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+public class ExamenInterfacesGraficas extends JFrame{
+	private JPanel panelIzquierdo, panelDerechoSuperior, panelDerechoInferior;
+	private JLabel etiquetaDrives, etiquetaCarpetas; 
+	private JComboBox<String> listaDrives, listaCarpetas;
+	private static DefaultMutableTreeNode root;
+	private DefaultTreeModel model;
+	public static void main(String[] args) {
+		new ExamenInterfacesGraficas();
+	}
+	public ExamenInterfacesGraficas() {
+		super("Examen DAM Interfaces Graficas");
+		crearInterfaz();
+	}
+	private void crearInterfaz() {
+		System.out.println("Creando Interfaz...");
+		etiquetaDrives=new JLabel("Drive");
+		etiquetaCarpetas=new JLabel("Carpetas en la raiz");
+		
+		panelIzquierdo=new JPanel();
+		panelIzquierdo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		panelDerechoSuperior=new JPanel();
+		panelDerechoSuperior.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		panelDerechoInferior=new JPanel();
+		panelDerechoInferior.setBorder(BorderFactory.createLineBorder(Color.RED));
+		BoxLayout boxLayoutIzquierdo=new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS);
+		BoxLayout boxLayoutDerechoSuperior=new BoxLayout(panelDerechoSuperior, BoxLayout.Y_AXIS);
+		BoxLayout boxLayoutDerechoInferior=new BoxLayout(panelDerechoInferior, BoxLayout.Y_AXIS);
+		panelIzquierdo.setLayout(boxLayoutIzquierdo);
+		panelDerechoSuperior.setLayout(boxLayoutDerechoSuperior);
+		panelDerechoInferior.setLayout(boxLayoutDerechoInferior);
+		add(panelIzquierdo);
+		add(panelDerechoSuperior);
+		add(panelDerechoInferior);
+		
+		listaDrives=new JComboBox<String>();
+		for(File fichero:getDrives()) {
+			listaDrives.addItem(fichero.toString());
+		}
+		panelIzquierdo.add(etiquetaDrives);
+		panelIzquierdo.add(listaDrives);
+		
+		listaCarpetas=new JComboBox<String>();
+		for(File fichero:getCarpetas()) {
+			listaCarpetas.addItem(fichero.toString());
+		}
+		panelIzquierdo.add(etiquetaCarpetas);
+		panelIzquierdo.add(listaCarpetas);
+		
+		setLayout(new FlowLayout());
+		setSize(1000,500);
+		setVisible(true);
+		System.out.println("Interfaz creada");
+	}
+	public JScrollPane crearPanel() {
+		String drive=null;
+		for(File fichero:getCarpetas()) {
+			drive=fichero.toString();
+		}
+		root=new DefaultMutableTreeNode(drive);
+		model=new DefaultTreeModel(root);
+		JTree arbol=new JTree(model);
+		
+		JScrollPane scroll=new JScrollPane(arbol);
+		getContentPane().add(scroll);
+		return scroll;
+	}
+	public File[] getDrives() {
+		File[] listaDrives=File.listRoots();
+		for(int i=0; i<listaDrives.length; i++) {
+			System.out.println(listaDrives[i]);
+		}
+		return listaDrives;
+	}
+	public File[] getCarpetas() {
+		String drive=null;
+		for(File fichero:getDrives()) {
+			drive=fichero.toString();
+		}
+		File raiz=new File(drive);
+		File[] listaCarpetas=raiz.listFiles();
+		for(int i=0; i<listaCarpetas.length; i++) {
+			System.out.println(listaCarpetas[i]);
+		}
+		return listaCarpetas;
+	}
+}

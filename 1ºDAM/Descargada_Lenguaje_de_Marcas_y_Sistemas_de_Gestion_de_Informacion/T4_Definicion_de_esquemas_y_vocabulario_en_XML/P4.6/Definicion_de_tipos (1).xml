@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <xs:element name="listacomponentes" type="tipolista"/>
+  
+  <xs:complexType name="tipolista">
+	  <xs:sequence>
+        <xs:element name="componente" type="tipocomponente" maxOccurs="unbounded"/>
+      </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="tipocomponente">
+    <xs:sequence>
+      <xs:element name="fabricante" type="tipofabricante"/>
+      <xs:element name="peso" type="tipopeso"/>
+    </xs:sequence>
+    <xs:attribute name="entrega" type="xs:date" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="tipofabricante">
+    <xs:complexContent>
+      <xs:restriction base="xs:anyType">
+        <xs:sequence>
+          <xs:element name="nombre" type="tiponombre"/>
+          <xs:element name="calificacion"type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:simpleType name="tiponombre">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FAB1">
+      <xs:enumeration value="FAB2">
+      <xs:enumeration value="FAB3">
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="tipopeso_2">
+    <xs:restriction base="xs:decimal">
+      <xs:minExclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="tipopeso">
+    <xs:simpleContent>
+	  <xs:extension base="tipopeso_2">
+	    <xs.attribute name="unidad" type="xs:string"/>
+	  </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+</xs:schema>

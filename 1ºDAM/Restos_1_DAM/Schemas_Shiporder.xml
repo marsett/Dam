@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+  <xs:element name="shiporder" type="tipoship"/>
+  
+    <xs:complexType name="tipoship">
+      <xs:complexContent>
+        <xs:attribute name="orderid" type="xs:integer"/>
+        <xs:sequence>
+		  <xs:element name="orderperson" type="xs:string"/>
+		  <xs:element name="shipto" type="tiposhipto"/>
+		  <xs:element name="item" type="tipoitem" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="tiposhipto">
+	  <xs:sequence>
+	    <xs:element name="name" type="xs:string"/>
+	    <xs:element name="address" type="xs:anytype"/>
+		<xs:element name="city" type="xs:anytype"/>
+		<xs:element name="country" type="xs:string"/>
+	  </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="tipoitem">
+	  <xs:sequence>
+	    <xs:element name="title" type="xs:string"/>
+	    <xs:element name="note" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+	    <xs:element name="quantity" type="xs:integer"/>
+	    <xs:element name="price" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+    
+</xsd:schema>

@@ -1,0 +1,283 @@
+package practicaTree;
+import java.awt.*;
+import java.net.*;
+import java.sql.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class PracticaBaseDatosTree extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JLabel ipServidor, usuario, contrasena, defaultSchema, puerto;
+	private JTextField cuadroIpServidor, cuadroUsuario, cuadroContrasena, cuadroDefaultSchema, cuadroPuerto;
+	private JButton btConectar, btDesconectar;
+	private JLabel etiqueta;
+	private static Modelo modelo;
+	protected Connection conexion;
+	protected Statement statement;
+	protected DatabaseMetaData dataBaseMetaData;
+	DefaultTreeModel model;
+	private static DefaultMutableTreeNode root;
+	
+	private JPanel panelSuperior, panelCentral, panelInferior;
+	
+	public static void main(String[] args) {
+		new PracticaBaseDatosTree();
+	}
+	
+	public PracticaBaseDatosTree() {
+		super("Practica BASE DE DATOS");
+		crearInterfaz();
+	}
+	
+	private void crearInterfaz() {
+		System.out.println("Creando Interfaz PantallaUno...");
+		//getContentPane().setBackground(Color.PINK);
+		panelSuperior=new JPanel();
+		panelSuperior.setLayout(new GridBagLayout());
+		panelSuperior.setBorder(BorderFactory.createTitledBorder("Práctica BASE DE DATOS"));
+		//panelSuperior.setBackground(Color.YELLOW);
+		GridBagConstraints gbc=new GridBagConstraints();
+		gbc.insets=new Insets(1, 1, 1, 1);
+		
+		ipServidor=new JLabel("IP Servidor Base Datos");
+		usuario=new JLabel("Usuario");
+		contrasena=new JLabel("Contraseña");
+		defaultSchema=new JLabel("Default Schema");
+		puerto=new JLabel("Puerto");
+		cuadroIpServidor=new JTextField("localhost",30);
+		cuadroUsuario=new JTextField("root",30);
+		cuadroContrasena=new JTextField("mysql",30);
+		cuadroDefaultSchema=new JTextField("",30);
+		cuadroPuerto=new JTextField("3306",30);
+		btConectar=new JButton("Conectar");
+		btDesconectar=new JButton("Desconectar");
+		etiqueta=new JLabel();
+		
+		addComponente(ipServidor, cuadroIpServidor, 		panelSuperior, gbc);
+		addComponente(usuario, cuadroUsuario, 				panelSuperior, gbc);
+		addComponente(contrasena, cuadroContrasena, 		panelSuperior, gbc);
+		addComponente(defaultSchema, cuadroDefaultSchema, 	panelSuperior, gbc);
+		addComponente(puerto, cuadroPuerto, 				panelSuperior, gbc);
+		
+		/*add(ipServidor);
+		add(cuadroIpServidor);
+		add(usuario);
+		add(cuadroUsuario);
+		add(contrasena);
+		add(cuadroContrasena);
+		add(defaultSchema);
+		add(cuadroDefaultSchema);
+		add(puerto);
+		add(cuadroPuerto);*/
+		/*panelCentral=new JPanel();
+		panelCentral.setLayout(new FlowLayout());
+		panelCentral.add(btConectar);
+		panelCentral.add(btDesconectar);*/
+		
+
+		panelCentral=new JPanel();
+		panelCentral.setLayout(new FlowLayout());
+		
+		ImageIcon icono2=obtenerImagen("../imagenes/off.png","Indicador OFF");
+		ImageIcon icono3=new ImageIcon(icono2.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH));
+		etiqueta.setIcon(icono3);
+		
+		
+		anadirComponenteBotones(btConectar, panelSuperior, gbc);
+		anadirComponenteBotones(btDesconectar, panelSuperior, gbc);
+
+		panelInferior=new JPanel();
+		panelInferior.add(panelCentral, BorderLayout.NORTH);
+		btConectar.addActionListener(e->{
+			try {
+			
+				panelCentral.removeAll();
+				System.out.println("Conectando...");
+				ImageIcon icono=obtenerImagen("../imagenes/on.png","Indicador ON");
+
+				ImageIcon icono4=new ImageIcon(icono.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH));
+				etiqueta.setIcon(icono4);
+				//panelCentral.removeAll();
+				panelCentral.add(etiqueta);
+	
+				//panelCentral.setBackground(Color.RED);
+				
+				modelo=new Modelo(cuadroIpServidor.getText(),cuadroUsuario.getText(),cuadroContrasena.getText(),cuadroDefaultSchema.getText(),cuadroPuerto.getText());
+				System.out.println(modelo);
+				conexion();
+				//panelInferior.setBackground(Color.GREEN);
+				panelInferior.setPreferredSize(new Dimension(400, 800));
+				panelInferior.setSize(new Dimension(400, 200));
+				panelInferior.setLayout(new BorderLayout());
+				add(panelInferior);
+
+				panelInferior.add(panelCentral, BorderLayout.NORTH);
+				panelInferior.add(crearPanel(),BorderLayout.CENTER);
+				this.validate();
+				this.repaint();
+			
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
+		});
+		btDesconectar.addActionListener(e->{
+			System.out.println("Desconectando...");
+			etiqueta.setIcon(icono3);
+			panelCentral.removeAll();
+			panelCentral.add(etiqueta);
+			panelInferior.removeAll();
+			panelInferior.repaint();
+			panelInferior.add(panelCentral, BorderLayout.NORTH);
+
+			
+		});
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new FlowLayout());
+		
+		getContentPane().add(panelSuperior);
+		add(etiqueta);
+		setSize(500,750);
+		setVisible(true);
+	}
+	
+	private void addComponente(JLabel etiqueta, JTextField caja, JPanel p, GridBagConstraints gbc) {
+		gbc.anchor=GridBagConstraints.WEST;
+		gbc.gridwidth=GridBagConstraints.RELATIVE;
+		p.add(etiqueta,gbc);
+		gbc.anchor=GridBagConstraints.WEST;
+		gbc.gridwidth=GridBagConstraints.REMAINDER;
+		p.add(caja,gbc);
+		
+	}
+	
+	
+	private void anadirComponenteBotones(JButton boton, JPanel p, GridBagConstraints gbc) {
+		gbc.anchor=GridBagConstraints.CENTER;
+		gbc.gridwidth=GridBagConstraints.RELATIVE;
+		p.add(boton,gbc);
+		
+	}
+	
+	public JScrollPane crearPanel() throws SQLException {
+
+		root=new DefaultMutableTreeNode(cuadroDefaultSchema.getText().trim());
+		
+		model=new DefaultTreeModel(root);
+		
+		JTree arbol=new JTree(model);
+		
+		for(String tabla:getTablas(modelo.cuadroDefaultSchema)) {
+			System.out.println("Tabla: "+tabla);
+			cargarEstructura(tabla);
+		}
+
+		JScrollPane scroll=new JScrollPane(arbol);
+		getContentPane().add(scroll);
+		return scroll;
+	}
+	
+	public void cargarEstructura(String nombreTabla) {
+		
+		DefaultMutableTreeNode nodoHijo=new DefaultMutableTreeNode(nombreTabla);
+		for(String columnastipos:getColumnasTipos(modelo.cuadroDefaultSchema, nombreTabla)) {
+			DefaultMutableTreeNode columnasTipos=new DefaultMutableTreeNode(columnastipos);
+			nodoHijo.add(columnasTipos);
+		}
+		
+		root.add(nodoHijo);
+		
+	}
+	
+	public void conexion() throws SQLException {
+		System.out.println("Creando Conexion...");
+		String url="jdbc:mysql://localhost:3306/"+modelo.cuadroDefaultSchema;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conexion=DriverManager.getConnection(url,modelo.cuadroUserName,modelo.cuadroPassword);
+			statement=conexion.createStatement();
+			dataBaseMetaData=conexion.getMetaData();
+		}catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Se Ha Conectado...");
+	}
+	
+	public ArrayList<String> getTablas(String nombreEsquema) throws SQLException{
+		ArrayList<String> arrayTablas=new ArrayList<>();
+		System.out.println("getTablas() "+nombreEsquema);
+		String catalogo=null;
+		String patronTabla="%";
+		String[] tipos=null;
+		ResultSet tablas=dataBaseMetaData.getTables(nombreEsquema, catalogo,  patronTabla, tipos);
+		String nombreTabla=null;
+		while(tablas.next()) {
+			nombreTabla=tablas.getString(3);
+			System.out.println(nombreTabla);
+			arrayTablas.add(nombreTabla);
+		}
+		System.out.println("Fin getTablas()");
+		return arrayTablas;
+	}
+	
+	public ArrayList<String> getColumnasTipos(String nombreEsquema, String tablas) {
+		System.out.println("getColumnasTipos()");
+		
+		ArrayList<String> columnasTipos=new ArrayList<String>();
+		//String nombreEsquema=modelo.cuadroDefaultSchema;
+		try {
+			dataBaseMetaData=conexion.getMetaData();
+			String catalogo=null;
+			String formatoCol=null;
+		
+				ResultSet rsColumnasTipos=dataBaseMetaData.getColumns(nombreEsquema, catalogo, tablas, formatoCol);
+				String columna, tipo;
+				while(rsColumnasTipos.next()){
+					columna=rsColumnasTipos.getString(4);
+					tipo=rsColumnasTipos.getString(6);
+					System.out.println("Columna: "+columna);
+					System.out.println("Tipo: "+tipo);
+					columnasTipos.add(columna+" "+tipo.toUpperCase());
+				}
+			
+		}catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		return columnasTipos;
+	}
+	
+	private ImageIcon obtenerImagen(String ruta, String descripcion) {
+		URL imgUrl=getClass().getResource(ruta);
+		if(imgUrl!=null) {
+			return new ImageIcon(imgUrl, descripcion);
+		}
+		else {
+			System.err.println("No ha encontrado imagen en "+ruta);
+			return null;
+		}
+	}
+	
+	public class Modelo{
+		protected String cuadroServerHost=null;
+		protected String cuadroUserName=null;
+		protected String cuadroPassword=null;
+		protected String cuadroDefaultSchema =null;
+		protected String cuadroPort=null;
+		public Modelo(String cuadroServerHost, String cuadroUserName, String cuadroPassword, String cuadroDefaultSchema, String cuadroPort) {
+			this.cuadroServerHost=cuadroServerHost;
+			this.cuadroUserName=cuadroUserName;
+			this.cuadroPassword=cuadroPassword;
+			this.cuadroDefaultSchema=cuadroDefaultSchema;
+			this.cuadroPort=cuadroPort;
+			System.out.println("Creando Modelo...");
+		}
+		@Override
+		public String toString() {
+			return "Modelo [cuadroServerHost=" + cuadroServerHost + ", cuadroUserName=" + cuadroUserName
+					+ ", cuadroPassword=" + cuadroPassword + ", cuadroDefaultSchema=" + cuadroDefaultSchema
+					+ ", cuadroPort=" + cuadroPort + "]";
+		}
+	}
+}

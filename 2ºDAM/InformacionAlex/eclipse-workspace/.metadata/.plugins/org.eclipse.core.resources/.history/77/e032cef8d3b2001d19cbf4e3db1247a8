@@ -1,0 +1,26 @@
+package componentesTablas.ordenaciontablas;
+import javax.swing.table.*;
+
+public class ModeloDatosOrdenado extends AbstractTableModel{
+	private static final long serialVersionUID = 1L;
+	private Object[][]rowData= {
+			{1,"Agapito","Masculino"},
+			{2,"Robustiano","Masculino"},
+			{3,"Críspula","Femenino"},
+			{4,"Ermengildo","Masculino"},
+			{5,"Aganzo","Masculino"},
+			{6,"Keyla","Transexual"}
+	};
+	@Override
+	public int getRowCount() {
+		return rowData.length;
+	}
+	@Override
+	public int getColumnCount() {
+		return 0;
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return null;
+	}
+}

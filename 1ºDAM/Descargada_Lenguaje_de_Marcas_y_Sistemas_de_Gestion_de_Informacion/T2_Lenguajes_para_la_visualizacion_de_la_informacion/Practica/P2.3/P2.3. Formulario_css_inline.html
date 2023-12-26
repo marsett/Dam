@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+		<link rel="stylesheet" href="estilos.css">
+    </head>
+      <body style="font-family: Times New Roman; background-color: purple;">
+        <p style="color:black; background-color: lightblue; margin-left: 30%; margin-right: 54% ;">Rellena los siguientes datos:</p>
+          <fieldset style= "background-color: darkgreen; margin-left: 30%; margin-right: 30%; padding: 3px 10px; border: PowderBlue 5px double; border-top-left-radius: 20px; border-bottom-right-radius: 20px;" >
+            <legend style="background-color: lightblue;">Datos personales</legend>
+            <label for="name"><span class="a">Nombre:</span></label>
+            <input type="text" id="name" style="background-color: yellow;"><br><br>
+            <label for="surname">Apellidos:</label>
+            <input type="text" id="surname" style="background-color: yellow;"><br><br>
+            <label for="DNI">DNI:</label>
+            <input type="text" id="DNI" style="background-color: yellow;"><br><br>
+          </fieldset>
+          <fieldset style="background-color: black; margin-left: 30%; margin-right: 30%; padding: 3px 10px; border: PowderBlue 5px double; border-top-left-radius: 20px; border-bottom-right-radius: 20px;">
+            <legend style="background-color: lightblue; color: black;">Datos conexión</legend>
+            <label for="user" style="color:white;">Usuario:</label>
+            <input type="text" id="user" style="background-color: orange;"><br><br>
+            <label for="password" style="color:white;">Contraseña</label>
+            <input type="text" id="password" style="background-color: orange;"><br><br>
+          </fieldset>
+          <fieldset style="background-color: grey; margin-left: 30%; margin-right: 30%; padding: 3px 10px; border: PowderBlue 5px double; border-top-left-radius: 20px; border-bottom-right-radius: 20px;">
+            <legend style="background-color: lightblue; color: black;">Información general</legend>
+            <label for="gender" style="background-color: orange;">Género:</label><br>
+            <input type="radio" id="css" >
+            <label for="css">Masculino</label><br>
+            <input type="radio" id="css">
+            <label for="css">Femenino</label><br><br>
+            <legend style="background-color: orange; margin-right: 40%;">Unidad Didáctica (puedes elegir varias):</legend><br>
+            <input type="checkbox" id="css">
+            <label for="algebra">Álgebra</label><br>
+            <input type="checkbox" id="css">
+            <label for="physical">Física</label><br>
+            <input type="checkbox" id="css">
+            <label for="maths">Matemáticas</label><br>
+            <input type="checkbox" id="css">
+            <label for="draw">Dibujo</label><br><br>
+            <legend style="background-color: orange; margin-right: 47%;">Horario (elige entre mañana/tarde):</legend><br>
+            <select id="selecciona" size=1>
+              <option value="Mañana">Mañana</option>
+              <option value="Tarde">Tarde</option>
+            </select><br><br>
+            <legend>Selecciona tipo de comida:</legend><br>
+            <select id="selecciona" size="4" style="background-color: lightgreen;">
+				<option>Vegana</option>
+				<option>Vegetariana</option>
+				<option>Sin gluten</option>
+				<option>Normal</option>
+            </select><br><br>
+            <input type="checkbox"><font size=2>Estoy de acuerdo con utilizar mis datos para fines comerciales</font><br><br>
+            <input type="button" value="ENVIAR"><font size=1></font>
+          </fieldset>
+      </body>
+  </html>

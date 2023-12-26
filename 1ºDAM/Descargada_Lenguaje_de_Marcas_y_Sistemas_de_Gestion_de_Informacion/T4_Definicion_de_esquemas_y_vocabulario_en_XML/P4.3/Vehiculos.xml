@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema></xs:schema>
+	<xs:element name="vehiculos" type="tipovehiculo"/>
+	  <xs:complexType name="tipovehiculo">
+	    <xs:complexContent>
+			<xs:restriction base="xs:string">
+				<xs:sequence>
+					<xs:element name="moto" type="tipomoto" minOccurs="1" maxOccurs="unbounded"/>
+					<xs:element name="coche" type="tipocoche" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+	    </xs:complexContent>
+	  </xs:complexType>
+	  <xs:complexType name="tipomoto">
+	    <xs:complexContent>
+			<xs:attribute name="matricula" type="xs:string" use="required"/>
+			  <xs:sequence>
+				  <xs:element name="marca" type="tipomarca"></xs:element>
+				  <xs:element name="modelo" type="tipomodelo"></xs:element>
+				  <xs:element name="color" type="tipocolor"></xs:element>
+				  <xs:element name="combustible" type="tipocombustible">
+					  <xs:simpleType>
+						  <xs:restriction base="xs:string">
+							  <xs:sequence>
+								  <xs:element name="gasolina"/>
+								  <xs:element name="diesel"/>
+							  </xs:sequence>
+						  </xs:restriction>
+					  </xs:simpleType>
+				  </xs:element>
+				  <xs:element name="precio" type="tipoprecio">
+					  <xs:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][€]"/>
+				  </xs:element>
+				  <xs:element name="kilometraje" type="tipokilometraje">
+					  <xs:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+					  <xs:element name="desperfectos" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+						  <xs:complexType name="desperfectos">
+							  <xs:complexContent>
+								  <xs:attribute name="tipo" type="xs:string" use="required"/>
+								    <xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:sequence>
+												<xs:element name="estetico"/>
+												<xs:element name="funcional"/>
+											</xs:sequence>
+										</xs:restriction>
+								    </xs:simpleType>
+									<xs:sequence>
+										<xs:element name="tipo" type="tipo"/>
+										<xs:element name="descripcion" type="tipodescripcion"/>
+									</xs:sequence>
+							  </xs:complexContent>
+						  </xs:complexType>
+					  </xs:element>
+				  </xs:element>
+			  </xs:sequence>
+	    </xs:complexContent>
+	  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,8 @@
+package examendi;
+import javax.swing.tree.*;
+
+public class Modelo extends DefaultTreeModel{
+	public Modelo(TreeNode root) {
+		super(root);
+	}
+}

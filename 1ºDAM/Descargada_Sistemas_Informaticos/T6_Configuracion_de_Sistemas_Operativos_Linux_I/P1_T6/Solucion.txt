@@ -1,0 +1,167 @@
+1. Crear los usuarios practica1 y practica2 con el comando adduser.
+
+sudo adduser practica1
+sudo adduser practica2
+
+2. Crea el usuario practica3 con el comando useradd, ayúdate de las opciones del
+comando (y otros comandos en caso de ser necesario) para que no le falte ni
+contraseña, ni carpeta personal.
+
+sudo useradd -m practica3
+
+3. Modifica el nombre del usuario practica1 por el de anamaria y el del usuario practica2
+por joseluis.
+
+sudo usermod -l anamaria practica1
+sudo usermod -l joseluis practica2
+
+4. Modifica la contraseña del usuario practica3.
+
+sudo passwd practica3
+
+5. Modifica los parámetros de contraseña MAX_DAYS y WARNING a 60 y 12
+respectivamente al usuario anamaria.
+
+sudo chage -M 60 anamaria
+sudo chage -W 12 anamaria
+
+*6. Modifica los parámetros de contraseña MAX_DAYS, MIN_DAYS y WARNING a 45, 2 y 4
+ respectivamente para todos los usuarios nuevos que vayan a crearse en el sistema.
+
+sudo nano /etc/login.defs
+
+PASS_MAX_DAYS 45
+PASS_MIN_DAYS 2
+PASS_WARN_AGE 4
+
+En el archivo de configuración /etc/login.defs están definidas las variables que controlan los aspectos de la creación de usuarios y de los campos de shadow usada por defecto. 
+
+
+
+7. Crea un usuario depaso y comprueba que sus parámetros de contraseña han sido los
+modificados en el ejercicio 6.
+
+sudo adduser depaso
+sudo nano /etc/shadow   (visualizamos vemos que cambia contraseña)
+
+8. Elimina el usuario depaso y vuelve a poner los parámetros de contraseña modificados
+en el ejercicio 6 a sus valores anteriores.
+
+sudo deluser depaso
+
+para cambiar a valores anteriores volver a modificar fichero 
+
+sudo nano /etc/login.defs
+
+================GRUPOS LINUX
+
+1. Crea los grupos colegas y conocidos.
+
+sudo groupadd colegas
+sudo groupadd conocidos
+
+2. Añade a los usuarios anamaria y joseluis al grupo colegas.
+
+sudo usermod -a -G colegas anamaria
+sudo usermod -a -G colegas joseluis
+
+3. Añade al usuario practica3 al grupo conocidos
+
+sudo usermod -a -G conocidos practica3
+
+4. Modifica el nombre del grupo conocidos por el de desconocidos.
+
+sudo groupmod -n desconocidos conocidos
+
+5. Loguéate con cada uno de los usuarios creados en esta práctica y crea con ellos
+un fichero y una carpeta en sus respectivas carpetas personales.
+
+su anamaria
+cd /home/practica1
+mkdir directorio1
+touch fichero1.txt
+ls
+
+su joseluis
+cd /home/practica2
+mkdir directorio2
+touch fichero2.txt
+ls
+
+su practica3
+cd /home/practica3
+mkdir directorio3
+touch fichero3.txt
+ls
+
+
+================PERMISOS LINUX
+
+
+1. Convierte a anamaria y joseluis en usuarios sudoers.
+
+sudo su
+visudo
+
+# User privilege specification
+root 		ALL=(ALL:ALL) ALL
+anamaria 	ALL=(ALL:ALL) ALL
+joseluis 	ALL=(ALL:ALL) ALL
+
+
+2. Intenta realizar una tarea de administración con el usuario anamaria y a continuación la
+misma con el usuario práctica3. Comenta los resutados.
+
+sudo chage -M 120 anamaria
+sudo chage -M 90 practica3
+
+3. Cambia los dueños de /home/compartir para que el usuario propietario sea joseluis y el
+grupo propietario colegas.
+
+sudo chown joseluis compartir
+sudo chown colegas compartir
+ls -l
+
+4. Accede con los 3 usuarios creados en esta práctica a esa carpeta y realiza la
+demostración de que funcionan los permisos y dueños asignados.
+
+su anamaria
+cd /home/compartir
+mkdir prueba   (denegado)
+su joseluis
+cd /home/compartir
+mkdir prueba   (ok)
+
+
+5. Cambia los dueños de /home/compartir para que el usuario propietario sea anamaria y
+el grupo propietario desconocidos.
+
+sudo chown anamaria compartir
+sudo chwon :desconocidos compartir
+ls -l
+
+6. Accede con los 3 usuarios creados en esta práctica a esa carpeta y realiza la
+demostración de que funcionan los permisos y dueños asignados.
+
+su anamaria
+cd /home/compartir
+mkdir prueba2   (ok)
+ls
+
+su joseluis
+cd /home/compartir
+mkdir prueba3  (denegado)
+ls
+
+7. Elimina los 3 usuarios de la práctica y comprueba qué ocurre con sus carpetas
+personales y con la carpeta /home/compartir.
+
+su
+userdel anamaria
+userdel joseluis
+userdel practica3
+
+
+sudo rm -r practica1
+sudo rm -r practica2
+sudo rm -r practica3

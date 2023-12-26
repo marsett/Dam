@@ -1,0 +1,97 @@
+<?xml version="1.0" encode="UTF-8"?>
+<reserva>
+	<usuario>
+		<nombre>Pepe García</nombre>
+		<email>asdasd@asd.es</email>
+	</usuario>
+	<compra>
+		<cod_compra>123123</cod_compra>
+		<precio>1300€</precio>
+		<metodo>Tarjeta</metodo>
+		<titular>María Fernández</titular>
+		<pagado/>
+	</compra>
+	<vuelos>
+		<vuelo tipo="ida">
+			<num_vuelo>1234</num_vuelo>
+			<origen>Madrid</origen>
+			<destino>Londres</destino>
+			<fecha>25/01/2019</fecha>
+			<hora_salida>7:00</hora_salida>
+			<hora_llegada>9:30</hora_llegada>
+			<terminal>T1</terminal>
+			<pasajeros>
+				<pasajero>
+					<asiento>23A</asiento>
+					<id>123456789E</id>
+					<nombre>Pepe García</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>H</sexo>
+					<edad>34</edad>
+				</pasajero>
+				<pasajero>
+					<asiento>23F</asiento>
+					<id>123456788E</id>
+					<nombre>María Fernández</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>M</sexo>
+					<edad>34</edad>
+				</pasajero>
+			</pasajeros>
+		</vuelo>
+		<vuelo tipo="ida">
+			<num_vuelo>1235</num_vuelo>
+			<origen>Londres</origen>
+			<destino>Tokio</destino>
+			<fecha>25/01/2019</fecha>
+			<hora_salida>9:45</hora_salida>
+			<hora_llegada>18:00</hora_llegada>
+			<terminal>T4</terminal>
+			<pasajeros>
+				<pasajero>
+					<asiento>23A</asiento>
+					<id>123456789E</id>
+					<nombre>Pepe García</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>H</sexo>
+					<edad>34</edad>
+				</pasajero>
+				<pasajero>
+					<asiento>23F</asiento>
+					<id>123456788E</id>
+					<nombre>María Fernández</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>M</sexo>
+					<edad>34</edad>
+				</pasajero>
+			</pasajeros>
+		</vuelo>
+		<vuelo tipo="vuelta">
+			<num_vuelo>1236</num_vuelo>
+			<origen>Tokio</origen>
+			<destino>Madrid</destino>
+			<fecha>25/02/2019</fecha>
+			<hora_salida>9:00</hora_salida>
+			<hora_llegada>20:00</hora_llegada>
+			<terminal>T1</terminal>
+			<pasajeros>
+				<pasajero>
+					<asiento>23A</asiento>
+					<id>123456789E</id>
+					<nombre>Pepe García</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>H</sexo>
+					<edad>34</edad>
+				</pasajero>
+				<pasajero>
+					<asiento>23F</asiento>
+					<id>123456788E</id>
+					<nombre>María Fernández</nombre>
+					<facturacion>Si</facturacion>
+					<sexo>M</sexo>
+					<edad>34</edad>
+				</pasajero>
+			</pasajeros>
+		</vuelo>
+	</vuelos>
+</reserva>

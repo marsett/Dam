@@ -1,0 +1,45 @@
+package arboles.renderizado;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class EmpleadoCellRenderer implements TreeCellRenderer {
+
+	JLabel nombreEtiqueta=new JLabel(" ");
+	JLabel apellidoEtiqueta=new JLabel(" ");
+	JLabel salarioEtiqueta=new JLabel(" ");
+	JPanel renderer=new JPanel();
+	
+	DefaultTreeCellRenderer defaultRenderer=new DefaultTreeCellRenderer();
+	Color fondoSeleccionado;
+	Color fondoNoSeleccionado;
+	
+	public EmpleadoCellRenderer() {
+		nombreEtiqueta.setForeground(Color.blue);
+		renderer.add(nombreEtiqueta);
+		apellidoEtiqueta.setForeground(Color.green);
+		renderer.add(apellidoEtiqueta);
+		salarioEtiqueta.setHorizontalAlignment(JLabel.RIGHT);
+		salarioEtiqueta.setForeground(Color.red);
+		renderer.add(salarioEtiqueta);
+		
+		renderer.setBorder(BorderFactory.createLineBorder(Color.black));
+		fondoSeleccionado=defaultRenderer.getBackgroundSelectionColor();
+		fondoNoSeleccionado=defaultRenderer.getBackgroundNonSelectionColor();
+	}
+	
+	@Override
+	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
+			boolean leaf, int row, boolean hasFocus) {
+		Component retorno=null;
+		if(value!=null && value instanceof DefaultMutableTreeNode) {
+			Object objetoNodo=((DefaultMutableTreeNode)value).getUserObject();
+			if(objetoNodo instanceof Empleado) {
+				Empleado empleado=(Empleado)objetoNodo;
+				nombreEtiqueta.setText(empleado.nombre);
+			}
+		}
+		return null;
+	}
+
+}

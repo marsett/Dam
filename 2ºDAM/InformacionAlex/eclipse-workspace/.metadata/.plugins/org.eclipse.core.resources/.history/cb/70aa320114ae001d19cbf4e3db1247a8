@@ -1,0 +1,8 @@
+package arboles.renderizado;
+import javax.swing.*;
+
+public class UsoRenderizadoTree extends JFrame{
+	public static void main(String[] args) {
+		
+	}
+}

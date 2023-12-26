@@ -1,0 +1,57 @@
+      NOMBRE ALUMNO:  
+      FECHA:
+
+EXAMEN RAID, DEJÁ DUP, RSYNC, TAR, AOMEI********
+
+Entregar PDF con pantallazos parte gráfica + textos línea comandos según guión y plantilla de prácticas.
+
+
+      ================================
+      
+  1) 2 ptos
+
+1.1.) 
+
+Crea dos discos RAID5 (unidad A y unidad B) y un disco RAID0 (unidad C) a partir de DIEZ discos (100MB, 100MB, 150MB, 150MB, 150MB, 150MB, 250MB, 250MB, 250MB, 250MB). Darles formato ext4 y asígnales un punto de montaje distinto a cada uno de forma que estén disponibles al arrancar Ubuntu. 
+
+1.2.)  
+NOTA:  Aprovecha la combinación de los discos para obtener la mayor capacidad posible de almacenamiento. Muestra el tamaño y las particiones de los discos creados. 
+
+      ================================
+
+2) 1.5 ptos
+
+En la unidad A, en un directorio "archivos", dentro de el mismo crear con una línea de comando archivos con nombre  "archivoNUM"  donde NUM es de 1 al 20. Sincronizar con el comando rsync el todo el contenido de la unidad A con la unidad B. Mostrar el contenido de unidad A y unidad B.
+
+      ================================
+
+3) 1.5 ptos
+
+Mediante Dejá Dup, realizar una copia total manual de la unidad A en la unidad C. Proteger con contraseña.
+
+      ================================
+
+4) 1 ptos
+Crear en una línea de comando archivos con nombre  "archivoNUM"  donde NUM es de 21 al 40. Sincronizar con el comando rsync el contenido de la unidad A con la unidad B. Mostrar el contenido de ambas carpetas.
+
+      ================================
+
+5) 1 ptos
+Mediante Dejá Dup, realizar una copia incremental manual de la unidad A en la unidad C. Proteger con contraseña.
+
+      ================================
+
+6) 1 ptos
+Comprimir mediante el comando tar el contenido de la unidad A y guardarlo en sda en tu directorio de usuario. Mostrar resultados
+
+      ================================
+
+7) 1 ptos
+Desde Windows, y mediante AOMEI Backupper hacer una copia imagen de la Unidad C, guardarla en Descargas
+
+      ================================
+
+8) 1 ptos
+Desde Windows, crear un nuevo disco físico GPT con capacidad suficiente, en la máquina virtual y mediante AOMEI Backupper utilizar la copia imagen del apartado 7, para clonarlo. (clonamos el contenido del disco raid 0 a un disco normal).
+
+      ================================

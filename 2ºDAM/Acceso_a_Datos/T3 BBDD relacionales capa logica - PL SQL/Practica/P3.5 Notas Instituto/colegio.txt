@@ -1,0 +1,126 @@
+--si hay objetos existentes en la BBDD, se borran con estas instrucciones
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE ALUMNOS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE ASIGNATURAS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE NOTAS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+--se crean las tablas a utilizar en el programa
+CREATE TABLE ALUMNOS
+(
+  DNI VARCHAR2(10) NOT NULL,
+  APENOM VARCHAR2(30),
+  DIREC VARCHAR2(30),
+  POBLA  VARCHAR2(15),
+  TELEF  VARCHAR2(10) 
+);
+CREATE TABLE ASIGNATURAS
+(
+  COD NUMBER(2) NOT NULL,
+  NOMBRE VARCHAR2(25)
+);
+CREATE TABLE NOTAS
+(
+  DNI VARCHAR2(10) NOT NULL,
+  COD NUMBER(2) NOT NULL,
+  NOTA NUMBER(4,2) NOT NULL
+);
+--se insertan los valores en la tabla asignaturas
+INSERT INTO ASIGNATURAS VALUES (1,'Prog. Leng. Estr.');
+INSERT INTO ASIGNATURAS VALUES (2,'Sist. Informáticos');
+INSERT INTO ASIGNATURAS VALUES (3,'Análisis');
+INSERT INTO ASIGNATURAS VALUES (4,'FOL');
+INSERT INTO ASIGNATURAS VALUES (5,'RET');
+INSERT INTO ASIGNATURAS VALUES (6,'Entornos Gráficos');
+INSERT INTO ASIGNATURAS VALUES (7,'Aplic. Entornos 4ªGen');
+--se insertan valores en la tabla alumnos
+INSERT INTO ALUMNOS VALUES
+('12344345','Alcalde García, Elena', 'C/Las Matas, 24','Madrid','917766545');
+INSERT INTO ALUMNOS VALUES
+('4448242','Cerrato Vela, Luis', 'C/Mina 28 - 3A', 'Madrid','916566545');
+INSERT INTO ALUMNOS VALUES
+('56882942','Díaz Fernández, María', 'C/Luis Vives 25', 'Móstoles','915577545');
+--se insertan los valores en la tabla notas
+INSERT INTO NOTAS VALUES('12344345', 1,6.2);
+INSERT INTO NOTAS VALUES('12344345', 2,5.7);
+INSERT INTO NOTAS VALUES('12344345', 3,6.5);
+INSERT INTO NOTAS VALUES('4448242', 4,6.01);
+INSERT INTO NOTAS VALUES('4448242', 5,8.1);
+INSERT INTO NOTAS VALUES('4448242', 6,4.3);
+INSERT INTO NOTAS VALUES('4448242', 7,5.6);
+INSERT INTO NOTAS VALUES('56882942', 4,8);
+INSERT INTO NOTAS VALUES('56882942', 6,8.3);
+INSERT INTO NOTAS VALUES('56882942', 7,9.6);
+COMMIT;
+/
+--se crea un procedimiento que dice la nota media de una asignatura según las notas que se tengan
+Create or replace function nota_media( p_nombre_modulo asignaturas.nombre%TYPE)
+return NUMBER
+is
+v_nota_media NUMBER;
+begin
+select avg(nota) into v_nota_media
+from notas
+where cod = (select cod
+from asignaturas
+where nombre=p_nombre_modulo);
+return v_nota_media;
+end nota_media;
+/
+--se llama al procedimiento anterior y se imprime por consola el resultado
+create or replace procedure probar_nota_media( nombre_modulo asignaturas.nombre%TYPE)
+is
+begin
+dbms_output.put_line('La nota media de ' || nombre_modulo || ' es ' || nota_media(nombre_modulo));
+end probar_nota_media;
+/
+--se crea un procedimiento que muestra los datos personales del alumno y el listado de notas
+create or replace procedure datosPersonalesAlumno(dni_alumno alumnos.DNI%TYPE)
+is
+cursor c_datosPersonales is select * from alumnos where dni=dni_alumno;
+datosP c_datosPersonales%rowtype;
+cursor c_listadoNotas is select *from notas where dni=dni_alumno;
+listadoN c_listadoNotas%rowtype;
+begin
+    dbms_output.put_line('Los datos personales del alumno con dni ' || dni_alumno || ' son:');
+    open c_datosPersonales;
+    fetch c_datosPersonales into datosP;
+        while c_datosPersonales%found loop
+            dbms_output.put_line(datosP.DNI || ', ' || datosP.APENOM || ', ' || datosP.DIREC || ', ' || datosP.POBLA || ', ' || datosP.TELEF);
+            dbms_output.put_line('-----------------------------------------------------');
+            fetch c_datosPersonales into datosP;
+        end loop;
+    close c_datosPersonales;
+    dbms_output.put_line('Listado de notas de este mismo alumno es:');
+    open c_listadoNotas;
+    fetch c_listadoNotas into listadoN;
+        while c_listadoNotas%found loop
+            dbms_output.put_line(listadoN.DNI || ', ' || listadoN.COD || ', ' || listadoN.NOTA);
+            dbms_output.put_line('+++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            fetch c_listadoNotas into listadoN;
+        end loop;
+    close c_listadoNotas;
+end datosPersonalesAlumno;
+/
+--se llama al procedimiento
+BEGIN
+      probar_nota_media('FOL');
+END;
+/
+--se sacan los datos de un alumno
+begin
+    datosPersonalesAlumno('12344345');
+end;
+/

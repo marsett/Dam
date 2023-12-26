@@ -1,0 +1,19 @@
+package componentesTablas.renderer;
+import java.awt.*;
+
+import javax.swing.*;
+
+public class TablaCombos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new TablaCombos();
+	}
+	public TablaCombos() {
+		JTable tabla=new JTable(6,5);
+		Font fuente=new Font("Verdana",Font.BOLD,40);
+		tabla.setFont(fuente);
+		tabla.setRowHeight(30);
+		tabla.setBackground(Color.LIGHT_GRAY);
+		tabla.setForeground(Color.WHITE);
+	}
+}

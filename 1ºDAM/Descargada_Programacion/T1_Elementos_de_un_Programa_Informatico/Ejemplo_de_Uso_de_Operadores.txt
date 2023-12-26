@@ -1,0 +1,20 @@
+Ejemplo de uso de Operadores
+int pepe=5, paco=2, luis=1;
+
+boolean res1=false, res2=false, final=false;
+
+
+
+pepe= pepe + 7;  //pepe=12
+
+res1 = ((pepe!=paco)&&(pepe!=luis))||(paco==luis);  //res1 = true
+
+luis--;  //luis=0
+
+res2 = (pepe>=paco)^(luis!=pepe); //res2=false
+
+final = !res1 && !res2; //final=false
+
+
+
+System.out.println("El resultado es: " + final);

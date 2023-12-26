@@ -1,0 +1,10 @@
+package examendi;
+import javax.swing.tree.*;
+
+public class Modelo extends DefaultTreeModel{
+	DefaultMutableTreeNode nodoRaiz;
+	public Modelo(TreeNode root) {
+		super(new DefaultMutableTreeNode("root"));
+		nodoRaiz=(DefaultMutableTreeNode) getRoot();
+	}
+}

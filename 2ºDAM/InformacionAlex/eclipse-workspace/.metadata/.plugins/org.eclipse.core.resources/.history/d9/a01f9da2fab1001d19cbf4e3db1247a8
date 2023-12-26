@@ -1,0 +1,21 @@
+package tabbedpane;
+import java.awt.*;
+import javax.swing.*;
+
+public class UsoTabbedPane extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsoTabbedPane();
+	}
+	public UsoTabbedPane() {
+		JTabbedPane panelPestanas=new JTabbedPane();
+		JPanel panel1=new JPanel();
+		JLabel etiqueta=new JLabel("Panel 1",SwingConstants.CENTER);
+		panel1.add(etiqueta);
+		panelPestanas.addTab("Ficha 1", null, panel1, "Ayuda");
+		JLabel etiqueta2=new JLabel("Panel 2",SwingConstants.CENTER);
+		JPanel panel2=new JPanel();
+		panel2.setBackground(Color.GREEN);
+		panel2.add(etiqueta);
+	}
+}

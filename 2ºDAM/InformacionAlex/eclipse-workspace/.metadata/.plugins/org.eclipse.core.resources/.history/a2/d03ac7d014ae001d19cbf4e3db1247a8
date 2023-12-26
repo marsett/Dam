@@ -1,0 +1,25 @@
+package arboles.renderizado;
+import javax.swing.*;
+
+public class UsoRenderizadoTree extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsoRenderizadoTree();
+	}
+	public UsoRenderizadoTree() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		Empleado listaEmpleado[]= {new Empleado("Gumersindo","Vitorino",600),
+				new Empleado("Ermenegildo","Gutierrez",600),
+				new Empleado("Justiniano","Adefesio",600),
+				new Empleado("Adorado","Solano",600)
+				
+		};
+		Empleado listaJefes[]= {new Empleado("Antonino","La Gumina",600),
+				new Empleado("Franciscano","Toledano",600),
+				new Empleado("Bernemento","Fernadino",600),
+				new Empleado("Celistiano","Jorobao",600)
+				
+		};
+	}
+}

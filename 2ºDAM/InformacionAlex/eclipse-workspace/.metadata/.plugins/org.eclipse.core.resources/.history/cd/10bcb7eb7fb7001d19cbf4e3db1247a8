@@ -1,0 +1,9 @@
+package compilando;
+
+public class CompilandoInformes {
+	final static String RUTA_DESTINO="";
+	public static void main(String[] args) {
+		String nombreFichero="basic";
+		final String RUTA_PLANTILLA="C:\\Reportes\\Plantillas\\"+nombreFichero+".jrxml";
+	}
+}

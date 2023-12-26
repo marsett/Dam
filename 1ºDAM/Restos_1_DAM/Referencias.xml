@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  
+<!-- definition of simple elements -->
+<xs:element name="calificacion"type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+<xs:element name="nombre">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FAB1">
+      <xs:enumeration value="FAB2">
+      <xs:enumeration value="FAB3">
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+
+<!-- definition of attributes -->
+<xs:attribute name="entrega" type="xs:date" use="required"/>
+<xs:attribute name="unidad" type="xs:string" minExclusive="0"/>
+
+<!--definition of restrictions -->
+
+<xs:simpleType name="tipopeso_2">
+  <xs:restriction base="xs:decimal">
+    <xs:minExclusive value="0"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<!-- definition of complex elements -->
+<xs:element name="listacomponentes">
+  <xs:complexType>
+	  <xs:sequence>
+        <xs:element name="componente" type="tipocomponente" maxOccurs="unbounded"/>
+      </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="componente">
+  <xs:complexType name="tipocomponente">
+    <xs:sequence>
+      <xs:element name="fabricante" type="tipofabricante"/>
+      <xs:element name="peso" type="tipopeso"/>
+    </xs:sequence>
+    <xs:attribute name="entrega" type="xs:date" use="required"/>
+  </xs:complexType>
+</xs:element>
+
+
+<xs:element name="fabricante">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:restriction base="xs:anyType">
+        <xs:sequence>
+          <xs:element name="nombre" type="tiponombre"/>
+          <xs:element name="calificacion"type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="peso">
+  <xs:complexType>
+    <xs:simpleContent>
+	  <xs:extension base="tipopeso_2">
+	    <xs.attribute name="unidad" type="xs:string"/>
+	  </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

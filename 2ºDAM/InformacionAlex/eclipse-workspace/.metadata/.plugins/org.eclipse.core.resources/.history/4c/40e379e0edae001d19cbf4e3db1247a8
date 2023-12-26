@@ -1,0 +1,15 @@
+package examendi;
+import javax.swing.*;
+
+public class ExamenInterfacesGraficas extends JFrame{
+	public static void main(String[] args) {
+		new ExamenInterfacesGraficas();
+	}
+	public ExamenInterfacesGraficas() {
+		super("Examen DAM Interfaces Graficas");
+		crearInterfaz();
+	}
+	private void crearInterfaz() {
+		
+	}
+}

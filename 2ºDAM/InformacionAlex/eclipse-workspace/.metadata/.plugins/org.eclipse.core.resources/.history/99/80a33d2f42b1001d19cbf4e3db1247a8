@@ -1,0 +1,19 @@
+package examendi;
+import java.io.File;
+
+import javax.swing.tree.*;
+
+public class Modelo extends DefaultTreeModel{
+	private static final long serialVersionUID = 1L;
+	DefaultMutableTreeNode nodoRaiz;
+	public Modelo(TreeNode root) {
+		super(new DefaultMutableTreeNode("root"));
+		nodoRaiz=(DefaultMutableTreeNode) getRoot();
+	}
+	public DefaultMutableTreeNode anadirNodo(DefaultMutableTreeNode nodoPadre, File directorio) {
+		DefaultMutableTreeNode retorno=null;
+		String rutaActual=directorio.getPath();
+		retorno=new DefaultMutableTreeNode(rutaActual);
+		return retorno;
+	}
+}

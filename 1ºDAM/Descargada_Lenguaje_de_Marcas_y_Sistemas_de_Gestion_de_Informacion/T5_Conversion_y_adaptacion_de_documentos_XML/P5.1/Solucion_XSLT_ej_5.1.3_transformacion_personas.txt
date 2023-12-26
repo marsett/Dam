@@ -1,0 +1,15 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:template match="/">
+<clase>
+<xsl:for-each select="/personas/persona">
+<alumno>
+<xsl:attribute name="dni">
+<xsl:value-of select="dni"/>
+</xsl:attribute>
+<xsl:value-of select="nombre"/>
+<xsl:value-of select="apellido"/>
+</alumno>
+</xsl:for-each>
+</clase>
+</xsl:template>
+</xsl:stylesheet>

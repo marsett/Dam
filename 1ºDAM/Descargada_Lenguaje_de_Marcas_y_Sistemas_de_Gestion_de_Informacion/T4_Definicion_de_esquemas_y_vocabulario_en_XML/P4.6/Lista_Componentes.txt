@@ -1,0 +1,21 @@
+XML: Lista componentes
+<listacomponentes>
+    <!--Obligatoria fecha entrega-->
+    <componente entrega="2018-03-15">
+        <fabricante>
+            <!--Posibles fabricantes FAB1, FAB2 y FAB3-->
+            <nombre>FAB1</nombre>
+            <!--Calificacion es un string y es optativa-->
+            <calificacion>Positiva</calificacion>
+        </fabricante>
+        <!--Atributo unidad es cadena. Dentro de peso
+        solo puede haber numeros con decimales y mayores de 0-->
+        <peso unidad="kg">40.5</peso>
+    </componente>
+    <componente entrega="2018-12-31">
+        <fabricante>
+            <nombre>FAB2</nombre>
+        </fabricante>
+        <peso unidad="miligramos">260.5</peso>
+    </componente>
+</listacomponentes>

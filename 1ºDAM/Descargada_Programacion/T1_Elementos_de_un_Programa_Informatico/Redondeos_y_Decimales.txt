@@ -1,0 +1,32 @@
+/**
+ * programa de redondeo
+ * @author MG
+ * */
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class redondeo{
+  
+  public static void main(String[] args){   
+    
+    double numOriginal;
+  
+    numOriginal = 789.55358;    
+    System.out.println("número original = "+numOriginal);
+
+    //números enteros
+    System.out.println("número typecasting con (int) = "+(int)numOriginal);  
+    System.out.println("número redondeado usando el método Math.round() = "+Math.round(numOriginal));
+
+    //números con decimales
+    System.out.println("número redondeado con dos decimales = "+Math.round(numOriginal*100.0)/100.0);
+
+    //mediante la clase BigDecimal
+    BigDecimal dosDecimales = new BigDecimal(numOriginal).setScale(2, RoundingMode.HALF_UP);
+    double dosDecimalesValue = dosDecimales.doubleValue();
+  
+    System.out.println("número redondeado con BigDecimal = "+ dosDecimalesValue);
+  
+  }
+}

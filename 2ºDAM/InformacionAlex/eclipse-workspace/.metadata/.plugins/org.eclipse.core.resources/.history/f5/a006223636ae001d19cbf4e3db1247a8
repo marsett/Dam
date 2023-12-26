@@ -1,0 +1,12 @@
+package componentesTablas.renderer;
+import javax.swing.*;
+
+public class TablaCombos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new TablaCombos();
+	}
+	public TablaCombos() {
+		JTable tabla=new JTable(5,5);
+	}
+}

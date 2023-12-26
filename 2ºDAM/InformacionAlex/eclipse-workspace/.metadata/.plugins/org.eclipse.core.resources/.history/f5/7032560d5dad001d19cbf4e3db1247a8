@@ -1,0 +1,61 @@
+package componentesTablas;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.*;
+
+public class EjemploBasico extends JFrame{
+	private static final long serialVersionUID = 1L;
+	ModeloDatos modelo=null;
+	JTable table;
+	private JButton btnBorrar=new JButton("BORRAR");
+	JButton btnLlenar=new JButton("Llenar"); 
+	JButton btnAnadir=new JButton("Anadir");
+	public static void main(String[] args) {
+		new EjemploBasico();
+	}
+	public EjemploBasico() {
+		table=new JTable();
+		Container panelCentral=this.getContentPane();
+		modelo=new ModeloDatos();
+		table.setModel(modelo);
+		this.add(obtenerBotonera(),BorderLayout.NORTH);
+		panelCentral.add(table);
+		this.setSize(400,400);
+		this.setVisible(true);
+	}
+	public JPanel obtenerBotonera() {
+		JPanel panel=new JPanel();
+		FlowLayout fl=new FlowLayout();
+		fl.setAlignment(FlowLayout.CENTER);
+		panel.add(btnBorrar);
+		panel.add(btnLlenar);
+		panel.add(btnAnadir);
+		btnBorrar.addActionListener(e-> borrarTabla());
+		btnLlenar.addActionListener(e-> llenarTabla());
+		btnAnadir.addActionListener(e-> insertarFila());
+		return panel;
+	}
+	private void llenarTabla() {
+		System.out.println("llenar tabla");
+		List<String> lista=Arrays.asList("Ana","Benito","Cesar","Daniela","Ernesto","Florencia");
+		modelo.llenarTabla(new ArrayList<String>(lista));
+		table.revalidate();
+		table.repaint();
+	}
+	private void borrarTabla() {
+		System.out.println("borrar tabla");
+		modelo.borrarTabla();
+		table.revalidate();//actualiza
+		table.repaint();
+	}
+	private void insertarFila() {
+		modelo.insertarFila();
+		table.revalidate();
+		table.repaint();
+	}
+}

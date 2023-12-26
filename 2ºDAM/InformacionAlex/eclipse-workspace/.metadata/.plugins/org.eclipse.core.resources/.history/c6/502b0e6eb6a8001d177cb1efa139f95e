@@ -1,0 +1,14 @@
+package arboles;
+import javax.swing.*;
+
+public class PanelArbolDinamico {
+	ModeloDatos modelo;
+	JTree jTree;
+	JPanel contentPane;
+	public static void main(String[] args) {
+		new PanelArbolDinamico();
+	}
+	public PanelArbolDinamico() {
+		
+	}
+}

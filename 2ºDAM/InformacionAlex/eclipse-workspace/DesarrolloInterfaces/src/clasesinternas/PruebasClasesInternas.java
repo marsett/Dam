@@ -1,0 +1,12 @@
+package clasesinternas;
+
+public class PruebasClasesInternas {
+
+	public static void main(String[] args) {
+		Persona p=new Persona();
+		//Persona.Direccion dir=p.new Direccion("Serrano",1,2,2);
+		//Direccion es una clase interna miembro
+		//clases anidadas --> clases internas estáticas
+	}
+
+}

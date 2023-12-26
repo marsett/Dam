@@ -1,0 +1,19 @@
+package componentes;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class UsandoTreeComboSelector extends JFrame{
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
+		new UsandoTreeComboSelector();
+	}
+	public UsandoTreeComboSelector() {
+		Object[] array= {Boolean.TRUE,Boolean.FALSE,"Hello"};
+		JTree arbol=new JTree(array);
+		arbol.setEditable(true);
+		DefaultTreeCellRenderer renderer=new DefaultTreeCellRenderer();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+}

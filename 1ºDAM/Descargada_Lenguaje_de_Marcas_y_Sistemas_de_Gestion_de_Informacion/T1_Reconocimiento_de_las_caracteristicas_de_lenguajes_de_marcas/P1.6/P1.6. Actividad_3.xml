@@ -1,0 +1,33 @@
+<!-- Actividad gestión informática alumnos del ciclo DAM -->
+<? xml version= "1.0" encoding= "UTF-8">
+	<Lenguaje de Marcas y Gestión de Información>
+		<duracion>4 horas semanales obligatorias</duracion>
+		<extension curso>
+			<inicio>10 de septiembre de 2016</inicio>
+			<final>30 de junio de 2019</final>
+		</extension curso>
+		<alumnos matriculados>
+			<alumno 1>
+				<nombre>Ana</nombre>
+				<apellidos>Fernández Gutiérrez</apellidos>
+				<NIF>16965696L</NIF>
+				<telefono>789654321</telefono>
+				<email>ana.fdezgtrrez@hotmail.com</email>
+				<direccion>C/El Percebe, 13 de Santander</direccion>
+				<CP>39302</CP>
+				<faltas de asistencia></faltas de asistencia>
+				<notas />
+			</alumno 1>
+			<alumno 2>
+				<nombre>Pepito</nombre>
+				<apellido>Grillo</apellido>
+				<NIF>98765432H</NIF>
+				<telefono>656566555</telefono>
+				<email>yhyh@yahoo.com</email>
+				<direccion>Avd. El Pez, 5 de Suances</direccion>
+				<CP>39401</CP>
+				<nota>"apto"</nota>
+				<faltas de asistencia />
+			</alumno 2>
+		</alumnos matriculados>
+	</Lenguaje de Marcas y Gestión de Información>

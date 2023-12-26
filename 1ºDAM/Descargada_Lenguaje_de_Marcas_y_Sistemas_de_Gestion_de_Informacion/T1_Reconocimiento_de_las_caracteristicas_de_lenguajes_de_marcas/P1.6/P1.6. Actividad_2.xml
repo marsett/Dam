@@ -1,0 +1,38 @@
+<!-- Actividad sopa de cebolla -->
+<? xml version= "1.0" encoding= "UTF-8">
+<Información de recetas de la cocina del restaurante "Los Gambones">
+	<Receta sopa de cebolla>
+		<cantidad de comensales>4</cantidad de comensales>
+		<ingredientes>
+			<cebollas>
+				<cantidad>1 kg</cantidad>
+			</cebollas>
+			<caldo de carne>
+				<cantidad> 2 litros</cantidad>
+			</caldo de carne>
+			<mantequilla>
+				<cantidad>100 gr</cantidad>
+			</mantequilla>
+			<harina>
+				<cantidad>1 cucharada</cantidad>
+			</harina>
+			<queso emmental suizo o gruyere rallado>
+				<cantidad>100 gr</cantidad>
+			</queso emmental suizo o gruyere rallado>
+			<pan tostado en rebanadas></pan tostado en rebanadas>
+			<tomillo></tomillo>
+			<laurel>
+				<cantidad>1 hoja</cantidad>
+			</laurel>
+			<pimienta></pimienta>
+		</ingredientes>
+		<proceso>
+			<paso 1>Pelar y partir las cebollas en rodajas finas</paso1>
+			<paso 2>Rehogarlas con la mantequilla, sal y pimienta a fuego lento hasta que estén transparentes sin dorarse</paso 2>
+			<paso 3>Añadir la harina sin dejar de remover</paso 3>
+			<paso 4>Ponerlo en una cazuela con el caldo, el tomillo y el laurel</paso 4>
+			<paso 5>Dejar cocer a fuego lento durante unos 15 minutos</paso 5>
+			<paso 6>Poner las rebanadas de pan encima, espolvorear el queso y gratinar al horno</paso 6>
+		</proceso>
+	</Receta sopa de cebolla>
+</Información de recetas de la cocina del restaurante "Los Gambones">

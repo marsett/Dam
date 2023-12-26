@@ -1,0 +1,18 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:template match="/">
+<!--  Creamos el elemento raíz del documento ¡Ojo! algunos han mantenido el formato del ejemplo y en este se pide algo diferente  -->
+<autores>
+<!--  Recorremos cada uno de los libros de la biblioteca del documento original  -->
+<xsl:for-each select="biblioteca/libro">
+<!--  Abrimos la etiqueta autor  -->
+<autor>
+<!--  Recuperamos el elemento autor del documento original  -->
+<xsl:value-of select="autor"/>
+<!--  Cerramos la etiqueta autor  -->
+</autor>
+<!--  Cierre del bucle que recorre los libros  -->
+</xsl:for-each>
+<!--  Cerramos la etiqueta raíz autores  -->
+</autores>
+</xsl:template>
+</xsl:stylesheet>

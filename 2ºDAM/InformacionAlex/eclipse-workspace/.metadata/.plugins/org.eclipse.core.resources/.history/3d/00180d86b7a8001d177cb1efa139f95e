@@ -1,0 +1,29 @@
+package arboles;
+import javax.swing.tree.*;
+
+public class ModeloDatos extends DefaultTreeModel{
+	private static final long serialVersionUID = 1L;
+	DefaultMutableTreeNode nodoRaiz=null;
+	public ModeloDatos() {
+		super(new DefaultMutableTreeNode());
+		nodoRaiz=(DefaultMutableTreeNode) getRoot();
+	}
+	public void cargar() {
+		nodoRaiz.removeAllChildren();
+		for(int i=0;i<(int)(Math.random()*10);i++) {
+			DefaultMutableTreeNode nodoHijo=new DefaultMutableTreeNode("Nodo "+i);
+			nodoHijo.add(getNodoAleatorio(nodoHijo.toString()));
+			nodoRaiz.add(nodoHijo);
+		}
+		super.nodeStructureChanged(nodoRaiz);
+	}
+	private DefaultMutableTreeNode getNodoAleatorio(String nodo) {
+		DefaultMutableTreeNode retorno=new DefaultMutableTreeNode(nodo);
+		for(int i=0;i<(int)(Math.random()*10);i++) {
+			DefaultMutableTreeNode nodoHijo=new DefaultMutableTreeNode("Nodo "+i);
+			nodoHijo.add(getNodoAleatorio(nodoHijo.toString()));
+			retorno.add(nodoHijo);
+		}
+		return retorno;
+	}
+}

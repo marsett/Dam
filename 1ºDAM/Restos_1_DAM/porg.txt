@@ -1,0 +1,62 @@
+public void lectura_y_escritura() throws IOException{
+		
+			//File f = new File("Quijote.txt");
+			
+			File fl = new File("Quijote.txt");
+			File fe = new File("Quijote_lineas.txt");
+			
+			FileReader fr = new FileReader(fl);
+			FileWriter fw = new FileWriter(fe);
+			
+			BufferedWriter bw = new BufferedWriter(fw);
+			BufferedReader br = new BufferedReader(fr);
+			
+			//String frase = "";
+			
+			if(fl.exists()){
+				
+				try {
+				
+					int caracter = 0;
+					
+					for(int i=0;i<texto.length();i++) {
+						bw.write(texto.charAt(i));
+					}
+				
+					caracter = fr.read();
+			
+					while(caracter!=-1) {
+						
+						texto = texto + (char) caracter;
+						
+						if((char) caracter == '.' || (char) caracter == ',' || (char) caracter == ';') {
+		
+							bw.write(texto);
+							bw.newLine();
+							bw.flush();
+							texto = "";
+
+						}
+				
+					}
+					
+					
+					while(texto!=null) {
+						texto = br.readLine();
+					
+						if(texto!=null) {
+							System.out.println(texto);
+						}
+					}
+					
+					bw.close();
+				fr.close();
+			
+			}catch (IOException e) {
+				System.out.println("Error 2");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} 
+	}

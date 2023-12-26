@@ -1,0 +1,11 @@
+package arboles;
+
+public class PanelArbolDinamico {
+	public static void main(String[] args) {
+		new PanelArbolDinamico();
+	}
+	public PanelArbolDinamico() {
+		
+	}
+
+}

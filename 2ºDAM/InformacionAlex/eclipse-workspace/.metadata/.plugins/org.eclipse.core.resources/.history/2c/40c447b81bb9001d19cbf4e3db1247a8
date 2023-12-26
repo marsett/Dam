@@ -1,0 +1,174 @@
+package mariojimenez;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.*;
+import javax.swing.table.*;
+
+public class Window extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JTabbedPane panelPestanas;
+	private JPanel panelEntrada, panelEstadisticas;
+	private JMenu menuArchivo, menuAcercaDe;
+	private JMenuItem itemSalir;
+	private JMenuBar barraMenu;
+	private JLabel etiquetaNombre, etiquetaApellidos, etiquetaEdad;
+	private JTextField cajaNombre, cajaApellidos, cajaEdad;
+	private JButton botonAnadir;
+	private JTable tabla;
+	public static void main(String[] args) {
+		new Window();
+	}
+	public Window() {
+		crearInterfaz();
+	}
+	public void crearInterfaz() {
+		crearMenu();
+		crearPanelPestanas();
+		//setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,600);
+		setVisible(true);
+	}
+	public void crearPanelPestanas() {
+		panelPestanas=new JTabbedPane();
+		//panelEntrada=new JPanel();
+		panelEntrada=crearPanelEntradaEmpleados();
+		panelEstadisticas=new JPanel();
+		panelPestanas.addTab("Entrada de Empleados", null, panelEntrada, "Estas en el Panel de Entrada de Empleados");
+		panelPestanas.addTab("Estadisticas", null, panelEstadisticas, "Estas en el Panel de Estadisticas");
+		SwingUtilities.updateComponentTreeUI(panelPestanas);
+		this.add(panelPestanas,BorderLayout.CENTER);
+	}
+	public void crearMenu() {
+		menuArchivo=new JMenu("Archivo");
+		menuAcercaDe=new JMenu("Acerca de...");
+		itemSalir=new JMenuItem("Salir");
+		menuArchivo.add(itemSalir);
+		itemSalir.addActionListener(e-> {
+				String opcionPulsada=e.getActionCommand();
+				System.out.println("Has pulsado "+opcionPulsada);
+				int respuesta=JOptionPane.showOptionDialog(this, "Salida de la aplicación", "¿Realmente desea salir?", 
+						JOptionPane.YES_NO_OPTION, 3, null, null, null);
+				System.out.println("Opcion Seleccionada: "+respuesta);
+				if(respuesta==0) {
+					System.out.println("Cerrando aplicación...");
+					System.exit(0);
+				}else {
+					System.out.println("Usted sigue dentro de la aplicación...");
+				}
+			
+		});
+		barraMenu=new JMenuBar();
+		FlowLayout fl=new FlowLayout();
+		fl.setAlignment(FlowLayout.LEFT);
+		barraMenu.add(menuArchivo);
+		barraMenu.add(menuAcercaDe);
+		this.setJMenuBar(barraMenu);
+	}
+	public JPanel crearPanelEntradaEmpleados() {
+		JPanel panelEntrada=new JPanel();
+		etiquetaNombre=new JLabel("Nombre:");
+		cajaNombre=new JTextField(20);
+		etiquetaApellidos=new JLabel("Apellidos:");
+		cajaApellidos=new JTextField(20);
+		etiquetaEdad=new JLabel("Edad:");
+		cajaEdad=new JTextField(5);
+		botonAnadir=new JButton("Anadir");
+		Modelo modelo=new Modelo();
+		/*private void llenarTabla() {
+			System.out.println("llenar tabla");
+			List<String> lista=Arrays.asList("Ana","Benito","Cesar","Daniela","Ernesto","Florencia");
+			modelo.llenarTabla(new ArrayList<String>(lista));
+			table.revalidate();
+			table.repaint();
+		}*/
+		
+		RowSorter<TableModel>rowSorter=new TableRowSorter<>(modelo);
+		tabla=new JTable(modelo);
+		tabla.setRowSorter(rowSorter);
+		JScrollPane scrollPane=new JScrollPane(tabla);
+		botonAnadir.addActionListener(e->{
+			/*System.out.println("Llenar Tabla");
+			List<String> lista=Arrays.asList(cajaNombre.getText(), cajaApellidos.getText(), cajaEdad.getText());
+			modelo.llenarTabla(new ArrayList<String>(lista));*/
+			System.out.println("Insertar Fila");
+			modelo.insertarFila(cajaNombre.getText(), cajaApellidos.getText(), Integer.parseInt(cajaEdad.getText()));
+			tabla.revalidate();
+			tabla.repaint();
+		});
+		panelEntrada.add(etiquetaNombre);
+		panelEntrada.add(cajaNombre);
+		panelEntrada.add(etiquetaApellidos);
+		panelEntrada.add(cajaApellidos);
+		panelEntrada.add(etiquetaEdad);
+		panelEntrada.add(cajaEdad);
+		panelEntrada.add(botonAnadir);
+		panelEntrada.add(scrollPane);
+		return panelEntrada;
+	}
+	class Modelo extends AbstractTableModel{
+		private static final long serialVersionUID = 1L;
+		private String[]nombreColumnas= {"ID","Nombre","Apellidos","Edad"};
+		private Class[]tipoColumna= {
+				Integer.class, String.class,String.class,Integer.class
+		};
+		private Object[][]rowData= {};
+		public Modelo() {
+			rowData=new Object[1][nombreColumnas.length];
+		}
+		public void insertarFila(String nombre, String apellidos, int edad) {
+			//rowData=new Object[1][3];
+			rowData[0][0]=1;
+			rowData[0][1]=nombre;
+			rowData[0][2]=apellidos;
+			rowData[0][3]=edad;
+			int tam=rowData.length;//devuelve numero de filas
+			int tamTocados=rowData.length;
+			Object[][] copia=new Object[tam+1][nombreColumnas.length];
+			System.arraycopy(rowData, 0, copia, 0, tam);
+			this.rowData=copia;
+			System.out.println("Fila anadida");
+		}
+		
+		
+		
+		
+		
+		
+		
+		@Override
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return false;
+		}
+		@Override
+		public void setValueAt(Object valor, int fila, int columna) {
+			System.out.printf("setValueAt(%s) -> COLUMNA: %d FILA: %d %n",valor.toString(),fila,columna);
+			rowData[fila][columna]=valor;
+		}
+		@Override
+		public Class<?> getColumnClass(int columnIndex) {
+			return tipoColumna[columnIndex];
+		}
+		@Override
+		public int getRowCount() {
+			// TODO Auto-generated method stub
+			System.out.println("getRowCount() ");
+			return rowData.length;
+		}
+		@Override
+		public int getColumnCount() {
+			// TODO Auto-generated method stub
+			System.out.println("getColumnCount() ");
+			return rowData.length;
+		}
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			//se ejecuta cada vez que se toca en una celda
+			System.out.printf("getValueAt() -> COLUMNA: %d FILA: %d%n",columnIndex,rowIndex);
+			return rowData[rowIndex][columnIndex];
+		}
+	}
+}

@@ -1,0 +1,46 @@
+package arreglos;
+
+public class InteresesArray {
+
+    public static void main(String[] args) {
+	double acumulado;
+	double interes = 0.1;
+
+	double[][] saldo = new double[6][5];
+
+	for (int i = 0; i < saldo.length; i++) {
+	    saldo[i][0] = 5000;
+	    acumulado = 5000;
+
+	    for (int j = 1; j < saldo[0].length; j++) {
+		acumulado = acumulado + (acumulado * interes);
+		saldo[i][j] = acumulado;
+	    }
+
+	    interes = interes + 0.01;
+	}
+	
+	//FOR
+	for (int i = 0; i < saldo.length; i++) {
+	    System.out.println();
+	    for (int j = 0; j < saldo[0].length; j++) {
+		System.out.printf("%1.2f", saldo[i][j]);
+		System.out.println(" ");
+	    }
+
+	}
+	
+	/*
+	//FOREACH
+	for (double[] dimension1 : saldo) {
+	    System.out.println();
+	    for (double dimension2 : dimension1) {
+		System.out.printf("%1.2f", dimension2);
+		System.out.print(" ");
+	    }
+	
+	}
+	*/
+
+    }
+}

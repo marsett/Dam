@@ -1,0 +1,56 @@
+/*create TABLE Asignaturas(
+    codAsignatura   number (10),
+    nombre          varchar(30) not null,
+    constraint pkAsignaturas primary key (codAsignatura)
+);
+
+create TABLE Alumnos(
+    dniAlumno   varchar(20) not null,
+    nombre      varchar(50) not null,
+    apellido1   varchar(50) not null,
+    apellido2   varchar(50) not null,
+    direccion   varchar(50) not null,
+    telefono    varchar(10) not null,
+    poblacion   varchar(50) not null,
+    constraint pkAlumnos primary key (dniAlumno)
+);*/
+
+/*create TABLE Notas(
+    idNotas     number(10),
+    nota        number(5),
+    codAsignatura   number (10),
+    dniAlumno       varchar(20) not null,
+    constraint pkNotas primary key (idNotas),
+    constraint fkNotascodAsignatura foreign key (codAsignatura)
+        references Asignaturas (codAsignatura),
+    constraint fkNotasdniAlumno foreign key (dniAlumno)
+        references Alumnos (dniAlumno)
+);*/
+
+/*drop TABLE Asignaturas CASCADE CONSTRAINTS;
+drop TABLE Alumnos CASCADE CONSTRAINTS;
+drop TABLE Notas CASCADE CONSTRAINTS;*/
+
+/*insert into Asignaturas (codAsignatura, nombre) values(1,'Acceso Datos');
+insert into Asignaturas (codAsignatura, nombre) values(2,'Desarrollo Interfaces');
+insert into Asignaturas (codAsignatura, nombre) values(3,'Sistemas Gestion Empresarial');*/
+
+/*select * from Asignaturas*/
+
+/*insert into Alumnos (dniAlumno, nombre, apellido1, apellido2, direccion, telefono, poblacion)
+values ('123456789','Prudenciano','Gomez','Gonzalez','c/Esteroides 24','627381723','Madrid');
+insert into Alumnos (dniAlumno, nombre, apellido1, apellido2, direccion, telefono, poblacion)
+values ('987654321','Durante','De Tomas','Rios','c/Asteroides 32','612864524','Barcelona');
+insert into Alumnos (dniAlumno, nombre, apellido1, apellido2, direccion, telefono, poblacion)
+values ('748591039','Enmesio','Diaz','Castillo','c/Dr Esquerdo 67','648173526','Murcia');*/
+
+/*select * from Alumnos*/
+
+/*insert into Notas (idNotas, nota, codAsignatura, dniAlumno) 
+values (1,3.4,1,'748591039');
+insert into Notas (idNotas, nota, codAsignatura, dniAlumno) 
+values (2,7.2,3,'123456789');
+insert into Notas (idNotas, nota, codAsignatura, dniAlumno) 
+values (3,8.7,2,'987654321');*/
+
+/*select * from Notas*/

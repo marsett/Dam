@@ -1,0 +1,4 @@
+8,00/10,00
+
+	
+El método lectura_escritura debe leer del fichero carácter a carácter, no del string. No hace falta crear 3 objetos de OperacionesFicheros.

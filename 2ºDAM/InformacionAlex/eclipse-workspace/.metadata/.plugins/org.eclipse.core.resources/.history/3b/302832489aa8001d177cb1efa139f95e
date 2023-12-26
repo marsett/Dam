@@ -1,0 +1,13 @@
+package arboles;
+import javax.swing.tree.*;
+
+public class ModeloDatos extends DefaultTreeModel{
+	private static final long serialVersionUID = 1L;
+	public ModeloDatos(TreeNode root) {
+		super(root);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
+}

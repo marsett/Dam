@@ -1,0 +1,10 @@
+package clasesinternas;
+
+public class PruebasClasesInternas {
+
+	public static void main(String[] args) {
+		Persona p=new Persona();
+		Persona.Direccion dir=new Direccion();
+	}
+
+}

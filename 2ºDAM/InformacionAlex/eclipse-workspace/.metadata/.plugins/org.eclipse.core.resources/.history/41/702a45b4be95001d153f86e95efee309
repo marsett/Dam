@@ -1,0 +1,54 @@
+package componentes;
+import java.awt.FlowLayout;
+
+import javax.swing.*;
+
+public class UsandoComboBoxConModeloDeDatos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsandoComboBoxConModeloDeDatos();
+	}
+	public UsandoComboBoxConModeloDeDatos() {
+		// TODO Auto-generated constructor stub
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new FlowLayout());
+		JComboBox<String>listaCombo=new JComboBox<>();
+		listaCombo.addItem("Item1");
+		listaCombo.addItem("Item2");
+		listaCombo.addItem("Item3");
+		listaCombo.addItem("Item4");
+		listaCombo.setMaximumRowCount(1);
+		add(listaCombo);
+		JComboBox<String>listaCombo2=new JComboBox<>(new ModeloDatos());
+		//tambien se puede hacer esto: listaCombo.setModel(new ModeloDatos());
+		//no se puede hacer esto: listaCombo2.addItem("Intento meter esto");
+		add(listaCombo2);
+		setSize(600,450);
+		setVisible(true);
+	}
+	private class ModeloDatos extends AbstractListModel<String> implements ComboBoxModel<String>{
+		private static final long serialVersionUID = 1L;
+		String[] listaValores= {"RDT","Fali","Domingo Cisma","Isi Paleison","Muriqi"};
+		String valorSeleccionado=listaValores[1];
+		@Override
+		public int getSize() {
+			// TODO Auto-generated method stub
+			return listaValores.length;
+		}
+		@Override
+		public String getElementAt(int index) {
+			// TODO Auto-generated method stub
+			return listaValores[index];
+		}
+		@Override
+		public void setSelectedItem(Object anItem) {
+			// TODO Auto-generated method stub
+			valorSeleccionado=(String)anItem;
+		}
+		@Override
+		public String getSelectedItem() {
+			// TODO Auto-generated method stub
+			return valorSeleccionado;
+		}
+	}
+}

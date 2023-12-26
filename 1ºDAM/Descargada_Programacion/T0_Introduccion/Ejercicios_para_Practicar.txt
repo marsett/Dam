@@ -1,0 +1,120 @@
+EJERCICIOS PARA PRACTICAR
+1.       Escribe un programa que muestre tu nombre por pantalla.
+
+2.       Modifica el programa anterior para que además se muestre tu dirección y tu número de teléfono. Asegúrate de que los datos se muestran en líneas separadas.
+
+3.       Escribe un programa que muestre por pantalla 10 palabras en inglés junto a su correspondiente traducción al castellano. Las palabras deben estar distribuidas en dos columnas y alineadas a la izquierda. Pista: Se puede insertar un tabulador mediante \t.
+
+4.       Escribe un programa que muestre tu horario de clase. Puedes usar espacios o tabuladores para alinear el texto.
+
+5.       Modifica el programa anterior añadiendo colores. Puedes mostrar cada asignatura de un color diferente.
+
+6.       Escribe un programa que pinte por pantalla una pirámide rellena a base de asteriscos. La base de la pirámide debe estar formada por 9 asteriscos.
+
+7.       Igual que el programa anterior, pero esta vez la pirámide estará hueca (se debe ver únicamente el contorno hecho con asteriscos).
+
+8.       Igual que el programa anterior, pero esta vez la pirámide debe aparecer invertida, con el vértice hacia abajo.
+
+9.       Escribe un programa que pinte por pantalla alguna escena - el campo, la habitación de una casa, un aula, etc. - o algún objeto animado o inanimado - un coche, un gato, una taza de café, etc. Ten en cuenta que puedes utilizar caracteres como *, +, <, #, @, etc. ¡Échale imaginación!
+
+10.    Escribe un programa en el que se declaren las variables enteras x e y. Asígnales los valores 144 y 999 respectivamente. A continuación, muestra por pantalla el valor de cada variable, la suma, la resta, la división y la multiplicación.
+
+11.    Crea la variable nombre y asígnale tu nombre completo. Muestra su valor por pantalla de tal forma que el resultado del programa sea el mismo que en el ejercicio 1.
+
+12.    Crea las variables nombre, dirección y teléfono y asígnale los valores correspondientes. Muestra los valores de esas variables por pantalla de tal forma que el resultado del programa sea el mismo que en el ejercicio 2.
+
+13.    Realiza un conversor de euros a pesetas. La cantidad en euros que se quiere convertir deberá estar almacenada en una variable.
+
+14.    Realiza un conversor de pesetas a euros. La cantidad en pesetas que se quiere convertir deberá estar almacenada en una variable.
+
+15.    Escribe un programa que calcule el total de una factura a partir de la base imponible (precio sin IVA). La base imponible estará almacenada en una variable.
+
+16.    Declarar dos variables de tipo entero (int) con valores 15 y 6. Sumarlas y restar 1 al resultado, almacenándolo en una tercera variable. Imprimir el resultado almacenado en esa variable por la salida estándar.
+
+17.    Definir una variable de tipo char. Convertirla a una variable de tipo entero e imprimir su valor asociado. Probarlo con los caracteres ‘a’, ‘b’, ‘A’ y ‘B’.
+
+18.    Hacer lo contrario, definir un entero y convertirlo a un carácter. Imprimirlo por pantalla. Probarlo con el 97, 126 y 128.
+
+19.    Repetir el programa anterior leyendo el entero de la entrada estándar.
+
+20.    Realizar un programa en Java que muestre por pantalla en una cadena de caracteres sin salto de línea que ponga: “Escribe_tu_nombre: “. A continuación, debe aparecer una línea con salto de línea que ponga: “bienvenido al mundo Java!”. Pon comentarios sobre la diferencia del funcionamiento de las sentencias que hayas utilizado.
+
+Escribe tu nombre: (Nombre)
+
+¡(Nombre), bienvenido al mundo Java!
+
+21.    Escribe un programa que imprima el siguiente triángulo:
+
+*
+
+**
+
+***
+
+****
+
+*****
+
+******
+
+*******
+
+********
+
+*********
+
+**********
+
+22.    Desarrollar un programa que recoja dos números enteros y escriba por pantalla el resultado de sumarlos.
+
+23.    Desarrollar un programa que escriba por pantalla el cuadrado de un número entero pasado por la entrada estándar.
+
+24.    Desarrollar un programa que a partir de dos números reales calcule el área que forma una habitación de planta rectangular con esas dimensiones.
+
+25.    Definir una variable entera, asignarle el valor 5 e imprimir el valor. Definir una variable float y asignarla la división por 2 del anterior entero e imprimir el resultado. Repetir la operación anterior haciendo un casting a float del numerador o del denominador de la división.
+
+26.    Escribe un programa para convertir de grados Fahrenheit a grados Celsius. (La fórmula de conversión es °C = 5/9 * (°F -­‐ 32).)
+
+27.    Leer un número de cuatro dígitos (no cuatro dígitos por separado) y cifrarlo de la siguiente manera: reemplazar cada dígito por la suma de ese dígito + 7 módulo 10. Después intercambiar el primer dígito con el tercero y el segundo con el cuarto y después imprimir el número resultante.
+
+28.    Desarrollar un programa que muestre una descripción de los cursos realizados por una persona, así como ciertos datos personales. Debe tener el formato más abajo especificado. En ella deben aparecer datos como: nombre y apellidos, teléfono, correo electrónico y dirección postal en líneas diferentes.
+
+ 
+
+###########################################
+
+Datos personales:
+
+Nombre y apellidos: “Juan Pérez Martínez” Edad: 23
+
+DNI: “0123456M”
+
+Teléfono de contacto: 911234567
+
+Correo electrónico: “juanperez@upm.es”
+
+ 
+
+Datos académicos:
+
+“Curso1” “Curso2” “Curso3”
+
+###########################################
+
+ 
+
+29.    Desarrollar un programa que genere tarjetas con formato, los cuales contengan datos de personas (Utilizar los campos de “Datos personales” especificados en el ejercicio anterior). Utilizar la entrada estándar para introducir los datos.
+
+30.    Desarrollar un programa que solicite un número entero e indique por la entrada estándar si es par o no (true o false).
+
+31.    Escribir un programa que, a partir de un número entero pasado por la entrada estándar, diga si es múltiplo de 2, 3 o 5 (con true o false). Ejemplo:
+
+ 
+
+Escribe un número: 10
+
+(2) true
+
+(3) false
+
+(5) true

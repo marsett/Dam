@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:"http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:element name="vehiculos" type="tipovehiculos"/>
+	
+	<xsd:complexType name="tipovehiculos">
+		<xsd:choice>
+			<xsd:element name="moto" type="tipogenerico"/>
+			<xsd:element name="coche" type="tipogenerico"/>
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="tipogenerico">
+		<xsd:complexContent>
+			<xsd:extension type="tipovehiculos">
+				<xsd:attribute name="matricula" type="tipomatricula"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	
+</xsd:schema>

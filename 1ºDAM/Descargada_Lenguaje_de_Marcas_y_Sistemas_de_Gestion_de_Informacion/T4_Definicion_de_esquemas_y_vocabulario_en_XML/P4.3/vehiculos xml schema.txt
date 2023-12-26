@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name="vehiculos" type="tipoVehiculo"/>
+
+	<xsd:complexType name="tipoVehiculo">
+			<xsd:choice>
+				<xsd:element name="coche" type="tipoGenerico" minOccurs="0" maxnOccurs="unbounded"/>
+				<xsd:element name="moto" type="tipoGenerico" minOccurs="0" maxnOccurs="unbounded"/>
+			</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="tipoGenerico">
+		<xsd:complexContent>
+			<xsd:extension type="xsd:tipoVehiculo">
+				<xsd:attribute name="matricula" type="xsd:string"/>
+			</xsd:extension>
+
+			<xsd:restriction base="xsd:anyType">
+				<xsd:sequence>
+					<xsd:element name="marca" type="xsd:string"/>
+					<xsd:element name="modelo" type="xsd:string"/>
+					<xsd:element name="color" type="xsd:string"/>
+					<xsd:element name="combustible" type="tipoCombustible"/>
+					<xsd:element name="precio" type="tipoPrecio"/>
+					<xsd:element name="kilometraje" type="tipoKilometraje"/>
+					<xsd:element name="desperfectos" type="tipoDesperfectos" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="tipoCombustible">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="gasolina"/>
+			<xsd:enumeration value="diesel"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tipoPrecio">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{7}€"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tipoKilometraje">
+		<xsd:restriction base="xsd:string">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="tipoDesperfectos">
+		<xsd:complexContent>
+			<xsd:restriction base="xsd:anyType">
+				<xsd:sequence>
+					<xsd:element name="desperfecto" type="tipoDesperfecto" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="tipoDesperfecto">
+		<xsd:complexContent>
+			<xsd:extension type="xsd:anyType">
+				<xsd:attribute name="tipo" type="tipoTipo"/>
+			</xsd:extension>
+			<xsd:restriction base="xsd:anyType">
+				<xsd:sequence>
+					<xsd:element name="tipo" type="xsd:string" 						/>
+					<xsd:element name="descripcion" type="xsd:string" 						/>
+				</xsd:sequence>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="tipoTipo">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="estetico"/>
+			<xsd:enumeration value="funcional"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

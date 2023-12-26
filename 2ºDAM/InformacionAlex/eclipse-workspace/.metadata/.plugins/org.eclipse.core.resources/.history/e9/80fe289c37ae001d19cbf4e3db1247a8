@@ -1,0 +1,25 @@
+package componentesTablas.renderer;
+import java.awt.*;
+
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+
+public class TablaCombos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new TablaCombos();
+	}
+	public TablaCombos() {
+		JTable tabla=new JTable(6,5);
+		Font fuente=new Font("Verdana",Font.BOLD,40);
+		tabla.setFont(fuente);
+		tabla.setRowHeight(30);
+		tabla.setBackground(Color.LIGHT_GRAY);
+		tabla.setForeground(Color.WHITE);
+		TableColumn tablaColumna=tabla.getColumnModel().getColumn(3);
+		add(tabla);
+		setLocationRelativeTo(null);
+		setSize(500,400);
+		setVisible(true);
+	}
+}

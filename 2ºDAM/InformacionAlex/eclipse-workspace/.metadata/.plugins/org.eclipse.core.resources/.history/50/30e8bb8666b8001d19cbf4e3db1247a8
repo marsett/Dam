@@ -1,0 +1,59 @@
+package mariojimenez;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class Window extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JTabbedPane panelPestanas;
+	private JPanel panelEntrada, panelEstadisticas;
+	private JMenu menuArchivo, menuAcercaDe;
+	private JMenuItem itemSalir;
+	private JMenuBar barraMenu;
+	public static void main(String[] args) {
+		new Window();
+	}
+	public Window() {
+		crearInterfaz();
+	}
+	public void crearInterfaz() {
+		crearMenu();
+		crearPanelPestanas();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,600);
+		setVisible(true);
+	}
+	public void crearPanelPestanas() {
+		panelPestanas=new JTabbedPane();
+		panelEntrada=new JPanel();
+		panelEstadisticas=new JPanel();
+		panelPestanas.addTab("Entrada de Empleados", null, panelEntrada, "Estas en el Panel de Entrada de Empleados");
+		panelPestanas.addTab("Estadisticas", null, panelEstadisticas, "Estas en el Panel de Estadisticas");
+		SwingUtilities.updateComponentTreeUI(panelPestanas);
+		this.add(panelPestanas,BorderLayout.CENTER);
+	}
+	public void crearMenu() {
+		menuArchivo=new JMenu("Archivo");
+		menuAcercaDe=new JMenu("Acerca de...");
+		itemSalir=new JMenuItem("Salir");
+		menuArchivo.add(itemSalir);
+		itemSalir.addActionListener(e-> {
+				String opcionPulsada=e.getActionCommand();
+				System.out.println("Has pulsado "+opcionPulsada);
+				int respuesta=JOptionPane.showOptionDialog(this, "Esto es una pregunta a responder", "Pregunta", 
+						JOptionPane.YES_NO_CANCEL_OPTION, 1, null, null, null);
+				System.out.println("Opcion Seleccionada: "+respuesta);
+			
+		});
+		barraMenu=new JMenuBar();
+		FlowLayout fl=new FlowLayout();
+		fl.setAlignment(FlowLayout.LEFT);
+		barraMenu.add(menuArchivo);
+		barraMenu.add(menuAcercaDe);
+		this.setJMenuBar(barraMenu);
+	}
+}

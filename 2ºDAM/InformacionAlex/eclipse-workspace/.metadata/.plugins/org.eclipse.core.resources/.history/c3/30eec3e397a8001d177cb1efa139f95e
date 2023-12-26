@@ -1,0 +1,130 @@
+package practicaTree;
+import java.sql.*;
+import java.util.ArrayList;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import practicaTree.PantallaUno.Modelo;
+
+public class PantallaDos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private static Modelo modelo;
+	private DefaultMutableTreeNode root;
+	protected Connection conexion;
+	protected Statement statement;
+	protected DatabaseMetaData dataBaseMetaData;
+	public static void main(String[] args) {
+		try {
+			new PantallaDos(modelo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public PantallaDos(Modelo modelo) throws SQLException {
+		super("Pantalla Dos");
+		PantallaDos.modelo=modelo;
+		root=new DefaultMutableTreeNode("Root");
+		crearInterfaz();
+		conexion();
+	}
+	public void crearInterfaz() {
+		System.out.println("Creando Interfaz PantallaDos...");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(450,450);
+		setVisible(true);
+	}
+	public void conexion() throws SQLException {
+		System.out.println("Creando Conexion...");
+		String url="jdbc:mysql://localhost:3306/"+modelo.cuadroDefaultSchema;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conexion=DriverManager.getConnection(url,modelo.cuadroUserName,modelo.cuadroPassword);
+			statement=conexion.createStatement();
+			dataBaseMetaData=conexion.getMetaData();
+		}catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Se Ha Conectado...");
+		getTablas(dataBaseMetaData,modelo.cuadroDefaultSchema);
+	}
+	public void getTablas(DatabaseMetaData dataBaseMetaData, String nombreEsquema) throws SQLException {
+		System.out.println("getTablas() "+nombreEsquema);
+		String catalogo=null;
+		String patronTabla="%";
+		String[] tipos=null;
+		ResultSet tablas=dataBaseMetaData.getTables(nombreEsquema, catalogo,  patronTabla, tipos);
+		String nombreTabla=null;
+		ArrayList<String> arrayTablas=new ArrayList<>();
+		while(tablas.next()) {
+			nombreTabla=tablas.getString(3);
+			System.out.println(nombreTabla);
+			arrayTablas.add(nombreTabla);
+		}
+		System.out.println("El arrayTablas contiene:");
+		for(int i=0;i<arrayTablas.size();i++) {
+			System.out.println(arrayTablas.get(i));
+			getEstructura(llenarEstructura(getNodo(arrayTablas.get(i))));
+		}
+		System.out.println("Fin getTablas()");
+	}
+	public DefaultMutableTreeNode getNodo(String nombreTabla) {
+		DefaultMutableTreeNode nodo=new DefaultMutableTreeNode(nombreTabla);
+		return nodo;
+	}
+	public DefaultMutableTreeNode llenarEstructura(DefaultMutableTreeNode nodo) {
+		root.add(nodo);
+		return root;
+	}
+	public JTree getEstructura(DefaultMutableTreeNode root) {
+		JTree arbol=new JTree(root);
+		arbol.setRootVisible(false);
+		arbol.setShowsRootHandles(true);
+		JScrollPane panel=new JScrollPane(arbol);
+		add(getContentPane().add(panel));
+		return arbol;
+	}
+	public void getCampos(DatabaseMetaData dataBaseMetaData, String nombreEsquema, String nombreTabla) {
+		System.out.println("getCampos() "+nombreEsquema+" "+nombreTabla);
+		try {
+			dataBaseMetaData=conexion.getMetaData();
+			String catalogo=null;
+			String formatoCol=null;
+			ResultSet rsColumnas=dataBaseMetaData.getColumns(nombreEsquema, catalogo, nombreTabla, formatoCol);
+			String columna, tipo;
+			ArrayList<String> arrayColumnas=new ArrayList<>();
+			ArrayList<String> arrayTipos=new ArrayList<>();
+			while(rsColumnas.next()){
+				columna=rsColumnas.getString(4);
+				tipo=rsColumnas.getString(6);
+				System.out.println("Columna: "+columna+" Tipo: "+tipo);
+				arrayColumnas.add(columna);
+				arrayTipos.add(tipo);
+			}
+			System.out.println("El Array de Columnas contiene:");
+			for(int i=0;i<arrayColumnas.size();i++) {
+				System.out.println(arrayColumnas.get(i));
+				getEstructura(llenarEstructuraCampos(nombreTabla,getNodo(arrayColumnas.get(i))));
+				
+				
+				
+			}
+			System.out.println("El Array de Tipos contiene:");
+			for(int i=0;i<arrayTipos.size();i++) {
+				System.out.println(arrayTipos.get(i));
+				getEstructura(llenarEstructuraCampos(nombreTabla,getNodo(arrayTipos.get(i))));
+				
+				
+			}
+			System.out.println("Fin getCampos()");
+		}catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+	}
+	public DefaultMutableTreeNode llenarEstructuraCampos(String nombreTabla, DefaultMutableTreeNode nodo) {
+		DefaultMutableTreeNode nodoCampo=new DefaultMutableTreeNode(nombreTabla);
+		nodo.add(nodoCampo);
+		return nodo;
+	}
+}

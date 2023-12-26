@@ -1,0 +1,17 @@
+package arboles.renderizado;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class EmpleadoCellRenderer implements TreeCellRenderer {
+
+	JLabel nombreEtiqueta=new JLabel();
+	
+	@Override
+	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
+			boolean leaf, int row, boolean hasFocus) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

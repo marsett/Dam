@@ -1,0 +1,173 @@
+--se eliminan los objetos existentes en la BBDD
+--se hace la gestión de excepciones para evitar mensajes de error en la consola
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE productos'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE ventas'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+--se crean las tablas, especificando las columnas, cuyos atributos son de distintos tipos
+--se especifica también si pueden ser o no nulos
+CREATE TABLE productos
+(
+CodProducto VARCHAR2(10) CONSTRAINT p_cod_no_nulo NOT NULL,
+Nombre VARCHAR2(20) CONSTRAINT p_nom_no_nulo NOT NULL,
+LineaProducto VARCHAR2(10),
+PrecioUnitario NUMBER(6),
+Stock NUMBER(5),
+PRIMARY KEY (CodProducto)
+);
+CREATE TABLE ventas
+(
+CodVenta VARCHAR2(10) CONSTRAINT cod_no_nula NOT NULL,
+CodProducto VARCHAR2(10) CONSTRAINT pro_no_nulo NOT NULL,
+FechaVenta DATE,
+UnidadesVendidas NUMBER(3),
+PRIMARY KEY (CodVenta)
+);
+--se rellenan los datos de las ventas y los productos que se encuentran en stock
+--se insertan los productos con sus atributos
+INSERT INTO productos VALUES ('1','Procesador P133', 'Proc',15000,20);
+INSERT INTO productos VALUES ('2','Placa base VX',   'PB',  18000,15);
+INSERT INTO productos VALUES ('3','Simm EDO 16Mb',   'Memo', 7000,30);
+INSERT INTO productos VALUES ('4','Disco SCSI 4Gb',  'Disc',38000, 5);
+INSERT INTO productos VALUES ('5','Procesador K6-2', 'Proc',18500,10);
+INSERT INTO productos VALUES ('6','Disco IDE 2.5Gb', 'Disc',20000,25);
+INSERT INTO productos VALUES ('7','Procesador MMX',  'Proc',15000, 5);
+INSERT INTO productos VALUES ('8','Placa Base Atlas','PB',  12000, 3);
+INSERT INTO productos VALUES ('9','DIMM SDRAM 32Mb', 'Memo',17000,12); 
+--se insertan las ventas con el código de producto, fechas y cantidades
+--se le cambia el formato a la fecha
+INSERT INTO ventas VALUES('V1', '2', TO_DATE('07/09/2022', 'dd/mm/yyyy'),2);
+INSERT INTO ventas VALUES('V2', '4', TO_DATE('2012-09-12', 'yyyy/mm/dd'),1);
+INSERT INTO ventas VALUES('V3', '6', TO_DATE('2003-09-23', 'yyyy/mm/dd'),3);
+INSERT INTO ventas VALUES('V4', '5', TO_DATE('2006-09-12', 'yyyy/mm/dd'),5);
+INSERT INTO ventas VALUES('V5', '9', TO_DATE('2008-09-04', 'yyyy/mm/dd'),3);
+INSERT INTO ventas VALUES('V6', '4', TO_DATE('2008-09-08', 'yyyy/mm/dd'),1);
+INSERT INTO ventas VALUES('V7', '6', TO_DATE('2002-10-18', 'yyyy/mm/dd'),2);
+INSERT INTO ventas VALUES('V8', '6', TO_DATE('2002-10-21', 'yyyy/mm/dd'),1);
+INSERT INTO ventas VALUES('V9', '2', TO_DATE('2004-10-12', 'yyyy/mm/dd'),4);
+INSERT INTO ventas VALUES('V10','9', TO_DATE('2004-10-09', 'yyyy/mm/dd'),4);
+INSERT INTO ventas VALUES('V11','6', TO_DATE('2005-10-07', 'yyyy/mm/dd'),2);
+INSERT INTO ventas VALUES('V12','7', TO_DATE('2007-10-09', 'yyyy/mm/dd'),1);
+INSERT INTO ventas VALUES('V13','4', TO_DATE('2010-10-11', 'yyyy/mm/dd'),3);
+INSERT INTO ventas VALUES('V14','4', TO_DATE('2006-10-24', 'yyyy/mm/dd'),2);
+INSERT INTO ventas VALUES('V15','3', TO_DATE('2008-10-17', 'yyyy/mm/dd'),3);
+INSERT INTO ventas VALUES('V16','4', TO_DATE('2008-10-14', 'yyyy/mm/dd'),5);
+INSERT INTO ventas VALUES('V17','6', TO_DATE('2012-10-04', 'yyyy/mm/dd'),2);
+INSERT INTO ventas VALUES('V18','6', TO_DATE('2002-11-15', 'yyyy/mm/dd'),2);
+INSERT INTO ventas VALUES('V19','2', TO_DATE('2004-11-23', 'yyyy/mm/dd'),3);
+INSERT INTO ventas VALUES('V20','9', TO_DATE('2004-12-22', 'yyyy/mm/dd'),3);
+
+COMMIT;
+/
+--se crea un procedimiento que calcula el stock de un producto del cual se venden unidades, comprobando si se puede o no vender faltando artículos
+create or replace procedure tratar_producto(  cod    productos.codproducto%TYPE,totalvend NUMBER)
+is
+e_stock_negativo exception;
+stock_antiguo NUMBER;
+stock_nuevo NUMBER;
+begin
+select stock into stock_antiguo
+from productos
+where codproducto=cod;
+stock_nuevo:= stock_antiguo - totalvend;
+if ( stock_nuevo < 0) then
+raise e_stock_negativo;
+end if;
+update productos
+set stock = stock_nuevo
+where codproducto = cod;
+exception
+when e_stock_negativo then
+dbms_output.put_line('Error (sin stock) en el código: '||cod);
+raise;
+end tratar_producto;
+/
+--se crea un procedimiento cuyo objetivo es actualizar el stock definido antes
+create or replace procedure actualizar_stock
+is
+cursor c_ventas is
+select codproducto, sum(unidadesvendidas) as totalvend
+from ventas
+group by codproducto;
+v_ventas c_ventas%ROWTYPE;
+ind_ventas NUMBER :=0;
+num_productos NUMBER:=0;
+e_no_hay_productos exception;
+begin
+select count(*) into num_productos
+from productos;
+if (num_productos=0) then
+raise e_no_hay_productos;
+end if;
+open c_ventas;
+fetch c_ventas into v_ventas;
+while c_ventas%FOUND loop
+tratar_producto(v_ventas.codproducto, v_ventas.totalvend);
+fetch c_ventas into v_ventas;
+ind_ventas:=1;
+end loop;
+close c_ventas;              
+--sin ventas, no cambiará a 1 nunca
+if (ind_ventas=0) then
+dbms_output.put_line('La tabla ventas está vacía');
+end if;
+--sin productos definidos, saltará por consola que está vacía la tabla de productos
+exception
+when e_no_hay_productos then
+dbms_output.put_line('La tabla de productos está vacía');
+end actualizar_stock;
+/
+--se crea un procedimiento que muestra los productos y cantidad
+create or replace procedure mostrar_tabla_prod
+is
+cursor c_producto is
+select *
+from productos;
+v_producto c_producto%ROWTYPE;
+begin
+dbms_output.put_line('TABLA PRODUCTOS');
+dbms_output.put_line('*********************************');
+open c_producto;
+fetch c_producto into v_producto;
+while c_producto%FOUND loop
+dbms_output.put_line(v_producto.codproducto || '|' || v_producto.nombre || '|' || v_producto.lineaproducto || '|' || v_producto.preciounitario || '|' || v_producto.stock );
+dbms_output.put_line('*********************************');
+fetch c_producto into v_producto;
+end loop;
+close c_producto;
+end mostrar_tabla_prod;
+/
+--se muestran las ventas
+create or replace procedure mostrar_tabla_ventas
+is
+cursor c_venta is
+select *
+from ventas;
+v_venta c_venta%ROWTYPE;
+begin
+dbms_output.put_line('TABLA VENTAS');
+dbms_output.put_line('*********************************');
+open c_venta;
+fetch c_venta into v_venta;
+while c_venta%FOUND loop
+dbms_output.put_line(v_venta.codVenta || '|' || v_venta.codProducto || '|' || v_venta.FechaVenta || '|' || v_venta.UnidadesVendidas );
+dbms_output.put_line('*********************************');
+fetch c_venta into v_venta;
+end loop;
+close c_venta;
+end mostrar_tabla_ventas;
+/
+/
+BEGIN
+tratar_producto('1', 15);
+mostrar_tabla_prod;
+END;
+/

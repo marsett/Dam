@@ -1,0 +1,36 @@
+package componentesTablas.ordenaciontablas;
+import javax.swing.table.*;
+
+public class ModeloDatosOrdenado extends AbstractTableModel{
+	private static final long serialVersionUID = 1L;
+	private String[]nombreColumnas= {"ID","Nombre","Género"};
+	//private Class[]c
+	private Object[][]rowData= {
+			{1,"Agapito","Masculino"},
+			{2,"Robustiano","Masculino"},
+			{3,"Críspula","Femenino"},
+			{4,"Ermengildo","Masculino"},
+			{5,"Aganzo","Masculino"},
+			{6,"Keyla","Trans"}
+	};
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return super.isCellEditable(rowIndex, columnIndex);
+	}
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		super.setValueAt(aValue, rowIndex, columnIndex);
+	}
+	@Override
+	public int getRowCount() {
+		return rowData.length;
+	}
+	@Override
+	public int getColumnCount() {
+		return nombreColumnas.length;
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return rowData[rowIndex][columnIndex];
+	}
+}

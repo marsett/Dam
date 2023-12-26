@@ -1,0 +1,28 @@
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+
+			<xsd:element name="fabricante" type="tipoFabricante"/>
+
+			<xsd:complexType name="tipoFabricante">
+					<xsd:sequence>
+						<xsd:element name="componente" type="tipoComponente" minOccurs="1" maxOccurs="unbounded"/>
+					<xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="tipoComponente">
+					<xsd:sequence>
+							<xsd:element name="codigo" type="tipoCodigo"/>
+							<xsd:element name="maquina" type="xsd:string"/>
+							<xsd:element name="fecha" type="xsd:date"/>
+							<xsd:element name="hora_inicio" type="xsd:time"/>
+							<xsd:element name="hora_fin" type="xsd:time"/>
+							<xsd:element name="operario" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:simpleType name="tipoCodigo">
+				<xsd:restriction base="xsd:integer">
+					<xsd:pattern value="[0-9]{8}"/>
+				</xsd:restriction>
+			</xsd:simpleType
+
+		</xsd:schema>

@@ -1,0 +1,13 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:template match="/">
+<listado>
+<xsl:for-each select="/biblioteca/libro">
+<libro>
+<xsl:value-of select="autor"/>
+-
+<xsl:value-of select="title"/>
+</libro>
+</xsl:for-each>
+</listado>
+</xsl:template>
+</xsl:stylesheet>

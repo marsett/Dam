@@ -1,0 +1,13 @@
+6,00/10,00
+
+Hola Mario. Podrías haber hecho mejor la práctica. Tenías tiempo de sobre y has cometido errores que pdorías haber resuelto. Te adjunto comentarios:
+
+- Respecto al diseño, es muy raro porque va cambiando en función de los botones que ejecutes.
+
+- No controla el error de que el código no exista para las consultas.
+
+- Insertas correctamente pero no envías los mensajes adecuados, al campo de texto.
+
+- No modifcas el registro elegido, sino que haces un UPDATE de toda la tabla.
+
+- Bien el código, aunque podrías haber estructurado en métodos las acciones a BD.  Dificil trazear tu código si metes en los executeQuery y executeUpdate, las sentencias (sin construir un string antes).

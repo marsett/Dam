@@ -1,0 +1,307 @@
+-- Bloques para borrar objetos tablas previas que puedieran existir sin resetear todo el rato
+
+/
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE ALUMNOS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE ASIGNATURAS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+
+BEGIN 
+EXECUTE IMMEDIATE 'DROP TABLE NOTAS'; 
+EXCEPTION 
+WHEN OTHERS THEN NULL; 
+END; 
+/
+
+-- Creamos las tablas necesarias
+
+CREATE TABLE ALUMNOS
+(
+  DNI VARCHAR2(10) NOT NULL,
+  APENOM VARCHAR2(30),
+  DIREC VARCHAR2(30),
+  POBLA  VARCHAR2(15),
+  TELEF  VARCHAR2(10)
+ );
+
+/
+
+CREATE TABLE ASIGNATURAS
+(
+  COD NUMBER(2) NOT NULL,
+  NOMBRE VARCHAR2(25)
+  
+);
+
+/
+
+CREATE TABLE NOTAS
+(
+  DNI VARCHAR2(10) NOT NULL,
+  COD NUMBER(2) NOT NULL,
+  NOTA NUMBER(2)
+  
+);
+
+/
+
+-- Definición de claves primarias y foráneas.
+
+ALTER TABLE ALUMNOS ADD CONSTRAINT PK_ALUMNOS PRIMARY KEY(DNI);
+
+ALTER TABLE ASIGNATURAS ADD CONSTRAINT PK_ASIGNATURAS PRIMARY KEY(COD);
+
+ALTER TABLE NOTAS ADD CONSTRAINT PK_NOTAS FOREIGN KEY(NOTA);
+ALTER TABLE NOTAS ADD CONSTRAINT FK_NOTAS_ASIGNATURAS FOREIGN KEY(COD) REFERENCES ASIGNATURAS(COD);
+ALTER TABLE NOTAS ADD CONSTRAINT FK_NOTAS_ALUMNOS FOREIGN KEY (DNI) REFERENCES ALUMNOS(DNI);
+
+/
+-- Insertamos valores en las tablas para tener ejemplo ejecutable
+
+INSERT INTO ASIGNATURAS VALUES (1,'AD');
+INSERT INTO ASIGNATURAS VALUES (2,'PSP');
+INSERT INTO ASIGNATURAS VALUES (3,'PMDM');
+INSERT INTO ASIGNATURAS VALUES (4,'SI');
+INSERT INTO ASIGNATURAS VALUES (5,'LMSI');
+INSERT INTO ASIGNATURAS VALUES (6,'ED');
+INSERT INTO ASIGNATURAS VALUES (7,'ING');
+
+INSERT INTO ALUMNOS VALUES
+('12344345','ALCALDE GARCÍA, ELENA', 'C/LAS MATAS, 24','MADRID','917766545');
+
+INSERT INTO ALUMNOS VALUES
+('4448242','CERRATO VELA, LUIS', 'C/MINA 28 - 3A', 'MADRID','916566545');
+
+INSERT INTO ALUMNOS VALUES
+('56882942','DÍAZ FERNÁNDEZ, MARÍA', 'C/LUIS VIVES 25', 'MÓSTOLES','915577545');
+
+INSERT INTO NOTAS VALUES('12344345', 1,6);
+INSERT INTO NOTAS VALUES('12344345', 2,5);
+INSERT INTO NOTAS VALUES('12344345', 3,6);
+INSERT INTO NOTAS VALUES('12344345', 4,3);
+INSERT INTO NOTAS VALUES('12344345', 5,5);
+INSERT INTO NOTAS VALUES('12344345', 6,4);
+
+INSERT INTO NOTAS VALUES('4448242', 4,6);
+INSERT INTO NOTAS VALUES('4448242', 5,8);
+INSERT INTO NOTAS VALUES('4448242', 6,4);
+INSERT INTO NOTAS VALUES('4448242', 7,5);
+
+INSERT INTO NOTAS VALUES('56882942', 5,7);
+INSERT INTO NOTAS VALUES('56882942', 6,8);
+INSERT INTO NOTAS VALUES('56882942', 7,9);
+
+COMMIT;
+/
+ 
+-- Definimos una función de devuelve la nota media
+
+CREATE OR REPLACE FUNCTION NOTA_MEDIA( P_NOMBRE_MODULO ASIGNATURAS.NOMBRE%TYPE) RETURN NUMBER
+IS
+V_NOTA_MEDIA NUMBER;
+BEGIN
+  SELECT round(avg(nota),2) INTO V_NOTA_MEDIA
+                               FROM NOTAS
+                               WHERE COD = (SELECT COD
+                                                   FROM ASIGNATURAS
+                                                   WHERE NOMBRE=P_NOMBRE_MODULO);
+                               RETURN V_NOTA_MEDIA;
+END NOTA_MEDIA;
+
+
+
+/
+-- Procedimiento para probar el procedimiento de nota media
+
+CREATE OR REPLACE PROCEDURE PROBAR_NOTA_MEDIA( NOMBRE_MODULO ASIGNATURAS.NOMBRE%TYPE)
+IS
+BEGIN
+DBMS_OUTPUT.PUT_LINE( to_char(ROUND(NOTA_MEDIA(NOMBRE_MODULO),2), 'fm9900.00')  );
+END PROBAR_NOTA_MEDIA;
+/
+
+CREATE OR REPLACE PROCEDURE INFO_ALUMNO( AUXDNI ALUMNOS.DNI%TYPE)
+IS
+
+CURSOR C_ALUM_DATOS IS SELECT * FROM ALUMNOS WHERE (ALUMNOS.DNI=AUXDNI);
+CURSOR C_ALUM_ASIG IS SELECT COD,NOTA FROM NOTAS WHERE (NOTAS.DNI=AUXDNI);
+V_ALUM_DATOS C_ALUM_DATOS%ROWTYPE;
+V_ALUM_ASIG C_ALUM_ASIG%ROWTYPE;
+NOMBRE_ASIG ASIGNATURAS.NOMBRE%TYPE;
+
+BEGIN
+
+OPEN C_ALUM_ASIG;
+OPEN C_ALUM_DATOS;
+
+-- 1) opción con Fetch para cursor explícito (mismo resultado)
+
+    --FETCH C_ALUM_DATOS INTO V_ALUM_DATOS;
+
+-- 2) opción Select Into para cursor implícito (mismo resultado)
+
+SELECT * INTO V_ALUM_DATOS FROM ALUMNOS WHERE DNI = AUXDNI;
+
+
+dbms_output.put_line('++++++++++++++++++++++++++++++++++++++++');
+dbms_output.put_line('++++++++++++++++++++++++++++++++++++++++');
+dbms_output.put_line('INFORMACIÓN DE ALUMNO');
+dbms_output.put_line('++++++++++++++++++++++++++++++++++++++++');
+dbms_output.put_line('++++++++++++++++++++++++++++++++++++++++');
+dbms_output.put_line('nombre:' || V_ALUM_DATOS.APENOM );
+dbms_output.put_line('dni:' || V_ALUM_DATOS.DNI );
+dbms_output.put_line('teléfono:' || V_ALUM_DATOS.TELEF );
+dbms_output.put_line('dirección:' || V_ALUM_DATOS.DIREC || '   población:' || V_ALUM_DATOS.POBLA );
+dbms_output.put_line('==========');
+
+
+
+LOOP
+FETCH C_ALUM_ASIG INTO V_ALUM_ASIG;
+
+EXIT WHEN C_ALUM_ASIG%NOTFOUND;
+
+SELECT NOMBRE INTO NOMBRE_ASIG FROM ASIGNATURAS WHERE ASIGNATURAS.COD=V_ALUM_ASIG.COD;
+dbms_output.put_line('asignatura: ' || NOMBRE_aSIG || ' nota: ' || to_char(V_ALUM_ASIG.NOTA, 'fm9900.00')  );
+   
+END LOOP;
+
+dbms_output.put_line('==========');
+
+
+CLOSE C_ALUM_ASIG;
+CLOSE C_ALUM_DATOS;
+END INFO_ALUMNO;
+
+/
+BEGIN
+
+PROBAR_NOTA_MEDIA('LMSI');
+PROBAR_NOTA_MEDIA('SI');
+PROBAR_NOTA_MEDIA('AD');
+
+END;
+/
+
+BEGIN
+
+INFO_ALUMNO(12344345);
+INFO_ALUMNO(56882942);
+INFO_ALUMNO(4448242);
+ 
+
+END;
+/
+
+
+
+=============================================
+=============================================
+=============================================
+LO QUE SALE EN CONSOLA
+=============================================
+=============================================
+=============================================
+
+Statement processed.
+Statement processed.
+Statement processed.
+Table created.
+Table created.
+Table created.
+Table altered.
+Table altered.
+ORA-00905: missing keyword 
+
+
+
+Table altered.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+1 row(s) inserted.
+Statement processed.
+Function created.
+Procedure created.
+Procedure created.
+Statement processed.
+06.67
+04.50
+06.00
+
+Statement processed.
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+INFORMACIÓN DE ALUMNO
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+nombre:ALCALDE GARCÍA, ELENA
+dni:12344345
+teléfono:917766545
+dirección:C/LAS MATAS, 24   población:MADRID
+==========
+asignatura: AD nota: 06.00
+asignatura: PSP nota: 05.00
+asignatura: PMDM nota: 06.00
+asignatura: SI nota: 03.00
+asignatura: LMSI nota: 05.00
+asignatura: ED nota: 04.00
+==========
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+INFORMACIÓN DE ALUMNO
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+nombre:DÍAZ FERNÁNDEZ, MARÍA
+dni:56882942
+teléfono:915577545
+dirección:C/LUIS VIVES 25   población:MÓSTOLES
+==========
+asignatura: LMSI nota: 07.00
+asignatura: ED nota: 08.00
+asignatura: ING nota: 09.00
+==========
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+INFORMACIÓN DE ALUMNO
+++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++
+nombre:CERRATO VELA, LUIS
+dni:4448242
+teléfono:916566545
+dirección:C/MINA 28 - 3A   población:MADRID
+==========
+asignatura: SI nota: 06.00
+asignatura: LMSI nota: 08.00
+asignatura: ED nota: 04.00
+asignatura: ING nota: 05.00
+==========
+2023 Oracle · Live SQL 23.1.1, running Oracle Database 19c EE Extreme Perf - 19.17.0.0.0 · Database Documentation · Ask Tom · Dev Gym

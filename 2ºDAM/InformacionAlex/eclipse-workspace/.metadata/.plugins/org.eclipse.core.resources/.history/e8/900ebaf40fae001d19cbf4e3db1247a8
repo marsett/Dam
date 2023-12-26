@@ -1,0 +1,6 @@
+package arboles.renderizado;
+import java.util.*;
+
+public class NodoArbolVector extends Vector{
+
+}

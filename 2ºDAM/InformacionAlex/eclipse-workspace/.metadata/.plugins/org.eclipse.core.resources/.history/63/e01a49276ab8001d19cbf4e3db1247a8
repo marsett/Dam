@@ -1,0 +1,88 @@
+package componentesTablas;
+import java.util.ArrayList;
+
+import javax.swing.table.*;
+
+public class ModeloDatos extends AbstractTableModel{
+	private static final long serialVersionUID = 1L;
+	private boolean[][] tocados;
+	private Object[][] arrayDatos;
+	private String[] columnasTitulos= {"ID","Nombre","Apellidos"};
+	private Class[] columnasTipos= {Integer.class,String.class,String.class};
+	public ModeloDatos() {
+		// TODO Auto-generated constructor stub
+		arrayDatos=new Object[9][columnasTitulos.length];
+		tocados=new boolean[10][columnasTitulos.length];
+		arrayDatos[0][0]="10";
+		arrayDatos[0][1]="'Cholo'";
+		arrayDatos[0][2]="Simeone";
+		arrayDatos[1][0]="1";
+		arrayDatos[1][1]="'Mono'";
+		arrayDatos[1][2]="Burgos";
+		arrayDatos[2][0]="14";
+		arrayDatos[2][1]="Gabi";
+		arrayDatos[2][2]="Fernández";
+	}
+	public void borrarTabla() {
+		arrayDatos=new Object[0][columnasTitulos.length];
+		tocados=new boolean[0][columnasTitulos.length];
+	}
+	public void llenarTabla(ArrayList<String> s) {
+		arrayDatos=new Object[s.size()][3];
+		for(int i=0;i<s.size();i++) {
+			arrayDatos[i][0]=i+1;//s.get(i);
+			arrayDatos[i][1]=s.get(i).length();
+			arrayDatos[i][2]=s.get(i).length();
+		}
+	}
+	@Override
+	public int getRowCount() {
+		// TODO Auto-generated method stub
+		System.out.println("getRowCount() ");
+		return arrayDatos.length;
+	}
+	@Override
+	public int getColumnCount() {
+		// TODO Auto-generated method stub
+		System.out.println("getColumnCount() ");
+		return columnasTitulos.length;
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		//se ejecuta cada vez que se toca en una celda
+		// TODO Auto-generated method stub
+		System.out.printf("getValueAt() -> COLUMNA: %d FILA: %d%n",columnIndex,rowIndex);
+		return arrayDatos[rowIndex][columnIndex];
+	}
+	@Override
+	public boolean isCellEditable(int fila, int columna) {
+		/*if(tocados[fila][columna]) {
+			return false;
+		}
+		if(columna==0) {
+			return false;
+		}else {*/
+			return true;
+		//}
+	}
+	@Override
+	public void setValueAt(Object valor, int fila, int columna) {
+		System.out.printf("setValueAt(%s) -> COLUMNA: %d FILA: %d %n",valor.toString(),fila,columna);
+		/*String nValor=((String)valor).toUpperCase();
+		arrayDatos[fila][columna]=nValor;*/
+		arrayDatos[fila][columna]=valor;
+		tocados[fila][columna]=true;
+	}
+	public void insertarFila() {
+		int tam=arrayDatos.length;//devuelve numero de filas
+		int tamTocados=tocados.length;
+		Object[][] copia=new Object[tam+1][columnasTitulos.length];
+		System.arraycopy(arrayDatos, 0, copia, 0, tam);
+		this.arrayDatos=copia;
+		boolean[][] copiaTocados=new boolean[tamTocados+1][columnasTitulos.length];
+		System.arraycopy(tocados, 0, copiaTocados, 0, tamTocados);
+		this.tocados=copiaTocados;
+		arrayDatos[arrayDatos.length-1][0]=arrayDatos.length;
+		System.out.println("Fila anadida");
+	}
+}

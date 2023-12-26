@@ -1,0 +1,19 @@
+package examendi;
+import javax.swing.*;
+
+public class ExamenInterfacesGraficas extends JFrame{
+	private JPanel panelIzquierdo, panelDerechoSuperior, panelDerechoInferior;
+	public static void main(String[] args) {
+		new ExamenInterfacesGraficas();
+	}
+	public ExamenInterfacesGraficas() {
+		super("Examen DAM Interfaces Graficas");
+		crearInterfaz();
+	}
+	private void crearInterfaz() {
+		System.out.println("Creando Interfaz...");
+		setSize(1000,500);
+		setVisible(true);
+		System.out.println("Interfaz creada");
+	}
+}

@@ -1,0 +1,42 @@
+<vehiculos>
+<coche matricula="3456FFD">
+<marca>Seat</marca>
+<modelo>Ibiza</modelo>
+<color>Negro</color>
+<combustible>Diesel</combustible>
+<precio>2500€</precio>
+<kilometraje>1450000</kilometraje>
+<desperfectos>
+<desperfecto tipo="estetico">
+<tipo>Pintura</tipo>
+<descripcion> Arañazo en la paste posterior </descripcion>
+</desperfecto>
+<desperfecto tipo="funcional">
+<tipo>Embrague</tipo>
+<descripcion> Sonido de campaneo en el embrague </descripcion>
+</desperfecto>
+</desperfectos>
+</coche>
+<moto matricula="3742DDD">
+<marca>Yamaha</marca>
+<modelo>XT</modelo>
+<color>Azul</color>
+<combustible>Gasolina</combustible>
+<precio>2000€</precio>
+<kilometraje>650000</kilometraje>
+</moto>
+<coche matricula="4786GDR">
+<marca>Volkswagen</marca>
+<modelo>Passat</modelo>
+<color>Blanco</color>
+<combustible>Gasolina</combustible>
+<precio>10500€</precio>
+<kilometraje>150000</kilometraje>
+<desperfectos>
+<desperfecto tipo="estetico">
+<tipo>Interior</tipo>
+<descripcion> Asiento conductor roto </descripcion>
+</desperfecto>
+</desperfectos>
+</coche>
+</vehiculos>

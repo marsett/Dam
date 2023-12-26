@@ -1,0 +1,4 @@
+7,20/10,00	
+
+notaMedia debe ser static. No es necesaria la variable resultado (era un método).
+La variable numalumnos es mejor incrementarla en los constructores. No haces bien la comparativa de los equals. El resultado que sale es incorrecto.

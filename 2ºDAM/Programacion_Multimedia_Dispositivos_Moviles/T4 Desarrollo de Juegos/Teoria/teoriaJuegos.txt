@@ -1,0 +1,2 @@
+Introduccion al framework LibGDX -> https://multimedia.codeandcoke.com/apuntes:libgdx
+Repositorio videojuegos LibGDX -> https://github.com/codeandcoke/libgdx

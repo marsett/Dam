@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--Mario Jiménez Marset-->
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+      <title>Telepizza HTML</title>
+        <link rel="stylesheet" href="LIMPIOCSS.css">
+  </head>
+  <body>
+     <!--Menú de Cabecera-->
+      <header> 
+        <nav>
+          <span class="menuofertas">OFERTAS</span>
+          <span class="menumenus">MENÚS</span>
+          <span class="menupizzas">PIZZAS</span>
+          <span class="menuentrantes">ENTRANTES</span>
+          <span class="menubebidas">BEBIDAS</span>
+          <span class="menupostres">POSTRES</span>
+          <span class="menumitelepi">MI TELEPI</span>
+        </nav>
+      </header>
+      <main>
+       <!--Cuerpo de la página web-->
+        <div class="imagen">
+          <p><img src="pizza.png" width="808" height="618" alt="Telepizza"></p><br><br>
+        </div>
+          <aside>
+            <form>
+              <span class="sesion"><b>Inicia sesión y pide más rápido</b></span><br><br>
+                <fieldset class="email">
+                  <legend class="email2">Tu email</legend>
+                    <input type="text" id="borde"><br>
+                </fieldset><br>
+                <fieldset class="contraseña">
+                  <legend class="contraseña2">Tu contraseña</legend>
+                    <input type="text" id="borde2"><br>   
+                </fieldset><br>
+                    <input type="checkbox" style="width:25px;height:25px;"><span class="recordarme">Recordarme
+                    </span>
+                      <a href="https://www.telepizza.es/usuario/clave"><span class="datos">¿Olvidaste tus datos?
+                      </span></a><br><br>
+                      <a href="https://www.telepizza.es/">
+                <fieldset class="pedido">
+                  <b>EMPEZAR PEDIDO</b> 
+                </fieldset></a><br>
+                  <hr class="hr">
+                  <span class="registro"><b>¿Aún no estás registrado?</b></span><br><br>
+                    <a href="https://www.telepizza.es/#registrarse"> 
+                <fieldset class="registrarse">
+                  <b>REGISTRARME</b>
+                </fieldset></a><br><br>
+                  <a href="https://www.telepizza.es/pedido/inicio">
+                <fieldset class="sinregistrar">
+                  <b>PEDIDO SIN REGISTRAR</b>
+                </fieldset></a>
+          </form>
+        </aside> 
+      </main>
+     <!--Pie de página-->
+      <footer>
+       <span class="texto">
+         Utilizamos cookies propias y de terceros para mejorar nuestros servicios, elaborar información<br>
+         estadística, analizar sus hábitos de navegación e inferir grupos de interés. Esto nos permite<br>
+         personalizar el contenido que ofrecemos y mostrarle publicidad relacionada con sus<br>
+         preferencias. Adicionalmente, compartimos los análisis de navegación y los grupos de interés<br>
+         inferidos con terceros. Al clicar en "Aceptar" o SI CONTINÚA NAVEGANDO, ACEPTA SU USO.<br>
+         También puede CONFIGURAR O RECHAZAR la instalación de coookies clicando en<br>
+         Configuración de cookies.<br>
+        </span>
+        <span class="cookies">
+            <a href="https://www.telepizza.es/info/cookies"><span class="galletas"><b>&#10095; Configuración de cookies</b>
+        </span></a></span>
+        <span class="aceptar">   
+            <b>&#10003; Aceptar cookies</b>
+        </span> 
+      </footer>
+		<form>
+			<span class="pizza"><b>PIZZAS:</b></span>
+			<span class="tipos"><select id="pizza" onChange="mostrarSeleccionPizza()">
+                <option value="18 €">Jamón y Queso</option>
+                <option value="15 €">4 Quesos con mozzarella</option>
+                <option value="17 €">Barbacoa</option>
+            </select></span>
+				<input type="text" id="mensaje" style="position: relative; left: -230px; top: 57px;">
+		</form>
+		<script src="TELEPIZZASCRIPT.js"></script>
+		<form>
+			<span class="pizza2"><b>REFRESCOS:</b></span>
+			<span class="tipos2"><select id="pizza2" onChange="mostrarSeleccionPizza2()">
+                <option value="2 €">Coca Cola</option>
+                <option value="2.50 €">Fanta</option>
+                <option value="1.80 €">Nestea</option>
+			</select></span>
+				<input type="text" id="mensaje2" style="position: relative; left: 53px; top: 35px;">
+		</form>
+		<script src="TELEPIZZASCRIPT.js"></script>
+	</body>  
+</html>
+ 

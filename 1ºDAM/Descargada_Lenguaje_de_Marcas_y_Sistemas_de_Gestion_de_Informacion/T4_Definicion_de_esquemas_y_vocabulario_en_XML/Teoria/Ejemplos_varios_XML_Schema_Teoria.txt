@@ -1,0 +1,95 @@
+Elemento primitivos
+
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="edad" type="xsd:integer"/>
+</xsd:schema>
+
+Elementos tipo simple
+
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="edad" type="tipoEdad"/>
+	<xsd:simpleType name="tipoEdad">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="16"/>
+			<xsd:maxInclusive value="65"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
+
+Peso, decimal y valores de 0 a 1000
+
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="peso" type="tipoPeso"/>
+	<xsd:simpleType name="tipoPeso">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
+
+
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="nif" type="tipoNIF"/>
+	<xsd:simpleType name="tipoNIF">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{8}[A-Z]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
+
+Elementos tipo complejo 
+
+	-Contenido simple
+
+		<peso unidad="kg">1000</peso>
+		
+		<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<xsd:element name="peso" type="tipoPeso"/>
+			<xsd:complexType name="tipoPeso">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:integer">
+						<xsd:attribute name="unidad" type="xsd:string" use="required"/>
+					</xsd:extension>
+					<xsd:restriction base="xsd:integer">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusice value="1000"/>
+					</xsd:restriction>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			
+		</xsd:schema>
+
+	-Contenido complejo
+
+		<persona>
+			<nombre>Luis</nombre>
+			<apellidos>García</apellidos>
+			<edad>34</edad>
+		</persona>
+
+		<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<xsd:element name="persona" type="tipoPersona"/>
+			<xsd:complexType name="tipoPersona">
+				<xsd:complexContent>
+					<xsd:restriction base="xsd:anyType">
+						<xsd:sequence>
+							<xsd:element name="nombre" type="primeraMayuscula" minOccurs="1" maxOccurs="unbounded"/>
+							<xsd:element name="apellidos" type="primeraMayuscula"/>
+							<xsd:element name="edad" type="tipoEdad"/>
+						</xsd:sequence>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:simpleType name="tipoEdad">
+				<xsd:restriction base="xsd:integer">	
+					<xsd:minInclusive value="16"/>
+					<xsd:maxInclusive value="65"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="primeraMayuscula">
+				<xsd:restriction base="xsd:string">	
+					<xsd:pattern value="[A-Z]*"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>

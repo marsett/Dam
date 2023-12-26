@@ -1,0 +1,38 @@
+<style>
+      span{
+        font-weight: bold;
+      }
+      td{
+        font-family:Arial;
+      }
+      #hora{
+        background-color:#0c0606;color:white;text-align:center;font-weight: bold;
+      }
+      #dias{
+        background-color:#0c0606;color:white;font-weight: bold;
+      }
+      #horas{
+        background-color:#0c0606;color:white;
+      }  
+      #pmdm{
+        background-color:#2eac20;text-align:center;
+      }
+      #di{
+        background-color:#67aaa9;text-align:center;
+      }
+      #sge{
+        background-color:#567533;text-align:center;
+      }
+      #ad{
+        background-color:#a94344;text-align:center;
+      }
+      #psp{
+      background-color:#004555;text-align:center;
+      }
+      #ingles{
+      background-color:#443491;text-align:center;
+      }
+      #eie{
+      background-color:#fffa0d;text-align:center;
+      }
+</style> 

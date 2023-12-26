@@ -1,0 +1,605 @@
+/*create database PROYECTO_FINAL*/
+
+create table CANCIONES(
+	Codigo_cancion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_cancion PRIMARY KEY,
+	Nombre_C  VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_C_canciones FOREIGN KEY REFERENCES NOMBRES_CANCIONES,
+	Tipo_de_cancion VARCHAR (15) NOT NULL,
+	Año_lanzamiento INTEGER
+)
+
+create table NOMBRES_CANCIONES(
+	Nombre_C VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_C_nombre PRIMARY KEY,
+	Nº_reproducciones INTEGER,
+	Nombre_álbum VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_album_nombres FOREIGN KEY REFERENCES NOMBRES_ALBUMES,
+	Min_C INTEGER NOT NULL,
+	Seg_C INTEGER NOT NULL
+)
+
+/*Tipo de Servicio de Streaming e Idioma*/
+
+create table APLICACION_MUSICAL(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app PRIMARY KEY,
+	Idiomas_disponibles INTEGER,
+	Nº_oyentes INTEGER,
+	Nº_artistas INTEGER
+)
+
+create table TIPO_SERVICIO_STREAMING(
+	Tipo_servicio_streaming VARCHAR (10) NOT NULL CONSTRAINT R_Tipo_servicio_streaming PRIMARY KEY
+)
+
+create table IDIOMA(
+	Idioma VARCHAR (10) NOT NULL CONSTRAINT R_Idioma PRIMARY KEY
+)
+
+/*visto desde el E/R, la relacion entre CANCIONES y APLICACIÓN MUSICAL*/
+
+create table ALMACENADAS(
+	Codigo_cancion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_cancion_almacenadas FOREIGN KEY REFERENCES CANCIONES,
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_almacenadas FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Nombre_C VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_C_almacenadas FOREIGN KEY REFERENCES NOMBRES_CANCIONES
+)
+
+create table NO_PAGO(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Tipo_servicio_streaming VARCHAR (10) NOT NULL CONSTRAINT R_Tipo_servicio_streaming FOREIGN KEY REFERENCES TIPO_SERVICIO_STREAMING,
+	Nº_canciones INTEGER DEFAULT 25
+)
+
+create table PAGO(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_pago FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Tipo_servicio_streaming VARCHAR (10) NOT NULL CONSTRAINT R_Tipo_servicio_streaming FOREIGN KEY REFERENCES TIPO_SERVICIO_STREAMING,
+	Nº_descargas INTEGER DEFAULT 3333
+)
+
+create table PLANES(
+	Codigo_plan VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_plan PRIMARY KEY,
+	Fecha DATETIME NOT NULL,
+	Nº_planes INTEGER DEFAULT 4,
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_planes FOREIGN KEY REFERENCES APLICACION_MUSICAL
+)
+
+create table TIPO_PLAN(
+	Tipo_plan VARCHAR (15) NOT NULL CONSTRAINT R_Tipo_plan PRIMARY KEY
+)
+
+create table INDIVIDUAL(
+	Codigo_plan VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_plan_individual FOREIGN KEY REFERENCES PLANES,
+	Nº_meses_prueba INTEGER DEFAULT 1-3,
+	Tipo_plan VARCHAR (15) NOT NULL CONSTRAINT R_Tipo_plan_individual FOREIGN KEY REFERENCES TIPO_PLAN,
+	Precio INTEGER DEFAULT 9.99,
+	Nº_descargas INTEGER
+)
+
+create table DUO(
+	Codigo_plan VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_plan_duo FOREIGN KEY REFERENCES PLANES,
+	Tipo_plan VARCHAR (15) NOT NULL CONSTRAINT R_Tipo_plan_duo FOREIGN KEY REFERENCES TIPO_PLAN,
+	Direccion_residencia VARCHAR (20) NOT NULL,
+	Precio INTEGER DEFAULT 12.99
+)
+
+create table FAMILIAR(
+	Codigo_plan VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_plan_familiar FOREIGN KEY REFERENCES PLANES,
+	Tipo_plan VARCHAR (15) NOT NULL CONSTRAINT R_Tipo_plan_familiar FOREIGN KEY REFERENCES TIPO_PLAN,
+	Nº_miembros INTEGER,
+	Nº_canciones_explicitas_bloqueadas INTEGER,
+	Precio INTEGER DEFAULT 3.99
+)
+
+create table ESTUDIANTE(
+	Codigo_plan VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_plan_estudiante FOREIGN KEY REFERENCES PLANES,
+	Tipo_plan VARCHAR (15) NOT NULL CONSTRAINT R_Tipo_plan_estudiante FOREIGN KEY REFERENCES TIPO_PLAN,
+	Años_tarifa_descuentos INTEGER DEFAULT 3,
+	Precio INTEGER DEFAULT 10.99
+)
+
+create table INGLES(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_plane_ingles FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Idioma VARCHAR (10) NOT NULL CONSTRAINT R_Idioma_ingles PRIMARY KEY,
+	Codigo_usuario_ingles VARCHAR (7) NOT NULL
+)
+
+create table ESPANOL(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_plan_espanol FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Idioma VARCHAR (10) NOT NULL CONSTRAINT R_Idioma_espanol PRIMARY KEY,
+	Codigo_usuario_espanol VARCHAR (7) NOT NULL
+)
+
+create table OTROS(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_plan_otros FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Idioma VARCHAR (10) NOT NULL CONSTRAINT R_Idioma_otros PRIMARY KEY,
+	Codigo_usuario_otros VARCHAR (7) NOT NULL
+)
+
+create table USUARIO_OYENTE(
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente PRIMARY KEY,
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_oyente FOREIGN KEY REFERENCES SEGUIDORES_USUARIO_OYENTE
+)
+
+create table SEGUIDORES_USUARIO_OYENTE(
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_seguidores_usuario_oyente PRIMARY KEY,
+	Nº_seguidores_oyentes INTEGER
+)
+
+/*Relación entre Apps y Oyentes*/
+
+create table CONSUMEN(
+	Codigo_app VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_app_consumen FOREIGN KEY REFERENCES APLICACION_MUSICAL,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_consumen FOREIGN KEY REFERENCES USUARIO_OYENTE,
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_consumen FOREIGN KEY REFERENCES SEGUIDORES_USUARIO_OYENTE
+)
+
+create table PLAYLIST(
+	Codigo_playlist VARCHAR (20) NOT NULL,
+	Codigo_oyente VARCHAR (20) NOT NULL,
+	Min_P INTEGER,
+	Seg_P INTEGER
+)
+
+alter table PLAYLIST add constraint R_los_codigos_playlist primary key (Codigo_playlist,Codigo_oyente)
+
+/*Relación entre Oyentes y Playlist*/
+
+create table SIGUE(
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_sigue FOREIGN KEY REFERENCES USUARIO_OYENTE,
+	Codigo_playlist VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_playlist_sigue FOREIGN KEY REFERENCES PLAYLIST,
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_sigue FOREIGN KEY REFERENCES SEGUIDORES_USUARIO_OYENTE
+)
+
+/*Relación entre Oyentes y Playlist*/
+
+create table TIENEN_O_P(
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_tienen_o_p FOREIGN KEY REFERENCES USUARIO_OYENTE,
+	Codigo_playlist VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_playlist_tienen_o_p FOREIGN KEY REFERENCES PLAYLIST,
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_tienen_o_p FOREIGN KEY REFERENCES SEGUIDORES_USUARIO_OYENTE,
+	Nº_playlist INTEGER,
+	Oyente_propietario_playlist VARCHAR (20) NOT NULL
+)
+
+create table TIPO_PLAYLIST(
+	Tipo_playlist VARCHAR (10) NOT NULL CONSTRAINT R_Tipo_playlist PRIMARY KEY 
+)
+
+create table PUBLICA(
+	Codigo_playlist VARCHAR NOT NULL CONSTRAINT R_codigo_playlist_publica FOREIGN KEY REFERENCES PLAYLIST,
+	Codigo_oyente VARCHAR NOT NULL CONSTRAINT R_codigo_oyente_publica FOREIGN KEY REFERENCES PLAYLIST,
+	Tipo_playlist VARCHAR (10) NOT NULL CONSTRAINT R_tipo_playlist_publica FOREIGN KEY REFERENCES TIPO_PLAYLIST,
+	Nº_seguidores INTEGER,
+	Nº_de_me_gusta INTEGER
+)
+
+create table PRIVADA(
+	Codigo_playlist VARCHAR (20) NOT NULL CONSTRAINT R_codigo_playlist_privada FOREIGN KEY REFERENCES PLAYLIST,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_codigo_oyente_privada FOREIGN KEY REFERENCES PLAYLIST,
+	Tipo_playlist VARCHAR (10) NOT NULL CONSTRAINT R_tipo_playlist_privada FOREIGN KEY REFERENCES TIPO_PLAYLIST,
+	Nº_de_usuarios INTEGER,
+)
+
+/*Relacion Playlist y Canciones*/
+
+create table TIENE(
+	Codigo_cancion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_cancion_tiene FOREIGN KEY REFERENCES CANCIONES,
+	Nombre_C VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_c_tiene FOREIGN KEY REFERENCES NOMBRES_CANCIONES,
+	Codigo_playlist VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_playlist_tiene FOREIGN KEY REFERENCES PLAYLIST,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_tiene FOREIGN KEY REFERENCES PLAYLIST
+)
+
+create table HORAS_CONCIERTOS(
+	Codigo_concierto VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_concierto_horas PRIMARY KEY,
+	Hora_entrada VARCHAR (5) NOT NULL,
+	Hora_salida VARCHAR (5) NOT NULL
+)
+
+create table LUGAR_CONCIERTO(
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_lugar PRIMARY KEY,
+	Lugar_concierto VARCHAR (20) NOT NULL
+)
+
+/*Relacion Conciertos y Oyentes*/
+
+create table ACUDEN(
+	Codigo_concierto VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_concierto_acuden FOREIGN KEY REFERENCES HORAS_CONCIERTOS,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_acuden FOREIGN KEY REFERENCES LUGAR_CONCIERTO,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_acuden FOREIGN KEY REFERENCES USUARIO_OYENTE,
+	Nombre_usuario VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_usuario_acuden FOREIGN KEY REFERENCES SEGUIDORES_USUARIO_OYENTE
+)
+
+create table ARTISTAS(
+	Nombre_artistico VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_artistico PRIMARY KEY,
+	Edad INTEGER,
+	Nº_canciones INTEGER,
+	Codigo_lugar_firma VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_lugar_firma_artistas FOREIGN KEY REFERENCES FIRMA_DE_DISCOS,
+	Codigo_empresa VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_empresa_musical_artistas FOREIGN KEY REFERENCES EMPRESA_MUSICAL_REPRESENTANTE,
+	Codigo_manager VARCHAR (10) NOT NULL CONSTRAINT R_Codigo_manager_artistas FOREIGN KEY REFERENCES MANAGER,
+	Nombre_M VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_m_artistas FOREIGN KEY REFERENCES NOMBRE_MANAGER,
+	Codigo_estudio VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_estudio_artistas FOREIGN KEY REFERENCES ESTUDIO
+)
+
+/*Relacion entre Artistas y Conciertos*/
+
+create table HACE(
+	Codigo_concierto VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_concierto_hace FOREIGN KEY REFERENCES CONCIERTOS,
+	Codigo_oyente VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_oyente_hace FOREIGN KEY REFERENCES CONCIERTOS,
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico FOREIGN KEY REFERENCES ARTISTAS,
+	Nº_conciertos_anuales INTEGER
+)
+
+create table FIRMA_DE_DISCOS(
+	Codigo_lugar_firma VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_lugar_firma_discos PRIMARY KEY,
+	Director VARCHAR (15) NOT NULL
+)
+
+create table EMPRESA_MUSICAL_REPRESENTANTE(
+	Codigo_empresa VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_empresa_musical PRIMARY KEY,
+	Nº_equipos INTEGER,
+	Nº_representantes INTEGER
+)
+
+create table EQUIPOS(
+	Codigo_equipo VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_equipo_equipos PRIMARY KEY,
+	Nombre_equipo VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_equipo_equipos FOREIGN KEY REFERENCES NOMBRES_EQUIPOS,
+	Codigo_empresa VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_empresa_musical_artistas FOREIGN KEY REFERENCES EMPRESA_MUSICAL_REPRESENTANTE
+)
+
+create table NOMBRES_EQUIPOS(
+	Nombre_equipo VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_equipo_nombres PRIMARY KEY,
+	Nº_integrantes INTEGER
+)
+
+create table INTEGRANTES(
+	Codigo_integrante VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_integrante_integrantes PRIMARY KEY,
+	Nombre_integrante VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_integrante_integrantes FOREIGN KEY REFERENCES NOMBRES_INTEGRANTES
+)
+
+create table NOMBRES_INTEGRANTES(
+	Nombre_integrante VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_integrante_nombres PRIMARY KEY,
+	Nombre_equipo VARCHAR (20) NOT NULL
+)
+
+/*Relacion Equipos e Integrantes*/
+
+create table CONTIENEN_E_I(
+	Codigo_equipo VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_equipo_contienen FOREIGN KEY REFERENCES EQUIPOS,
+	Nombre_equipo VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_equipo_contienen FOREIGN KEY REFERENCES NOMBRES_EQUIPOS,
+	Codigo_integrante VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_integrante_contienen FOREIGN KEY REFERENCES INTEGRANTES,
+	Nombre_integrante VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_integrante_contienen FOREIGN KEY REFERENCES NOMBRES_INTEGRANTES
+)
+
+create table MANAGER(
+	Codigo_manager VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_manager_manager PRIMARY KEY,
+	Nº_conciertos_programados INTEGER,
+	Nombre_M VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_m_manager FOREIGN KEY REFERENCES NOMBRE_MANAGER
+)
+
+create table NOMBRE_MANAGER(
+	Nombre_M VARCHAR (20) NOT NULL CONSTRAINT R_nombre_m_nombre PRIMARY KEY,
+	Nº_artistas_representados INTEGER,
+	Edad_M INTEGER
+)
+
+create table ESTUDIO(
+	Codigo_estudio VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_estudio_estudio PRIMARY KEY,
+	Productor VARCHAR (20) NOT NULL,
+	Codigo_compania VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_compania_estudio FOREIGN KEY REFERENCES COMPANIA_DISCOGRAFICA
+)
+
+create table COMPANIA_DISCOGRAFICA(
+	Codigo_compania VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_compania_discografica PRIMARY KEY,
+	Nº_artistas_asociados INTEGER,
+	Genero_asociado VARCHAR (20) NOT NULL,
+	Nombre_compania VARCHAR (20) NOT NULL
+)
+
+/*select * from COMPANIA_DISCOGRAFICA 
+select * from ESTUDIO*/
+
+create table COLABORACIONES(
+	Codigo_colaboracion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_colaboracion_colaboraciones PRIMARY KEY,
+	Nº_artistas_colaboradores INTEGER,
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico_colaboraciones FOREIGN KEY REFERENCES ARTISTAS,
+	Codigo_colaboracion_Aux VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_colaboracion_aux_colaboraciones FOREIGN KEY REFERENCES DEPENDE
+)
+
+/*Relacion Artistas y Colaboraciones*/
+
+create table TIENEN_A_C(
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico_tienen FOREIGN KEY REFERENCES ARTISTAS,
+	Codigo_colaboracion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_colaboracion_tienen FOREIGN KEY REFERENCES COLABORACIONES
+)
+
+/*Relacion reflexiva*/
+
+create table DEPENDE(
+	Codigo_colaboracion_Aux VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_colaboracion_depende FOREIGN KEY REFERENCES COLABORACIONES
+)
+
+create table ALBUMES(
+	Codigo_album VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_album_albumes PRIMARY KEY,
+	Nombre_album VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_album_albumes FOREIGN KEY REFERENCES NOMBRES_ALBUMES,
+	Nº_presaves INTEGER,
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico_albumes FOREIGN KEY REFERENCES ARTISTAS,
+)
+
+create table NOMBRES_ALBUMES(
+	Nombre_album VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_album_nombres PRIMARY KEY,
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico_nombres FOREIGN KEY REFERENCES ARTISTAS,
+	Min_A INTEGER,
+	Seg_A INTEGER
+)
+
+/*Relacion Artistas y Albumes*/
+
+create table CREA(
+	Nombre_artistico VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_artistico_crea FOREIGN KEY REFERENCES ARTISTAS,
+	Nombre_album VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_album_crea FOREIGN KEY REFERENCES NOMBRES_ALBUMES,
+	Codigo_album VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_album_crea FOREIGN KEY REFERENCES ALBUMES
+)
+
+/*Relacion Albumes y Canciones*/
+
+create table CONTIENEN_A_C(
+	Nombre_album VARCHAR (20) NOT NULL CONSTRAINT R_Nombre_album_contienen_a_c FOREIGN KEY REFERENCES NOMBRES_ALBUMES,
+	Codigo_album VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_album_contienen_a_c FOREIGN KEY REFERENCES ALBUMES,
+	Codigo_cancion VARCHAR (20) NOT NULL CONSTRAINT R_Codigo_cancion_contienen_a_c FOREIGN KEY REFERENCES CANCIONES,
+	Nombre_C VARCHAR (25) NOT NULL CONSTRAINT R_Nombre_c_contienen_a_c FOREIGN KEY REFERENCES NOMBRES_CANCIONES
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+insert into ALBUMES (Nombre_album, Codigo_album, Nº_presaves, Nombre_artistico) values ('Colores', 'ALB_001', '23049', 'JBalvin')
+insert into ALBUMES (Nombre_album, Codigo_album, Nº_presaves, Nombre_artistico) values ('X100PRE', 'ALB_002', '89756', 'Bad Bunny')
+
+insert into NOMBRES_ALBUMES (Nombre_album, Nombre_artistico, Min_A, Seg_A) values ('Colores', 'JBalvin', 28, 58)
+insert into NOMBRES_ALBUMES (Nombre_album, Nombre_artistico, Min_A, Seg_A) values ('X100PRE', 'Bad Bunny', 39, 43)
+
+insert into ARTISTAS (Nombre_artistico, Edad, Nº_canciones, Codigo_lugar_firma, Codigo_empresa, Codigo_manager, Codigo_estudio, Nombre_M) 
+values ('JBalvin', '30', '245', 'LF_001', 'EMP_001', 'MG_001', 'EST_001', 'Ernesto')
+insert into ARTISTAS (Nombre_artistico, Edad, Nº_canciones, Codigo_lugar_firma, Codigo_empresa, Codigo_manager, Codigo_estudio, Nombre_M) 
+values ('Bad Bunny', '27', '135', 'LF_002', 'EMP_002', 'MG_002', 'EST_002', 'Juancho')
+
+insert into FIRMA_DE_DISCOS (Codigo_lugar_firma, Director)values ('LF_001', 'Manolo')
+insert into FIRMA_DE_DISCOS (Codigo_lugar_firma, Director)values ('LF_002', 'Sebastian')
+
+insert into EMPRESA_MUSICAL_REPRESENTANTE (Codigo_empresa, Nº_equipos, Nº_representantes) values ('EMP_001', '37', '567')
+insert into EMPRESA_MUSICAL_REPRESENTANTE (Codigo_empresa, Nº_equipos, Nº_representantes) values ('EMP_002', '56', '872')
+
+insert into MANAGER (Codigo_manager, Nº_conciertos_programados, Nombre_M) values ('MG_001', '35', 'Ernesto')
+insert into MANAGER (Codigo_manager, Nº_conciertos_programados, Nombre_M) values ('MG_002', '89', 'Juancho')
+
+insert into NOMBRE_MANAGER (Nombre_M, Nº_artistas_representados, Edad_M) values ('Ernesto', '35', '22')
+insert into NOMBRE_MANAGER (Nombre_M, Nº_artistas_representados, Edad_M) values ('Juancho', '89', '72')
+
+insert into ESTUDIO (Codigo_estudio, Productor, Codigo_compania) values ('EST_001', 'Chris Jedi', 'COMP_001') 
+insert into ESTUDIO (Codigo_estudio, Productor, Codigo_compania) values ('EST_002', 'Alex Martini', 'COMP_002') 
+
+insert into COMPANIA_DISCOGRAFICA (Codigo_compania, Nº_artistas_asociados, Genero_asociado, Nombre_compania) values ('COMP_001', '23', 'Reggaeton', 'Discografica RGG') 
+insert into COMPANIA_DISCOGRAFICA (Codigo_compania, Nº_artistas_asociados, Genero_asociado, Nombre_compania) values ('COMP_002', '56', 'Reggaeton', 'Discografica LMG') 
+
+insert into APLICACION_MUSICAL (Codigo_app, Idiomas_disponibles, Nº_oyentes, Nº_artistas) values ('APP_001', '123', '4352680', '12891') 
+insert into APLICACION_MUSICAL (Codigo_app, Idiomas_disponibles, Nº_oyentes, Nº_artistas) values ('APP_002', '167', '98351627', '687901') 
+
+insert into CANCIONES (Codigo_cancion, Nombre_C, Tipo_de_cancion, Año_lanzamiento) 
+values ('CANC_001', 'Rosa', 'Reggaeton', '2020') 
+insert into CANCIONES (Codigo_cancion, Nombre_C, Tipo_de_cancion, Año_lanzamiento) 
+values ('CANC_002', 'La Romana', 'Reggaeton', '2022') 
+
+insert into NOMBRES_CANCIONES (Nombre_C, Nº_reproducciones, Nombre_álbum, Min_C, Seg_C) values ('Rosa', '79083561', 'Colores', 3, 9)
+insert into NOMBRES_CANCIONES (Nombre_C, Nº_reproducciones, Nombre_álbum, Min_C, Seg_C) values ('La Romana', '20987465', 'X100PRE', 2, 28)
+
+insert into COLABORACIONES (Codigo_colaboracion, Nº_artistas_colaboradores, Nombre_artistico, Codigo_colaboracion_aux) values ('COLAB_001', '7', 'JBalvin', 'AUX_001')
+insert into COLABORACIONES (Codigo_colaboracion, Nº_artistas_colaboradores, Nombre_artistico, Codigo_colaboracion_aux) values ('COLAB_002', '4', 'Bad Bunny', 'AUX_002')
+
+insert into DEPENDE (Codigo_colaboracion_aux) values ('AUX_001')
+insert into DEPENDE (Codigo_colaboracion_aux) values ('AUX_002')
+
+insert into HORAS_CONCIERTOS (Codigo_concierto, Hora_entrada, Hora_salida) values ('CONC_871', '21:35', '23:45')
+insert into HORAS_CONCIERTOS (Codigo_concierto, Hora_entrada, Hora_salida) values ('CONC_798', '22:00', '00:45')
+
+insert into LUGAR_CONCIERTO (Codigo_oyente, Lugar_concierto) values ('OY_679', 'Reggaeton Festival')
+insert into LUGAR_CONCIERTO (Codigo_oyente, Lugar_concierto) values ('OY_089', 'ALicante')
+
+insert into DUO (Codigo_plan, Tipo_plan, Direccion_residencia, Precio) values ('PL_001', 'DUO', 'Madrid, Hortaleza', '13')
+insert into INDIVIDUAL (Codigo_plan, Nº_meses_prueba, Tipo_plan, Precio, Nº_descargas) values ('PL_002', '4', 'INDIVIDUAL', '4', '678594')
+
+insert into PLANES (Codigo_plan, Fecha, Nº_planes, Codigo_app) values ('PL_001', '27-03-2022', '4', 'APP_001')
+insert into PLANES (Codigo_plan, Fecha, Nº_planes, Codigo_app) values ('PL_002', '31-12-2022', '4', 'APP_002')
+
+insert into TIPO_PLAN (Tipo_plan) values ('INDIVIDUAL')
+insert into TIPO_PLAN (Tipo_plan) values ('DUO')
+insert into TIPO_PLAN (Tipo_plan) values ('FAMILIAR')
+insert into TIPO_PLAN (Tipo_plan) values ('ESTUDIANTE')
+
+insert into EQUIPOS (Codigo_equipo, Nombre_equipo, Codigo_empresa) values ('EQ_023', 'Produccion-Sonido', 'EMP_001')
+insert into EQUIPOS (Codigo_equipo, Nombre_equipo, Codigo_empresa) values ('EQ_078', 'Baile', 'EMP_002')
+
+insert into NOMBRES_EQUIPOS (Nombre_equipo, Nº_integrantes) values ('Produccion-Sonido', '343')
+insert into NOMBRES_EQUIPOS (Nombre_equipo, Nº_integrantes) values ('Baile', '567')
+
+insert into ESPANOL (Codigo_app, Idioma, Codigo_usuario_espanol) values ('APP_001', 'Español', 'ESP_098')
+
+insert into ESTUDIANTE (Codigo_plan, Tipo_plan, Años_tarifa_descuentos, Precio) values ('PL_002', 'ESTUDIANTE', '3', '11')
+
+insert into FAMILIAR (Codigo_plan, Tipo_plan, Nº_miembros, Nº_canciones_explicitas_bloqueadas, Precio)
+values ('PL_001', 'FAMILIAR', '1', '78', '4')
+
+insert into IDIOMA (Idioma) values ('Inglés')
+
+insert into INGLES (Codigo_app, Idioma, Codigo_usuario_ingles) values ('APP_001', 'Inglés', 'ING_147')
+
+insert into INTEGRANTES (Codigo_integrante, Nombre_integrante) values ('INT_092', 'Juan Expósito')
+
+insert into NOMBRES_INTEGRANTES (Nombre_integrante, Nombre_equipo) values ('Juan Expósito', 'Baile')
+
+insert into NO_PAGO (Codigo_app, Tipo_servicio_streaming, Nº_canciones) values ('APP_002', 'NO_PAGO', '698')
+
+insert into TIPO_SERVICIO_STREAMING (Tipo_servicio_streaming) values ('NO_PAGO')
+insert into TIPO_SERVICIO_STREAMING (Tipo_servicio_streaming) values ('DE_PAGO')
+
+insert into OTROS (Codigo_app, Idioma, Codigo_usuario_otros) values ('APP_002', 'Español', 'OTR_276')
+
+insert into USUARIO_OYENTE (Codigo_oyente, Nombre_usuario) values ('OY_001', 'mario2003')
+
+insert into SEGUIDORES_USUARIO_OYENTE (Nombre_usuario, Nº_seguidores_oyentes) values ('mario2003', '18')
+
+insert into PAGO (Codigo_app, Tipo_servicio_streaming, Nº_descargas) values ('APP_002', 'DE_PAGO', '29123')
+
+insert into PLAYLIST (Codigo_playlist, Codigo_oyente, Min_P, Seg_P) values ('PL_001', 'OY_001', '23', '56')
+
+insert into TIPO_PLAYLIST (Tipo_playlist) values ('PÚBLICA')
+insert into TIPO_PLAYLIST (Tipo_playlist) values ('PRIVADA')
+
+insert into PRIVADA (Tipo_playlist, Nº_de_usuarios) values ('PRIVADA', '3836828')
+
+insert into PUBLICA (Tipo_playlist, Nº_seguidores, Nº_de_me_gusta) values ('PÚBLICA', '7362718', '56781829')
+
+insert into ACUDEN (Codigo_oyente, Codigo_concierto, Nombre_usuario) values ('OY_679', 'CONC_871', 'mario2003')
+
+insert into ALMACENADAS (Codigo_cancion, Codigo_app, Nombre_C) values ('CANC_001', 'APP_001', 'Rosa')
+insert into ALMACENADAS (Codigo_cancion, Codigo_app, Nombre_C) values ('CANC_002', 'APP_001', 'La Romana')
+insert into ALMACENADAS (Codigo_cancion, Codigo_app, Nombre_C) values ('CANC_001', 'APP_002', 'Rosa')
+insert into ALMACENADAS (Codigo_cancion, Codigo_app, Nombre_C) values ('CANC_002', 'APP_002', 'La Romana')
+
+insert into CONSUMEN (Codigo_app, Codigo_oyente, Nombre_usuario) values ('APP_001', 'OY_001', 'mario2003')
+insert into CONSUMEN (Codigo_app, Codigo_oyente, Nombre_usuario) values ('APP_002', 'OY_001', 'mario2003')
+
+insert into CONTIENEN_A_C (Nombre_album, Codigo_cancion, Codigo_album, Nombre_C) values ('X100PRE', 'CANC_002', 'ALB_002', 'La Romana')
+insert into CONTIENEN_A_C (Nombre_album, Codigo_cancion, Codigo_album, Nombre_C) values ('Colores', 'CANC_001', 'ALB_001', 'Rosa')
+
+insert into CONTIENEN_E_I (Codigo_equipo, Codigo_integrante, Nombre_equipo, Nombre_integrante) values ('EQ_078', 'INT_092', 'Baile', 'Juan Expósito')
+
+insert into CREA (Nombre_artistico, Nombre_album, Codigo_album) values ('JBalvin', 'Colores', 'ALB_001')
+insert into CREA (Nombre_artistico, Nombre_album, Codigo_album) values ('Bad Bunny', 'X100PRE', 'ALB_002')
+
+insert into DEPENDE (Codigo_colaboracion_Aux) values ('AUX_003')
+insert into DEPENDE (Codigo_colaboracion_Aux) values ('AUX_004')
+
+insert into SIGUE (Codigo_oyente, Nombre_usuario) values ('OY_001', 'mario2003')
+
+insert into TIENE (Codigo_cancion, Nombre_C) values ('CANC_001', 'Rosa')
+insert into TIENE (Codigo_cancion, Nombre_C) values ('CANC_002', 'La Romana')
+
+insert into TIENEN_A_C (Nombre_artistico, Codigo_colaboracion) values ('JBalvin', 'COLAB_001')
+insert into TIENEN_A_C (Nombre_artistico, Codigo_colaboracion) values ('Bad Bunny', 'COLAB_002')
+
+insert into TIENEN_O_P (Codigo_oyente, Nombre_usuario, Nº_playlist, Oyente_propietario_playlist) values ('OY_001', 'mario2003', '34', 'mario2003')
+
+
+
+
+
+
+
+
+/*Consultas SQL*/
+
+/*1*/
+
+/*modificación: en vez de ser edad entre 18 y 25, será entre 25 y 32*/
+
+select Nombre_artistico
+from ARTISTAS
+where Edad >= 25 and Edad <= 32
+
+/*2*/
+
+select Nombre_artistico
+from ARTISTAS
+where Edad not like 35
+
+order by Nombre_artistico 
+
+/*3*/
+
+select distinct A.Nombre_C , A.Nombre_álbum
+from NOMBRES_CANCIONES A, CANCIONES
+where Tipo_de_cancion = 'Reggaeton'
+
+order by A.Nombre_C desc
+
+/*4*/
+
+select Nombre_usuario, Codigo_oyente
+from USUARIO_OYENTE
+where Codigo_oyente in (select Codigo_oyente
+						from ACUDEN
+						where Codigo_oyente in (select Codigo_oyente
+												from LUGAR_CONCIERTO, HORAS_CONCIERTOS
+												where Hora_entrada = '22:00'))
+
+/*sale el resultado vacío ya que no existe ningún oyente que vaya a un concierto a esa hora*/
+
+/*5*/
+
+select distinct C.Nombre_artistico
+from ALBUMES A, NOMBRES_CANCIONES B, ARTISTAS C
+where A.Nombre_album = B.Nombre_álbum and A.Nº_presaves < B.Nº_reproducciones
+
+/*6*/
+
+select P.Nombre_album, A.Nombre_artistico, Nombre_C, Edad
+from ALBUMES P, NOMBRES_CANCIONES V, ARTISTAS A
+where P.Nombre_album = V.Nombre_álbum and P.Nombre_artistico = A.Nombre_artistico
+							
+
+/*7*/
+
+select Codigo_cancion
+from CANCIONES
+where Codigo_cancion in (select Codigo_cancion
+						from ALMACENADAS
+						where Codigo_app in (select Codigo_app
+											from APLICACION_MUSICAL
+											where Codigo_app in (select Codigo_app
+																from ESPANOL
+																where Idioma = 'Español')))
+
+/*8*/
+
+select Nombre_artistico
+from ARTISTAS
+where Nombre_artistico in (select Nombre_artistico
+							from TIENEN_A_C
+							where Nombre_artistico in (select Nombre_artistico
+														from COLABORACIONES
+														where Nº_canciones > Nº_artistas_colaboradores))
+
+/*9*/
+
+/*modificación: en vez de ser igual a 3:00, será a 3:09*/
+
+select Nombre_album
+from ALBUMES
+where Nombre_album in (select Nombre_album
+						from CONTIENEN_A_C
+						where Nombre_album in (select Nombre_album
+												from NOMBRES_CANCIONES
+												where Min_C = 3 and Seg_C = 9))
+
+
+
+
+
+
+
+
+
+

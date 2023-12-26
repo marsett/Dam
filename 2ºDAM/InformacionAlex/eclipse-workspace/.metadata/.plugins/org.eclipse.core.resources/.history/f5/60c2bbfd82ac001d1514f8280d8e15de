@@ -1,0 +1,5 @@
+package arboles.renderizado;
+
+public class Empleado {
+
+}

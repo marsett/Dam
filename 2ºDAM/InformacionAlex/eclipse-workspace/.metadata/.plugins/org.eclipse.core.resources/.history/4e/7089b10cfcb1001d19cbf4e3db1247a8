@@ -1,0 +1,36 @@
+package tabbedpane;
+import java.awt.*;
+import javax.swing.*;
+
+public class UsoTabbedPane extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsoTabbedPane();
+	}
+	public UsoTabbedPane() {
+		JTabbedPane panelPestanas=new JTabbedPane();
+		JPanel panel1=new JPanel();
+		JLabel etiqueta=new JLabel("Panel 1",SwingConstants.CENTER);
+		panel1.add(etiqueta);
+		JLabel etiqueta2=new JLabel("Panel 2",SwingConstants.CENTER);
+		JPanel panel2=new JPanel();
+		panel2.setBackground(Color.GREEN);
+		panel2.add(etiqueta2);
+		JPanel panel3=new JPanel();
+		panel3.setBackground(Color.RED);
+		panel3.setLayout(new BorderLayout());
+		panel3.add(new JButton("Norte"),BorderLayout.NORTH);
+		panel3.add(new JButton("Sur"),BorderLayout.SOUTH);
+		panel3.add(new JButton("Este"),BorderLayout.EAST);
+		panel3.add(new JButton("Oeste"),BorderLayout.WEST);
+		panel3.add(new JButton("Centro"),BorderLayout.CENTER);
+		panelPestanas.addTab("Ficha 1", null, panel1,"Estas en ficha 1");
+		panelPestanas.addTab("Ficha 2", panel2);
+		panelPestanas.addTab("Ficha 3", panel3);
+		this.add(panelPestanas,BorderLayout.CENTER);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,600);
+		setVisible(true);
+	}
+}

@@ -1,0 +1,11 @@
+package arboles;
+import javax.swing.tree.*;
+
+public class ModeloDatos extends DefaultTreeModel{
+	private static final long serialVersionUID = 1L;
+	DefaultMutableTreeNode nodoRaiz=null;
+	public ModeloDatos() {
+		super(new DefaultMutableTreeNode());
+		nodoRaiz=(DefaultMutableTreeNode) getRoot();
+	}
+}

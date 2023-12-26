@@ -1,0 +1,10 @@
+package awt;
+
+public class PruebasClasesInternas {
+
+	public static void main(String[] args) {
+		Persona p=new Persona();
+		Direccion dir=new Direccion();
+	}
+
+}

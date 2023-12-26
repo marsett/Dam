@@ -1,0 +1,26 @@
+package arboles;
+import java.awt.BorderLayout;
+
+import javax.swing.*;
+
+public class PanelArbolDinamico extends JFrame{
+	private static final long serialVersionUID = 1L;
+	ModeloDatos modelo;
+	JTree jTree;
+	JPanel contentPane;
+	public static void main(String[] args) {
+		new PanelArbolDinamico();
+	}
+	public PanelArbolDinamico() {
+		contentPane=(JPanel) getContentPane();
+		JButton btn=new JButton("Generar");
+		btn.addActionListener(e-> generar());
+		contentPane.add(btn,BorderLayout.NORTH);
+		modelo=new ModeloDatos();
+	}
+	public void generar() {
+		modelo.cargar();
+		jTree.validate();
+		repaint();
+	}
+}

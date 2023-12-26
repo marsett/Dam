@@ -1,0 +1,6 @@
+sudo modprobe vboxdrv
+
+sudo apt update
+sudo apt install --reinstall linux-headers-$(uname -r) virtualbox-dkms dkms
+
+sudo modprobe vboxdrv

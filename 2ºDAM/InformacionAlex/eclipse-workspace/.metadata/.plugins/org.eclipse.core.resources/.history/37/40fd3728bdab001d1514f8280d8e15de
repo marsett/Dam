@@ -1,0 +1,174 @@
+package practicaTree;
+import java.sql.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import practicaTree.PantallaUno.Modelo;
+
+public class PruebaDos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	
+	static Modelo modelo;
+	
+	protected Connection conexion;
+	protected Statement statement;
+	protected DatabaseMetaData dataBaseMetaData;
+	DefaultTreeModel model;
+	private static DefaultMutableTreeNode root;
+	
+	public static void main(String[] args) throws SQLException {
+		new PruebaDos(modelo);
+		
+	}
+	
+	public PruebaDos(Modelo modelo) throws SQLException {
+		PruebaDos.modelo=modelo;
+		conexion();
+		crearInterfaz();
+
+		root=new DefaultMutableTreeNode("Root");
+		
+		model=new DefaultTreeModel(root);
+		
+		JTree arbol=new JTree(model);
+		
+		for(String tabla:getTablas(modelo.cuadroDefaultSchema)) {
+			System.out.println("Tabla: "+tabla);
+			cargarEstructura(tabla);
+		}
+
+		JScrollPane scroll=new JScrollPane(arbol);
+		getContentPane().add(scroll);
+	}
+	
+	public void cargarEstructura(String nombreTabla) {
+		
+		DefaultMutableTreeNode nodoHijo=new DefaultMutableTreeNode(nombreTabla);
+		for(String columnastipos:getColumnasTipos(modelo.cuadroDefaultSchema, nombreTabla)) {
+			DefaultMutableTreeNode columnasTipos=new DefaultMutableTreeNode(columnastipos);
+			nodoHijo.add(columnasTipos);
+		}
+		/*for(String tipos:getTipos(modelo.cuadroDefaultSchema, nombreTabla)) {
+			DefaultMutableTreeNode tipo=new DefaultMutableTreeNode(tipos);
+			nodoHijo.add(tipo);
+		}*/
+		
+		root.add(nodoHijo);
+		
+	}
+	
+	public void crearInterfaz() {
+		System.out.println("Creando Interfaz PruebaDos...");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(450,450);
+		setVisible(true);
+	}
+	
+	public void conexion() throws SQLException {
+		System.out.println("Creando Conexion...");
+		String url="jdbc:mysql://localhost:3306/"+modelo.cuadroDefaultSchema;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conexion=DriverManager.getConnection(url,modelo.cuadroUserName,modelo.cuadroPassword);
+			statement=conexion.createStatement();
+			dataBaseMetaData=conexion.getMetaData();
+		}catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Se Ha Conectado...");
+	}
+	
+	public ArrayList<String> getTablas(String nombreEsquema) throws SQLException{
+		ArrayList<String> arrayTablas=new ArrayList<>();
+		System.out.println("getTablas() "+nombreEsquema);
+		String catalogo=null;
+		String patronTabla="%";
+		String[] tipos=null;
+		ResultSet tablas=dataBaseMetaData.getTables(nombreEsquema, catalogo,  patronTabla, tipos);
+		String nombreTabla=null;
+		while(tablas.next()) {
+			nombreTabla=tablas.getString(3);
+			System.out.println(nombreTabla);
+			arrayTablas.add(nombreTabla);
+		}
+		System.out.println("Fin getTablas()");
+		return arrayTablas;
+	}
+	
+	public ArrayList<String> getColumnasTipos(String nombreEsquema, String tablas) {
+		System.out.println("getColumnasTipos()");
+		
+		ArrayList columnasTipos=new ArrayList();
+		//String nombreEsquema=modelo.cuadroDefaultSchema;
+		try {
+			dataBaseMetaData=conexion.getMetaData();
+			String catalogo=null;
+			String formatoCol=null;
+		
+				ResultSet rsColumnasTipos=dataBaseMetaData.getColumns(nombreEsquema, catalogo, tablas, formatoCol);
+				String columna, tipo;
+				while(rsColumnasTipos.next()){
+					columna=rsColumnasTipos.getString(4);
+					tipo=rsColumnasTipos.getString(6);
+					System.out.println("Columna: "+columna);
+					System.out.println("Tipo: "+tipo);
+					columnasTipos.add(columna+" "+tipo.toUpperCase());
+				}
+			
+		}catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		return columnasTipos;
+	}
+	
+	public ArrayList<String> getTipos(String nombreEsquema, String tablas) {
+		System.out.println("getTipos()");
+		
+		ArrayList tipos=new ArrayList();
+		//String nombreEsquema=modelo.cuadroDefaultSchema;
+		try {
+			dataBaseMetaData=conexion.getMetaData();
+			String catalogo=null;
+			String formatoCol=null;
+		
+				ResultSet rsTipos=dataBaseMetaData.getColumns(nombreEsquema, catalogo, tablas, formatoCol);
+				String tipo;
+				while(rsTipos.next()){
+					tipo=rsTipos.getString(6);
+					System.out.println("Tipo: "+tipo);
+					tipos.add(tipo);
+				}
+			
+		}catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		return tipos;
+	}
+	
+	public ArrayList<String> getColumnas(String nombreEsquema, String tablas) {
+		System.out.println("getColumnas()");
+		
+		ArrayList columnas=new ArrayList();
+		//String nombreEsquema=modelo.cuadroDefaultSchema;
+		try {
+			dataBaseMetaData=conexion.getMetaData();
+			String catalogo=null;
+			String formatoCol=null;
+		
+				ResultSet rsColumnas=dataBaseMetaData.getColumns(nombreEsquema, catalogo, tablas, formatoCol);
+				String columna;
+				while(rsColumnas.next()){
+					columna=rsColumnas.getString(4);
+					System.out.println("Tipo: "+columna);
+					columnas.add(columna);
+				}
+			
+		}catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		return columnas;
+	}
+	
+}

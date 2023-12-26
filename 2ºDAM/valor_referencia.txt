@@ -1,0 +1,24 @@
+public static void main(String[] args) {
+		int x = 10;
+		incrementar(x);
+		System.out.println(x);
+		int[] array = new int[5]; 
+		array[0] = 2;
+		modificar(array);
+		System.out.println(array[0]);
+		String a = "Hola";
+		cadenas(a);
+		System.out.println(a);
+	}
+ 
+	private static void incrementar(int y) {
+		y++;
+	}
+ 
+	private static void modificar(int[] array2) {
+		array2[0] = 3;
+	}
+ 
+	private static void cadenas(String cadena) {
+		cadena = "Hola mundo";
+	}

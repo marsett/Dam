@@ -1,0 +1,3 @@
+5,50/10,00
+
+Hola Mario. La parte de los combox lo has resuelto bien. Pero la parte de la consulta es un desastre: mezclas los objetos sin ton ni son. Tienes que revisar bien cómo se construye una sentencia.

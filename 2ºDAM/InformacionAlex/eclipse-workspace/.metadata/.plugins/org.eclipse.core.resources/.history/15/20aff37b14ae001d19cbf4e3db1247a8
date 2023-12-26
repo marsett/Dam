@@ -1,0 +1,12 @@
+package arboles.renderizado;
+import javax.swing.*;
+
+public class UsoRenderizadoTree extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsoRenderizadoTree();
+	}
+	public UsoRenderizadoTree() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}

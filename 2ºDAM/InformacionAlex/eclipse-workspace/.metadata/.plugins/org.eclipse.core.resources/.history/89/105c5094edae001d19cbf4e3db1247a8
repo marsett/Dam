@@ -1,0 +1,6 @@
+package examendi;
+import javax.swing.*;
+
+public class ExamenInterfacesGraficas extends JFrame{
+
+}

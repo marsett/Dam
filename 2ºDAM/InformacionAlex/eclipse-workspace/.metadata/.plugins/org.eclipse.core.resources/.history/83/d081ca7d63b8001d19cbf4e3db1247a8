@@ -1,0 +1,16 @@
+package mariojimenez;
+import javax.swing.*;
+
+public class Window extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JTabbedPane panelPestanas;
+	private JPanel panelEntrada, panelEstadisticas;
+	public static void main(String[] args) {
+		
+	}
+	public Window() {
+		panelPestanas=new JTabbedPane();
+		panelEntrada=new JPanel();
+		panelPestanas.addTab("Ficha 1", null, panelEntrada, "Estas en el Panel de Entrada de Empleados");
+	}
+}

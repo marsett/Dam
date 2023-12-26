@@ -1,0 +1,71 @@
+package examendi;
+import java.awt.Color;
+import java.awt.FlowLayout;
+
+import javax.swing.*;
+
+public class ExamenInterfacesGraficas extends JFrame{
+	private JPanel panelIzquierdo, panelDerechoSuperior, panelDerechoInferior;
+	private JComboBox<String> listaDrives, listaCarpetas;
+	public static void main(String[] args) {
+		new ExamenInterfacesGraficas();
+	}
+	public ExamenInterfacesGraficas() {
+		super("Examen DAM Interfaces Graficas");
+		crearInterfaz();
+	}
+	private void crearInterfaz() {
+		System.out.println("Creando Interfaz...");
+		panelIzquierdo=new JPanel();
+		panelIzquierdo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		panelDerechoSuperior=new JPanel();
+		panelDerechoSuperior.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		panelDerechoInferior=new JPanel();
+		panelDerechoInferior.setBorder(BorderFactory.createLineBorder(Color.RED));
+		BoxLayout boxLayoutIzquierdo=new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS);
+		BoxLayout boxLayoutDerechoSuperior=new BoxLayout(panelDerechoSuperior, BoxLayout.Y_AXIS);
+		BoxLayout boxLayoutDerechoInferior=new BoxLayout(panelDerechoInferior, BoxLayout.Y_AXIS);
+		panelIzquierdo.setLayout(boxLayoutIzquierdo);
+		panelDerechoSuperior.setLayout(boxLayoutDerechoSuperior);
+		panelDerechoInferior.setLayout(boxLayoutDerechoInferior);
+		add(panelIzquierdo);
+		add(panelDerechoSuperior);
+		add(panelDerechoInferior);
+		
+		listaDrives=new JComboBox<String>(new ModeloListaDrives());
+		panelIzquierdo.add(listaDrives);
+		
+		setLayout(new FlowLayout());
+		setSize(1000,500);
+		setVisible(true);
+		System.out.println("Interfaz creada");
+	}
+	private class ModeloListaDrives extends AbstractListModel<String> implements ComboBoxModel<String>{
+		String[] listaValores= {"C:","D:","E:"};
+		String valorSeleccionado=listaValores[0];
+		@Override
+		public int getSize() {
+			// TODO Auto-generated method stub
+			return listaValores.length;
+		}
+
+		@Override
+		public String getElementAt(int index) {
+			// TODO Auto-generated method stub
+			return listaValores[index];
+		}
+
+		@Override
+		public void setSelectedItem(Object anItem) {
+			// TODO Auto-generated method stub
+			System.out.println("Se ha seleccionado "+anItem);
+			valorSeleccionado=(String)anItem;
+		}
+
+		@Override
+		public Object getSelectedItem() {
+			System.out.println("Se ha obtenido "+valorSeleccionado);
+			return valorSeleccionado;
+		}
+	}
+}

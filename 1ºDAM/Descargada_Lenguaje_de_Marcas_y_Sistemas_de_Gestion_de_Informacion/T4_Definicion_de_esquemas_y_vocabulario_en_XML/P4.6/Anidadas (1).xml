@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:element name="listacomponentes"/>
+    <xs:complexType>
+      <xs:element name="componente"/>
+        <xs:complexType>
+          <xs:attribute name="entrega" type="xs:date" use="required"/>
+          <xs:sequence>
+            <xs:element name="fabricante"/>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="nombre" type="xs:string"/>
+                    <xs:restriction base ="xs:string">
+                      <xs:enumeration value="FAB1">
+                      <xs:enumeration value="FAB2">
+                      <xs:enumeration value="FAB3">
+                    </xs:restriction>
+                  <xs:element name="calificacion" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            <xs:element name="peso" type="xs:decimal"/>
+              <xs:complexType>
+                <xs:attribute name="unidad" type="xs:string" minExclusive="0"/> 
+              </xs:complexType>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

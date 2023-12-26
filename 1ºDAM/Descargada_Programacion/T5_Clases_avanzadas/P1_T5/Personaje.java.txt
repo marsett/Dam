@@ -1,0 +1,24 @@
+package juego;
+
+public abstract class Personaje {
+  private final int VIDA_INICIAL = 100;
+  private int vida;
+
+  Personaje (){
+      vida = VIDA_INICIAL;
+      System.out.println("Personaje --> Constructor");
+  }
+ 
+  public void setVida(int vida) {
+      this.vida = vida;
+  }
+ 
+  public int getVida() {
+      return vida;
+  }
+ 
+  public abstract int movimientoLucha();
+  public abstract String getPersonaje();
+ 
+ 
+}

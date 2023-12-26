@@ -1,0 +1,9 @@
+5,50/10,00
+	
+Ventana Swing: Bien.
+
+Botón Escribir: Machacas las líneas y no las escribes al preguntar por el botón pulsado.
+
+Fichero escritura: Escribes carácter a carácter del campo txtField, no del campo txtArea. Por eso el fichero está vacio.
+
+Botón Finalizar: Abres un fichero para leer pero no habías escrito nada y además pones el código sin comprobar que el botón pulsado sea el de Finalizae

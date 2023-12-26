@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8">
+<!DOCTYPE lotes_y_pales[
+	<!ELEMENT entrega (lotes+)>
+	<!ELEMENT lotes (pales+)>
+	<!ELEMENT pales (numerodecajas, contenido, peso, formademanipulacion, etiquetadepagado?)>
+	<!ELEMENT numerodecajas (#PCDATA)>
+	<!ELEMENT peso (#PCDATA)>
+	<!ELEMENT formademanipulacion (#PCDATA)>
+	<!ELEMENT etiqueta_de_pagado EMPTY>
+	<!ELEMENT contenido (nombredelcomponente, procedencia?, numerodeserie | numerodepieza, pesodelcomponenteindividual, unidaddepeso?)>
+	<!ELEMENT nombredelcomponente (#PCDATA)>
+	<!ELEMENT procedencia (pais+)>
+	<!ELEMENT pais (#PCDATA)>
+	<!ELEMENT numerodeserie (#PCDATA)>
+	<!ELEMENT numerodepieza (#PCDATA)>
+	<!ELEMENT pesodelcomponenteindividual (#PCDATA)>
+	<!ELEMENT unidaddepeso (#PCDATA)>
+]>
+
+<!--Ejemplo xml del DTD anterior-->
+
+<entrega>
+	<lotes>
+		<pales>
+			<numero_de_cajas>8</numero_de_cajas>
+			<contenido>
+				<nombre_componente>Microprocesadores</nombre_componente>
+				<procedencia>
+					<pais>Taiwan</pais>
+				</procedencia>
+				<numero_de_serie>6</numero_de_serie>
+				<peso_componente_individual>60g</peso_componente_individual>
+				<unidad_de_peso>gramos</unidad_de_peso>
+			</contenido>
+			<peso>50kg</peso>
+			<forma_de_manipulacion>Máquinas</forma_de_manipulacion>
+			<etiqueta_pagado>Certificado Europeo</etiqueta_pagado>
+		</pales>
+	</lotes>
+</entrega>

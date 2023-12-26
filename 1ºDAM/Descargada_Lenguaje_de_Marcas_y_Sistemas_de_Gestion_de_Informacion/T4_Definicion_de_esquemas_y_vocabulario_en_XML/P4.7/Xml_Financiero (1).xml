@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<productosfinancieros xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="practica.xml">
+<!--Se deben crear mínimo 5 productos en el xml-->
+<!--Se deben crear mínimo 2 bonos, futuros o acciones -->
+  <producto>
+    <bono>
+      <valorcompra moneda="yenes">80.8</valorcompra>
+      <valoractual moneda="dolares">75.3</valoractual>
+      <beneficio>2.0</beneficio>
+    </bono>
+    <bono>
+      <valorcompra moneda="euros">24.7</valorcompra>
+      <valoractual moneda="dolares">15.3</valoractual>
+      <beneficio>24.8</beneficio>
+    </bono>
+  </producto>
+  <producto>
+    <futuro>
+      <elemento  idioma="frances">Elemento 1</elemento>
+      <beneficio>7.9</beneficio>
+    </futuro>
+    <futuro>
+      <elemento  idioma="italiano">Elemento 2</elemento>
+      <beneficio>67.9</beneficio>
+    </futuro>
+  </producto>
+  <producto>
+    <acciones>
+      <empresa pais="usa">Empresa 1</empresa>
+      <beneficio>6.7</beneficio>
+      <beneficio>8.2</beneficio>
+      <beneficio>3.4</beneficio>
+    </acciones>
+    <acciones>
+      <empresa pais="espania">Empresa 2</empresa>
+      <beneficio>43.2</beneficio>
+      <beneficio>98.1</beneficio>
+      <beneficio>32.7</beneficio>
+    </acciones>
+  </producto>
+  <producto>
+    <bono>
+      <valorcompra moneda="euros">45.8</valorcompra>
+      <valoractual moneda="yenes">23.1</valoractual>
+      <beneficio>21.4</beneficio>
+    </bono>
+    <bono>
+      <valorcompra moneda="dolares">27.5</valorcompra>
+      <valoractual moneda="yenes">32.8</valoractual>
+      <beneficio>112.8</beneficio>
+    </bono>
+  </producto>
+  <producto>
+    <futuro>
+      <elemento idioma="portugues"></elemento>
+      <beneficio>24.6</beneficio>
+    </futuro>
+    <futuro>
+      <elemento idioma="noruego"></elemento>
+      <beneficio>56.9</beneficio>
+    </futuro>
+  </producto>
+ <producto>
+   <acciones>
+     <empresa pais="alemania">Empresa 3</empresa>
+      <beneficio>78.5</beneficio>
+      <beneficio>92.8</beneficio>
+      <beneficio>25.8</beneficio>
+   </acciones>
+   <acciones>
+     <empresa pais="japon">Empresa 4</empresa>
+      <beneficio>6.3</beneficio>
+      <beneficio>2.1</beneficio>
+      <beneficio>7.9</beneficio>
+   </acciones>
+ </producto>
+</productosfinancieros>

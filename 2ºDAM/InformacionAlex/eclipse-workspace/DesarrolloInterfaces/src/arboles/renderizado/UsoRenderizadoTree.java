@@ -1,0 +1,38 @@
+package arboles.renderizado;
+import java.awt.BorderLayout;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.tree.TreeCellRenderer;
+
+public class UsoRenderizadoTree extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new UsoRenderizadoTree();
+	}
+	public UsoRenderizadoTree() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		Empleado listaEmpleado[]= {new Empleado("Gumersindo","Vitorino",600),
+				new Empleado("Ermenegildo","Gutierrez",600),
+				new Empleado("Justiniano","Adefesio",600),
+				new Empleado("Adorado","Solano",600)	
+		};
+		Empleado listaJefes[]= {new Empleado("Antonino","Enrevesado",600),
+				new Empleado("Franciscano","Toledano",600),
+				new Empleado("Bernemento","Fernadino",600),
+				new Empleado("Celistiano","Jorobao",600)
+		};
+		Vector<Empleado>empleados=new NodoArbolVector("Empleados",listaEmpleado);
+		Vector<Empleado>jefes=new NodoArbolVector("Jefes",listaJefes);
+		
+		Object[] nodosRaiz= {empleados,jefes};
+		JTree tree=new JTree(nodosRaiz);
+		TreeCellRenderer renderer=new EmpleadoCellRenderer();
+		tree.setCellRenderer(renderer);
+		
+		JScrollPane scroll=new JScrollPane(tree);
+		add(scroll,BorderLayout.CENTER);
+		setSize(500,400);
+		setVisible(true);
+	}
+}

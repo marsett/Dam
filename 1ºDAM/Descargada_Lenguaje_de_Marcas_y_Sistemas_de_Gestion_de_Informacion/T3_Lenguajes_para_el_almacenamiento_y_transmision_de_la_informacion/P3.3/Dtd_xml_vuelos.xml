@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8">
+<!DOCTYPE Vuelos[
+  <!ELEMENT reserva_compra (informacion_del_usuario, informacion_de_la_compra, informacion_del_vuelo+)>
+  <!ELEMENT informacion_del_usuario (usuario, email) >
+  <!ELEMENT usuario (#PCDATA)>
+  <!ELEMENT email (#PCDATA)>
+  <!ELEMENT informacion_de_la_compra (codigo_de_compra, titular_tarjeta, tarjeta, importe)>
+  <!ELEMENT codigo_de_compra (#PCDATA)>
+  <!ELEMENT titular_tarjeta (#PCDATA)>
+  <!ELEMENT tarjeta (#PCDATA)>
+  <!ELEMENT importe (#PCDATA)>
+  <!ELEMENT informacion_del_vuelo (vuelo_ida+, vuelo_vuelta)>
+  <!ELEMENT vuelo_ida (codigo_1, inicio_1, destino_1, fecha, hora_salida_1, hora_llegada_1, terminal_1, asientos_reservados_1_A, asientos_reservados_1_B, usuario_asiento_A, usuario_asiento_B, escala_1, codigo_2, inicio_2, destino_2, hora_salida_2, hora_llegada_2, terminal_2, asientos_reservados_2_A, asientos_reservados_2_B)>
+  <!ELEMENT codigo_1 (#PCDATA)>
+  <!ELEMENT codigo_2 (#PCDATA)>
+  <!ELEMENT inicio_1 (#PCDATA)>
+  <!ELEMENT inicio_2 (#PCDATA)>
+  <!ELEMENT destino_1 (#PCDATA)>
+  <!ELEMENT destino_2 (#PCDATA)>
+  <!ELEMENT fecha (#PCDATA)>
+  <!ELEMENT hora_salida_1 (#PCDATA)>
+  <!ELEMENT hora_salida_2 (#PCDATA)>
+  <!ELEMENT hora_llegada_1 (#PCDATA)>
+  <!ELEMENT hora_llegada_2 (#PCDATA)>
+  <!ELEMENT terminal_1 (#PCDATA)>
+  <!ELEMENT terminal_2 (#PCDATA)>
+  <!ELEMENT asientos_reservados_1_A (#PCDATA)>
+  <!ELEMENT asientos_reservados_1_B (#PCDATA)>
+  <!ELEMENT asientos_reservados_2_A (#PCDATA)>
+  <!ELEMENT asientos_reservados_2_B (#PCDATA)>
+  <!ELEMENT usuario_asiento_A (#PCDATA)>
+  <!ELEMENT usuario_asiento_B (#PCDATA)>
+  <!ELEMENT escala_1 (#PCDATA)>
+  <!ELEMENT vuelo_vuelta (codigo, inicio, destino, fecha, hora_salida, hora_llegada, terminal, asiento_reservado, usuario_asiento)>
+  <!ELEMENT codigo (#PCDATA)>
+  <!ELEMENT inicio (#PCDATA)>
+  <!ELEMENT destino (#PCDATA)>
+  <!ELEMENT fecha (#PCDATA)>
+  <!ELEMENT hora_salida (#PCDATA)>
+  <!ELEMENT hora_llegada (#PCDATA)>
+  <!ELEMENT terminal (#PCDATA)>
+  <!ELEMENT asiento_reservado (#PCDATA)>
+  <!ELEMENT usuario_asiento (#PCDATA)>
+  
+ ]>
+  
+  <!--Ejemplo xml del DTD anterior-->
+  
+  <reserva_compra>
+	  <informacion_del_usuario>
+		  <usuario>jlgarci</usuario>
+		  <email>jlgarci@gmail.com</email>
+	  </informacion_del_usuario>
+	  <informacion_de_la_compra>
+		  <codigo_de_compra>2134</codigo_de_compra>
+		  <titular_tarjeta>Jose Luis García</titular_tarjeta>
+		  <tarjeta>2354 3421 3454 4543</tarjeta>
+		  <importe>1834 euros</importe>
+	  </informacion_de_la_compra>
+	  <informacion_del_vuelo>
+		  <vuelo_ida>
+			  <codigo_1>1234</codigo_1>
+			  <codigo_2>1235</codigo_2>
+			  <inicio_1>Marid</inicio_1>
+			  <inicio_2>Londres</inicio_2>
+			  <destino_1>Londres</destino_1>
+			  <destino_2>Tokio</destino_2>
+			  <fecha>25/01/2020</fecha>
+			  <hora_salida_1>7:00</hora_salida_1>
+			  <hora_salida_2>9:45</hora_salida_2>
+			  <hora_llegada_1>9:30</hora_llegada_1>
+			  <hora_llegada_2>18:00</hora_llegada_2>
+			  <terminal_1>T1</terminal_1>
+			  <terminal_2>T4</terminal_2>
+			  <asientos_reservados_1_A>23A</asientos_reservados_1_A>
+			  <asientos_reservados_1_B>23F</asientos_reservados_1_B>
+			  <asientos_reservados_2>12A</asientos_reservados_2_A>
+			  <asientos_reservados_2>12F</asientos_reservados_2_B>
+			  <usuario_asiento_A>Pepe García</usuario_asiento_B>
+			  <usuario_asiento_B>María Fernández</usuario_asiento_B>
+			  <escala_1>Londres</escala_1>
+		  </vuelo_ida>
+		  <vuelo_vuelta>
+			  <codigo>1236</codigo>
+			  <inicio>Tokio</inicio>
+			  <destino>Madrid</destino>
+			  <fecha>25/02/2020</fecha>
+			  <hora_salida>9:00</hora_salida>
+			  <hora_llegada>20:00</hora_llegada>
+			  <terminal>T1</terminal>
+			  <asiento_reservado>45A</asiento_reservado>
+			  <usuario_asiento>María Fernández</usuario_asiento>
+		  </vuelo_vuelta>
+	  </informacion_del_vuelo>
+  </reserva_compra>

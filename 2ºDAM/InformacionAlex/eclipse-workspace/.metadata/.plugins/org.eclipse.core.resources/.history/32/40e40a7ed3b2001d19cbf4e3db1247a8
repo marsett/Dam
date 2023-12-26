@@ -1,0 +1,18 @@
+package componentesTablas.ordenaciontablas;
+import javax.swing.table.*;
+
+public class ModeloDatosOrdenado extends AbstractTableModel{
+	private static final long serialVersionUID = 1L;
+	@Override
+	public int getRowCount() {
+		return 0;
+	}
+	@Override
+	public int getColumnCount() {
+		return 0;
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return null;
+	}
+}

@@ -1,0 +1,3 @@
+9,17/10,00
+
+Tienes fallos en el ejercicio 1, corrige con la solución que he colgado

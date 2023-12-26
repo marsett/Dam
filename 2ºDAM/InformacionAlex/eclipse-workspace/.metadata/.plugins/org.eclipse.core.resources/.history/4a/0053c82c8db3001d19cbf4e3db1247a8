@@ -1,0 +1,19 @@
+package componentesTablas.ordenaciontablas;
+import javax.swing.*;
+
+public class EjemploOrdenacion extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new EjemploOrdenacion();
+	}
+	public EjemploOrdenacion() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ModeloDatosOrdenado modelo=new ModeloDatosOrdenado();
+		JTable tabla=new JTable(modelo);
+		JScrollPane scroll=new JScrollPane(tabla);
+		add(scroll);
+		setSize(500,400);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+}

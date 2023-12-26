@@ -1,0 +1,60 @@
+<!-- Actividad sobre la agenda de teléfonos -->
+<? xml version= "1.0" encoding= "UTF-8">
+<Agenda de teléfonos>
+	<cliente 1>
+		<nombre>Ambrosio</nombre>
+		<apellidos>González Roca</apellidos>
+		<direccion>calle Sainz de los Herreros 8</direccion>
+		<telefonos>
+			<de casa>957283920</de casa>
+			<movil>628019283</movil>
+			<del trabajo>638746273</del trabajo>
+		</telefonos>	
+	</cliente 1>
+	<cliente 2>
+		<nombre>Rolando Manuel</nombre>
+		<apellidos>Pinales Cardona</apellidos>
+		<direccion>calle Los Bienaventurados 46</direccion>
+		<telefonos>
+			<de casa>928364950</de casa>
+			<movil>628313253</movil>
+			<del trabajo>675829304</del trabajo>
+		</telefonos>	
+	</cliente 2>
+	<cliente 3>
+		<nombre>Leandro</nombre>
+		<apellidos>Martín Mendoza</apellidos>
+		<direccion>calle Mercurio 2</direccion>
+		<telefonos>
+			<de casa>927564910</de casa>
+			<movil>621982093</movil>
+			<del trabajo>673013873</del trabajo>
+		</telefonos>	
+	</cliente 3>
+</Agenda de teléfonos>
+
+
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+			

@@ -1,0 +1,154 @@
+package ficheros;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class OperacionesFicheros {
+	
+	//ZIP DESDE EL PROYECTO (DAM-PROGRAMACION O COMO SE LLAME)
+	
+	//Mario Jiménez Marset
+	
+	String texto = "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lentejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda. El resto della concluían sayo de velarte, calzas de velludo para las fiestas con sus pantuflos de lo mismo, los días de entre semana se honraba con su vellori de lo más fino. Tenía en su casa una ama que pasaba de los cuarenta, y una sobrina que no llegaba a los veinte, y un mozo de campo y plaza, que así ensillaba el rocín como tomaba la podadera. Frisaba la edad de nuestro hidalgo con los cincuenta años, era de complexión recia, seco de carnes, enjuto de rostro; gran madrugador y amigo de la caza. Quieren decir que tenía el sobrenombre de Quijada o Quesada (que en esto hay alguna diferencia en los autores que deste caso escriben), aunque por conjeturas verosímiles se deja entender que se llama Quijana; pero esto importa poco a nuestro cuento; basta que en la narración dél no se salga un punto de la verdad.";
+	
+	public void escritura() throws IOException{
+		
+		
+			//creación del fichero
+			File fichero1 = new File("Quijote.txt");
+			
+			FileWriter escribe = new FileWriter(fichero1);
+			
+		try {
+			
+			for(int i=0;i<texto.length();i++) {
+				escribe.write(texto.charAt(i));
+			}
+			
+			escribe.close();
+			
+		} catch (IOException e) {
+			System.out.println("Error 1");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void lectura() throws IOException{
+		
+		File fichero1 = new File("Quijote.txt");
+		
+		FileReader lee = new FileReader(fichero1);
+		
+		int c = 0;
+		
+		try {
+		
+		while(c!=-1) {
+			
+			c = lee.read();
+			char letra = (char)c;
+			System.out.print(letra);
+			
+		}
+		
+		System.out.println("\n");
+		
+		lee.close();
+		
+		}catch(IOException e) {
+			System.out.println("Error 1");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void escritura_buffer() throws IOException{
+		
+		try {
+			
+			File fl = new File("Quijote.txt");
+			File fe = new File("Quijote_lineas.txt");
+			
+			FileReader fr = new FileReader(fl);
+			FileWriter fw = new FileWriter(fe);
+			
+			BufferedWriter bw = new BufferedWriter(fw);
+			BufferedReader br = new BufferedReader(fr);
+			
+			
+			int caracter = 0;
+			
+			while(caracter!=-1) {
+				
+				texto = texto + (char) caracter;
+				
+				if((char) caracter == '.' || (char) caracter == ',' || (char) caracter == ';') {
+
+					for(int i=0;i<texto.length();i++) {
+						bw.write(texto.charAt(i));
+						//escribe.write("\r\n");
+					}
+					bw.newLine();
+					bw.flush();
+					texto = "";
+
+				}
+		
+			}
+			
+			
+			while(texto!=null) {
+				texto = br.readLine();
+			
+				if(texto!=null) {
+					System.out.println(texto);
+				}
+			}
+			
+			bw.close();
+			
+		} catch (IOException e) {
+			System.out.println("Error 3");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/*public void lectura_buffer() {
+		
+		FileReader lee;
+		try {
+			lee = new FileReader("Quijote_lineas.txt");
+			BufferedReader mybuffer = new BufferedReader(lee);
+			
+			String linea = "";
+			
+			while(linea!=null) {
+				
+				linea = mybuffer.readLine();
+				
+				if(linea!=null) {
+					System.out.println(linea);
+				}
+				
+				//lee.close();
+				
+			}
+		} catch (IOException e) {
+			System.out.println("Error 4");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}*/
+		
+		
+}

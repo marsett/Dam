@@ -1,0 +1,87 @@
+package practicaTree;
+import java.awt.GridLayout;
+import java.sql.SQLException;
+import javax.swing.*;
+
+public class PantallaUno extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JLabel ipServidor, usuario, contrasena, defaultSchema, puerto;
+	private JTextField cuadroIpServidor, cuadroUsuario, cuadroContrasena, cuadroDefaultSchema, cuadroPuerto;
+	private JButton btConectar, btDesconectar;
+	private Modelo modelo;
+	public static void main(String[] args) {
+		new PantallaUno();
+	}
+	public PantallaUno() {
+		super("Practica BASE DE DATOS");
+		crearInterfaz();
+	}
+	public void crearInterfaz() {
+		System.out.println("Creando Interfaz PantallaUno...");
+		ipServidor=new JLabel("IP Servidor Base Datos");
+		usuario=new JLabel("Usuario");
+		contrasena=new JLabel("Contraseña");
+		defaultSchema=new JLabel("Default Schema");
+		puerto=new JLabel("Puerto");
+		cuadroIpServidor=new JTextField("localhost");
+		cuadroUsuario=new JTextField("root");
+		cuadroContrasena=new JTextField("mysql");
+		cuadroDefaultSchema=new JTextField("bdgestion");
+		cuadroPuerto=new JTextField("3306");
+		btConectar=new JButton("Conectar");
+		btDesconectar=new JButton("Desconectar");
+		add(ipServidor);
+		add(cuadroIpServidor);
+		add(usuario);
+		add(cuadroUsuario);
+		add(contrasena);
+		add(cuadroContrasena);
+		add(defaultSchema);
+		add(cuadroDefaultSchema);
+		add(puerto);
+		add(cuadroPuerto);
+		add(btConectar);
+		add(btDesconectar);
+		btConectar.addActionListener(e->{
+			try {
+				System.out.println("Conectando...");
+				//indicador verde
+				modelo=new Modelo(cuadroIpServidor.getText(),cuadroUsuario.getText(),cuadroContrasena.getText(),cuadroDefaultSchema.getText(),cuadroPuerto.getText());
+				System.out.println(modelo);
+				@SuppressWarnings("unused")
+				PantallaDos vd=new PantallaDos(modelo);
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
+		});
+		btDesconectar.addActionListener(e->{
+			System.out.println("Desconectando");
+			//indicador rojo
+		});
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new GridLayout(6,6));
+		setSize(280,280);
+		setVisible(true);
+	}
+}
+public class Modelo{
+	protected String cuadroServerHost=null;
+	protected String cuadroUserName=null;
+	protected String cuadroPassword=null;
+	protected String cuadroDefaultSchema =null;
+	protected String cuadroPort=null;
+	public Modelo(String cuadroServerHost, String cuadroUserName, String cuadroPassword, String cuadroDefaultSchema, String cuadroPort) {
+		this.cuadroServerHost=cuadroServerHost;
+		this.cuadroUserName=cuadroUserName;
+		this.cuadroPassword=cuadroPassword;
+		this.cuadroDefaultSchema=cuadroDefaultSchema;
+		this.cuadroPort=cuadroPort;
+		System.out.println("Creando Modelo...");
+	}
+	@Override
+	public String toString() {
+		return "Modelo [cuadroServerHost=" + cuadroServerHost + ", cuadroUserName=" + cuadroUserName
+				+ ", cuadroPassword=" + cuadroPassword + ", cuadroDefaultSchema=" + cuadroDefaultSchema
+				+ ", cuadroPort=" + cuadroPort + "]";
+	}
+}

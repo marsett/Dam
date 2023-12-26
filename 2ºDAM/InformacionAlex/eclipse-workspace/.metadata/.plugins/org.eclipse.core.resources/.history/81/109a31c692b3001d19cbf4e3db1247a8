@@ -1,0 +1,25 @@
+package componentesTablas.ordenaciontablas;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+public class EjemploOrdenacion extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		new EjemploOrdenacion();
+	}
+	public EjemploOrdenacion() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ModeloDatosOrdenado modelo=new ModeloDatosOrdenado();
+		BorderLayout layout=new BorderLayout(10,10);
+		setLayout(layout);
+		RowSorter<TableModel> ordenador=new TableRowSorter<>(modelo);
+		JTable tabla=new JTable(modelo);
+		JScrollPane scroll=new JScrollPane(tabla);
+		add(scroll);
+		setSize(500,400);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+}

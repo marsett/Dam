@@ -1,0 +1,35 @@
+package mariojimenez;
+import java.awt.BorderLayout;
+
+import javax.swing.*;
+
+public class Window extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private JTabbedPane panelPestanas;
+	private JPanel panelEntrada, panelEstadisticas;
+	public static void main(String[] args) {
+		new Window();
+	}
+	public Window() {
+		crearInterfaz();
+	}
+	public void crearInterfaz() {
+		crearPanelPestanas();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,600);
+		setVisible(true);
+	}
+	public void crearPanelPestanas() {
+		panelPestanas=new JTabbedPane();
+		panelEntrada=new JPanel();
+		panelEstadisticas=new JPanel();
+		panelPestanas.addTab("Entrada de Empleados", null, panelEntrada, "Estas en el Panel de Entrada de Empleados");
+		panelPestanas.addTab("Estadisticas", null, panelEstadisticas, "Estas en el Panel de Estadisticas");
+		SwingUtilities.updateComponentTreeUI(panelPestanas);
+		this.add(panelPestanas,BorderLayout.CENTER);
+	}
+	public void crearMenu() {
+		
+	}
+}

@@ -1,0 +1,7 @@
+package componentesTablas.ordenaciontablas;
+
+public class TablaFiltrada {
+	public static void main(String[] args) {
+		new TablaFiltrada();
+	}
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE listado[
+	<!ELEMENT listado (futuros+, divisas+, bonos+, letras+)>
+	<!ELEMENT futuros (producto, pais)>
+		<!ATTLIST futuros precio #REQUIRED>
+	<!ELEMENT Madrid EMPTY>
+	<!ELEMENT producto (#PCDATA)>
+	<!ELEMENT pais (#PCDATA)>
+	<!ELEMENT divisas (nombre+)>
+		<!ATTLIST divisas precio #REQUIRED>
+		<!ATTLIST divisas estabilidad CDATA #IMPLIED>
+	<!ELEMENT NuevaYork EMPTY>
+	<!ELEMENT nombre (tiposdecambio+)>
+	<!ELEMENT bonos (pais_de_procedencia)>
+		<!ATTLIST bonos precio #REQUIRED>
+		<!ATTLIST bonos estabilidad CDATA #IMPLIED>
+	<!ELEMENT Frankfurt EMPTY>
+	<!ELEMENT pais_de_procedencia (valor_deseado, valor_minimo, valor_maximo)>
+	<!ELEMENT valor_deseado (#PCDATA)>
+	<!ELEMENT valor_minimo (#PCDATA)>
+	<!ELEMENT valor_maximo (#PCDATA)>
+	<!ELEMENT letras (tipodeinteres, paisemisor)>
+		<!ATTLIST letras precio #REQUIRED>
+	<!ELEMENT Tokio EMPTY>
+	<!ELEMENT tipodeinteres (#PCDATA)>
+	<!ELEMENT paisemisor (#PCDATA)>
+		<!ATTLIST paisemisor España #REQUIRED>
+		<!ATTLIST paisemisor EEUU #REQUIRED>
+		<!ATTLIST paisemisor Alemania #REQUIRED>
+		<!ATTLIST paisemisor Japon #REQUIRED>
+]>
+
+<!--Ejemplo Xml del DTD anterior-->
+
+<listado>
+	<futuros precio = 45>
+		<Madrid />
+		<producto>Fruta</producto>
+		<pais>Ucrania</pais>
+	</futuros>
+	<futuros precio = 79>
+		<Madrid />
+		<producto>Verduras</producto>
+		<pais>Marruecos</pais>
+	</futuros>
+	<divisas precio = 49, estabilidad = si>
+		<NuevaYork />
+		<nombre>Libras</nombre>
+	</divisas>
+	<bonos precio = 15, estabilidad = no>
+		<Frankfurt />
+		<pais_de_procedencia>
+			<valor_deseado>100</valor_deseado>
+			<valor_minimo>20</valor_minimo>
+			<valor_maximo>80</valor_maximo>
+		</pais_de_procedencia>
+	</bonos>
+	<bonos precio = 56, estabilidad = no>
+		<Frankfurt />
+		<pais_de_procedencia>
+			<valor_deseado>160</valor_deseado>
+			<valor_minimo>70</valor_minimo>
+			<valor_maximo>130</valor_maximo>
+		</pais_de_procedencia>
+	</bonos>
+	<letras precio = 58>
+		<Tokio />
+		<tipodeinteres>45</tipodeinteres>
+		<paisemisor>
+			España
+		</paisemisor>
+	</letras>
+</listado>

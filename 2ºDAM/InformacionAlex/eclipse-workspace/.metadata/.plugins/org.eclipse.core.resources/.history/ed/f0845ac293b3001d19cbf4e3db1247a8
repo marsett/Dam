@@ -1,0 +1,11 @@
+package componentesTablas.ordenaciontablas;
+import javax.swing.*;
+
+public class TablaFiltrada extends JFrame{
+	public static void main(String[] args) {
+		new TablaFiltrada();
+	}
+	public TablaFiltrada() {
+		
+	}
+}

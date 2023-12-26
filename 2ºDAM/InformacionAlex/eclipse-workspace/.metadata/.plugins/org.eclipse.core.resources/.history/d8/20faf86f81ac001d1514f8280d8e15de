@@ -1,0 +1,21 @@
+package componentes;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class UsandoTreeComboSelector extends JFrame{
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
+		new UsandoTreeComboSelector();
+	}
+	public UsandoTreeComboSelector() {
+		Object[] array= {Boolean.TRUE,Boolean.FALSE,"Hello"};
+		JTree arbol=new JTree(array);
+		arbol.setEditable(true);
+		DefaultTreeCellRenderer renderer=(DefaultTreeCellRenderer)arbol.getCellRenderer();
+		String[] elementosSeleccion= {"Elemento 1","Elemento 2","Elemento 3","Elemento 4"};
+		JComboBox<String> comboEditor=new JComboBox<String>(elementosSeleccion);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+}

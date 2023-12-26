@@ -1,0 +1,9 @@
+package arboles;
+
+public class ModeloDatos {
+
+	public ModeloDatos() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

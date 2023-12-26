@@ -1,0 +1,17 @@
+3,70/10,00
+
+Hola Mario. Un ejercicio muy flojo. He publicado la solución para que la veas. El lunes la trabajaremos en clase.
+
+Te adjunto los comentarios y errores:
+
+- ¿Cuántas veces te pregunté cómo ibas? No pudiste ni comprobar que creabas correctamente el array!!!
+
+- En el constructor de la clase Sorteo, copias mal los atributos. A partir de ahí, nada funciona.
+
+- La sentencia de inserción en BD es correcta pero no se ejecuta nunca.
+
+- La sentencia de consulta en BD es correcta pero no se ejecuta nunca.
+
+- La sentencia de borrado en BD es correcta pero no se ejecuta nunca.
+
+- ¿Porqué metes un switch en el método comprobarSorteo con una variable que siempre está a 0?
